@@ -1,6 +1,0 @@
-#!/bin/bash
-
-sudo apt update
-#install if not installed MySQL client, ruby-dbf
-sudo apt install -y mysql-client p7zip ruby-dbf
-
