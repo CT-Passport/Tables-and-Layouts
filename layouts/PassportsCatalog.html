@@ -1,18 +1,66 @@
-.datagrid table{
-margin-top:20px;
-}
-.datagrid th{text-align:center;}
-.datagrid td{text-align:left;}
+{% set personId = "" %}
+{% set whereList = url.getstringanddecode("where")|split(" and ") %}
+{% for where in whereList %}
+{% set w = where|split("=") %}
+{% if w[0] == "person" %}
+{% set personId = w[1] %}
+{% endif %}
+{% endfor %}
+
+<div style="float:right;">{{ html.recordcount }}</div>
+
+{% if personId != "" %}
+<div style="float:left;"><a href="/index.php?option=com_customtables&view=edititem&returnto={{ url.base64 }}&Itemid=615&person={{ personId }}" id="ctToolBarAddNew64" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить паспорт" title="Добавить паспорт"></a></div>
+{% endif %}
+
+
+<div class="datagrid">
+<div class="searchBox">
+  <div>{{ html.search("person","","reload") }}</div>
+  <div>{{ html.search("type","","reload") }}</div>
+  <div>{{ html.search("issuecountry","","reload") }}</div>
+  <div>{{ html.search("passportseries"," number","reload") }}</div>
+<div>{{ html.searchbutton }}</div>
+</div>  
+{% if table.records == 0 %}
+<p>Паспортов нет.</p>
+{% else %}
+
+<table>
+<thead><tr>
+<th style="width:auto;max-width:auto;">{{ person.title }}</th>
+<th style="width:auto;max-width:auto;">{{ type.title }}</th>
+<th>{{ issuecountry.title }}</th>  
+<th>{{ passportseries.title }} / {{ number.title }}</th>
+<th>{{ issuedate.title }}</th>
+<th>{{ expirationdate.title }}</th>
+<th>Приглашения</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td style="width:auto;max-width:auto;"><a href='{{ record.link(true) }}'>{{ person }}</a></td>
+<td style="width:auto;max-width:auto;">{{ type }}</td>
+<td>{{ issuecountry }}</td>  
+<td>{{ passportseries }} {{ number }}</td>  
+<td>{{ issuedate("Y-m-d") }}</td>  
+<td>{{ expirationdate("Y-m-d") }}</td>
+<td>
   
-.datagrid input, .datagrid select {
-  margin:5px;
-  }
-
-.searchBox div{
-display:inline-block;
-}
-
-.ctSearchBox.btn{
-margin-top:-5px;margin-bottom:0;
-margin-left:20px;
-}
+  {% set migmidcompanyloilettersCount=record.joincount("migmidcompanyloiletters") %}
+  {% if migmidcompanyloilettersCount > 0 %}
+  <a href="/index.php/russian-visas{{ document.languagepostfix|replace({'_': '-'}) }}?where={{ ("person=" ~ record.id) | base64encode }}" target="_blank">
+  <button class="btn btn-primary">{{ migmidcompanyloilettersCount }}</button></a>
+  {% endif %}
+  
+  </td>
+<td>{{ html.toolbar("edit","delete","publish") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>
+{% endif %}
+</div>

@@ -1,0 +1,19 @@
+.personalInfoBox{
+border:1px solid #cccccc;display:inline-block;
+padding:10px;
+vertical-align:top;
+border-radius:10px;
+}
+
+.detailsLine div{
+display:inline-block;
+}
+
+.detailsLabel{
+width:300px;
+}
+
+.detailsValue{
+margin-left:10px;
+font-weight:bold;
+}

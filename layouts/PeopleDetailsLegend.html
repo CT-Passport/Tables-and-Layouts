@@ -1,0 +1,60 @@
+<legend>Персональная информация</legend>
+
+<div class="personalInfoBox">
+{{ tables.getrecord("PassportPhoto",'person='~record.id~' and _published=1','expirationdate desc') }}
+</div>  
+  
+<div class="personalInfoBox">
+<div class="form-horizontal">
+
+  <div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на латинице{% else %}Name in English{% endif %}</div>:<div class="detailsValue">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</div>
+	</div>
+	
+  <div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на латинице{% else %}Name in English{% endif %}</div>:<div class="detailsValue">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на русском{% else %}Name in subjective case{% endif %}</div>:<div class="detailsValue">{{ firstnamerussubj }} {{ middlenamerussubj }} {{ lastnamerussubj }}</div>
+	</div>
+
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на родном языке{% else %}Name in native language{% endif %}</div>:<div class="detailsValue">{{ firstnamenative }} {{ middlenamenative }} {{ lastnamenative }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dateofbirth.title }}</div>:<div class="detailsValue">{{ dateofbirth("d-m-Y") }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ gender.title }}</div>:<div class="detailsValue">{{ gender }}</div>
+	</div>
+</div>
+
+</div>
+<hr/>
+<legend>Сведения о гражданстве и паспортах</legend>
+
+<div class="form-horizontal">  
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ citizenshiptype.title }}</div>:<div class="detailsValue">{{ citizenshiptype }}</div>
+	</div>  
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ ethnicity.title }}</div>:<div class="detailsValue">{{ ethnicity }}</div>
+	</div>
+  
+</div>
+
+{{ tables.getrecords("PassportsCatalogSimple",'person='~record.id) }}
+
+{{ tables.getrecords("VisasCatalogSimple",'person='~record.id) }}
+
+<legend>Должности</legend>
+{{ tables.getrecords("CompanyEmployeeSimpleList",'person='~record.id) }}
+
+
+

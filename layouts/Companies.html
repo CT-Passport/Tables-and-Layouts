@@ -1,0 +1,46 @@
+<legend>{{ table.title }}</legend>
+<br>
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<div class="datagrid">
+  
+<div class="searchBox">
+  <div>{{ html.search("fullnamerus") }}</div>
+  <div>{{ html.search("phone") }}</div>
+  <div>{{ html.search("email") }}</div>
+<div>{{ html.searchbutton() }}</div>
+</div>
+  
+<table>
+<thead><tr><th>{{ html.batch("checkbox") }}</th>
+<th>#</th>
+<th>{{ fullnamerus.title }}</th>
+<th>{{ phone.title }}</th>
+<th>{{ email.title }}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Сотрудники компании{% else %}Company employees{% endif %}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ html.toolbar("checkbox") }}</td>
+<td><a href='{{ record.link(true) }}'>{{ record.id }}</a></td>
+<td><a href='{{ record.link(true) }}'>{{ fullnamerus }}</a></td>
+<td>{{ phone }}</td>
+<td>{{ email }}</td>
+<td style="text-align:center;">
+  <a href="/index.php/sotrudniki-kompanij?where={{ ("company=" ~ record.id) | base64encode }}" target="_blank">
+  <button class="btn btn-primary">{{ record.joincount("companyemployees") }}</button>
+  </a> 
+<td>{{ html.toolbar("edit","delete","filebox") }}</td>
+
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>
+

@@ -1,0 +1,26 @@
+<style>
+  .dashboardblock{
+    text-align:center;
+  }
+  .dashboardblock button{
+    width:130px;
+    height:130px;
+    margin: 20px;
+    
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  
+  
+</style>
+
+<div class="dashboardblock">
+
+{% block record %}
+
+  <a href="{{ alias }}" title="{{ title }}">
+    <button class="btn button btn-primary">{{ title }}</button>
+  </a>
+
+{% endblock %}
+</div>
