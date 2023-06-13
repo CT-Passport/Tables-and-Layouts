@@ -1,0 +1,70 @@
+<legend>{{ table.title }}</legend>
+
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<div class="datagrid">
+
+<div class="searchBox">  
+  <div>{{ html.search("loinum") }}</div>
+	  
+  <div>{{ html.search("projsite","","reload") }}</div>
+  <div>{{ html.search("project","","reload") }}</div>
+  <div>{{ html.search("projbatch","","reload") }}</div>
+  
+  <div>{{ html.searchbutton }}</div>
+
+<table>
+<thead><tr>
+<th class="short">{{ html.batch("checkbox") }}</th>
+<th>{{ loinum.label(true) }}</th>
+<th>{{ dbentrydate.title(true) }}</th>
+<th>{{ project.title(true) }}<br>{{ projsite.title(true) }}</th>
+<th>{{ projectbatch.title(true) }}</th>
+<th>{{ passport.title }}</th>
+
+  
+
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td style="text-align:center;">{{ html.toolbar("checkbox") }}</td>
+<td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо #{% else %}Letter #{% endif %}{{ loinum }}</a></td>
+<td>{{ dbentrydate("Y-m-d") }}</td>
+<td>{{ tables.getrecord("projectName","id="~project.value) }}<br>
+{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</td>
+<td>{{ projectbatch }}</td>
+  
+<td>
+  {% if projectbatch.value != "" %}
+  
+  <a href="/index.php/pisma-poluchennye-iz-mvd?view=edititem&listing_id={{ record.id}}&batch={{ projectbatch.value }}&returnto={{ url.base64 }}">
+    
+  {% if employee.value == "" %}
+<button class="btn btn-primary" style="background-color:lightgray;">{% if document.languagepostfix=="_ru" %}Выбрать работника{% else %}Select Employee{% endif %}</button>
+  {% else %}
+    
+    {% if passport.value == "" %}
+  <button class="btn btn-primary" style="background-color:lightgray;">{% if document.languagepostfix=="_ru" %}Выбрать паспорт работника{% else %}Select Employee's Passport{% endif %}</button>
+    {% else %}
+<button class="btn btn-primary">{{ employee }}<br/>{% if document.languagepostfix=="_ru" %}Паспорт{% else %}Passport{% endif %} {{ passport.get("passportseriesnumber") }}</button>
+  {% endif %}  
+    
+  {% endif %}
+  </a>
+  
+  {% endif %}
+  </td>
+
+<td>{{ html.toolbar("edit","delete","filebox") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

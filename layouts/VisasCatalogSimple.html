@@ -1,0 +1,34 @@
+<legend>Визы, выданные человеку</legend><br>
+<style>
+.datagrid th{text-align:left;}
+.datagrid td{text-align:left;}
+</style>
+
+<div>  
+<table>
+<thead><tr>
+<th>{{ issuedate.title }}</th>
+<th>{{ visatermdays.title }}</th>
+<th>{{ multiplicity.title }}</th>
+<th>{{ visatype.title }}</th>
+<th>{{ visitpurpose.title }}</th>
+<th>{{ invcompanyname.title }}</th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ issuedate("Y-m-d") }}</td>
+<td>{{ visatermdays }}</td>  
+<td>{{ multiplicity }}</td>  
+<td>{{ visatype }}</td> 
+<td>{{ visitpurpose }}</td>  
+<td>{{ invcompanyname }}</td>  
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

@@ -1,0 +1,36 @@
+<legend>Паспорта, выданные человеку</legend><br>
+<style>
+.datagrid th{text-align:left;}
+.datagrid td{text-align:left;}
+</style>
+
+<div>  
+<table>
+<thead><tr>
+<th>{{ type.title }}</th>
+<th>{{ issuecountry.title }}</th>  
+<th>{{ passportseries.title }} / {{ number.title }}</th>
+<th>{{ issuedate.title }}</th>
+<th>{{ expirationdate.title }}</th>
+<th>{{ birthcountry.title }}</th>
+<th>{{ birthplace.title }}</th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ type }}</td>
+<td>{{ issuecountry }}</td>  
+<td>{% if passportseries != "" %}{{ passportseries }} {% endif %}{{ number }}</td>  
+<td>{{ issuedate("Y-m-d") }}</td>  
+<td>{{ expirationdate("Y-m-d") }}</td>  
+<td>{{ birthcountry }}</td>
+<td>{{ birthplace }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

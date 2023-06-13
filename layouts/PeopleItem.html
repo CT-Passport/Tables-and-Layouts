@@ -1,0 +1,41 @@
+<tr>
+<td style="width:auto;max-width:auto;">
+  
+  {% if isemployee.value == 1 %}
+  <b><a href="{{ record.link }}">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</a></b>
+  {% else %}
+  <a href="{{ record.link }}">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</a>
+  {% endif %}
+  </td>
+  
+<td style="width:auto;max-width:auto;">{{ firstnamerussubj }} {{ middlenamerussubj }} {{ lastnamerussubj }}</td>
+<td>{{ dateofbirth("Y-m-d") }}</td>
+  
+<td style="text-align:center;">
+  
+  {% set passports=record.joincount("passports") %}
+  {% if passports > 0 %}
+  <a href="/index.php/passports{{ document.languagepostfix|replace({'_': '-'}) }}?where={{ ("person=" ~ record.id) | base64encode }}" target="_blank">
+  <button class="btn btn-primary">{{ record.joincount("passports") }}</button>
+  </a>
+  {% else %}
+  <a href="/index.php/passports{{ document.languagepostfix|replace({'_': '-'}) }}?view=edititem&returnto={{ url.base64 }}&person={{ record.id }}">
+  <button class="btn btn-primary" style="background-color:lightgray;">+</button>
+  </a>
+  {% endif %}
+</td>
+  
+<td style="text-align:center;">
+  {% set peoplesrussianvisas=record.joincount("peoplesrussianvisas") %}
+  {% if peoplesrussianvisas > 0 %}
+  <a href="/index.php/russian-visas{{ document.languagepostfix|replace({'_': '-'}) }}?where={{ ("person=" ~ record.id) | base64encode }}" target="_blank">
+  <button class="btn btn-primary">{{ peoplesrussianvisas }}</button></a>
+  {% else %}
+  <a href="/index.php/russian-visas{{ document.languagepostfix|replace({'_': '-'}) }}?view=edititem&returnto={{ url.base64 }}&person={{ record.id }}">
+  <button class="btn btn-primary" style="background-color:lightgray;">+</button>
+  </a>
+  {% endif %}
+</td>
+<td style="text-align:center;">{{ tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) }}</td>
+<td>{{ html.toolbar("edit","delete","filebox") }}</td>
+</tr>
