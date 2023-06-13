@@ -7,70 +7,78 @@
 {% endif %}
 {% endfor %}
 
-
 <legend>{{ table.title }}</legend><br>
 <div style="float:right;">{{ html.recordcount }}</div>
 
 {% if companyId != "" %}
-<div style="float:left;"><a href="/index.php?option=com_customtables&view=edititem&returnto={{ url.base64 }}&Itemid=701&company={{ companyId }}" id="ctToolBarAddNew64" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить сотрудника" title="Добавить сотрудника"></a></div>
+<div style="float:left;"><a
+        href="/index.php?option=com_customtables&view=edititem&returnto={{ url.base64 }}&Itemid=701&company={{ companyId }}"
+        id="ctToolBarAddNew64" class="toolbarIcons"><img
+        src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить сотрудника"
+        title="Добавить сотрудника"></a></div>
 {% endif %}
 
 <div class="datagrid">
-<div class="searchBox">
-  <div style="display:inline-block;">{{ html.search("company") }}</div>
-  <div style="display:inline-block;">{{ html.search("person") }}</div>
-  <div style="display:inline-block;">{{ html.search("position") }}</div>
-  <div style="display:inline-block;">{{ html.search("phone") }}</div>
-  <div style="display:inline-block;">{{ html.search("phone1") }}</div>
-  <div style="display:inline-block;">{{ html.search("email") }}</div>
-  <div style="display:inline-block;">{{ html.search("email1") }}</div>
-  <div style="display:inline-block;">{{ html.search("comment") }}</div>
-  <div style="display:inline-block;">{% if document.languagepostfix == "_ru" %}{{ html.searchbutton ("Поиск") }}{% else %}{{ html.searchbutton ("Search") }}{% endif %}</div>
+    <div class="searchBox">
+        <div style="display:inline-block;">{{ html.search("company") }}</div>
+        <div style="display:inline-block;">{{ html.search("person") }}</div>
+        <div style="display:inline-block;">{{ html.search("position") }}</div>
+        <div style="display:inline-block;">{{ html.search("phone") }}</div>
+        <div style="display:inline-block;">{{ html.search("phone1") }}</div>
+        <div style="display:inline-block;">{{ html.search("email") }}</div>
+        <div style="display:inline-block;">{{ html.search("email1") }}</div>
+        <div style="display:inline-block;">{{ html.search("comment") }}</div>
+        <div style="display:inline-block;">{% if document.languagepostfix == "_ru" %}{{ html.searchbutton ("Поиск") }}{%
+            else %}{{ html.searchbutton ("Search") }}{% endif %}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>{{ html.batch("checkbox") }}</th>
+            <th>#</th>
+            <th>{{ company.title }}</th>
+            <th>{{ person.title }}</th>
+            <th>{{ position.title }}</th>
+            <th>{{ phone.title }}</th>
+            <th>{{ phone1.title }}</th>
+            <th>{{ email.title }}</th>
+            <th>{{ email1.title }}</th>
+            <th>{{ comment.title }}</th>
+            <!--<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Письма из МВД{% else %}Letters from MVD{% endif %}</th> -->
+
+            <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+
+
+        </tr>
+        </thead>
+
+
+        <tbody>
+        {% block record %}
+        <tr>
+            <td>{{ html.toolbar("checkbox") }}</td>
+            <td>{{ record.id }}</td>
+            <td><a href='{{ record.link(true) }}'>{{ company }}</a></td>
+            <td><a href='ludi?view=details&listing_id={{ person.value }}'>{{ person }}</a></td>
+            <td>{{ position }}</td>
+            <td>{{ phone }}</td>
+            <td>{{ phone1 }}</td>
+            <td>{{ email }}</td>
+            <td>{{ email1 }}</td>
+            <td>{{ comment }}</td>
+            <!--<td style="text-align:center;">
+              <a href="/index.php/dobavit-poluchennoe-iz-mvd-pismo-v-bazu-dannykh?where={ ("employee=" ~ record.id) | base64encode }}" target="_blank">
+              <button class="btn btn-primary">{ record.joincount("migmvdlois") }}</button>
+              </a>
+              </td>-->
+            <td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
+        </tr>
+        {% endblock %}
+        </tbody>
+    </table>
+
 </div>
-
-<table>
-<thead><tr>
-    <th>{{ html.batch("checkbox") }}</th>
-  <th>#</th>
-  <th>{{ company.title }}</th>
-  <th>{{ person.title }}</th>
-  <th>{{ position.title }}</th>
-  <th>{{ phone.title }}</th>
-  <th>{{ phone1.title }}</th>
-  <th>{{ email.title }}</th>
-  <th>{{ email1.title }}</th>
-  <th>{{ comment.title }}</th>
- <!--<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Письма из МВД{% else %}Letters from MVD{% endif %}</th> -->
- 
-   <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
-
-
-</tr></thead>
-
-
-<tbody>
-{% block record %}
-<tr>
-<td>{{ html.toolbar("checkbox") }}</td>
-<td>{{ record.id }}</td>
-<td><a href='{{ record.link(true) }}'>{{ company }}</a></td>
-<td><a href='ludi?view=details&listing_id={{ person.value }}'>{{ person }}</a></td>
-<td>{{ position }}</td>
-<td>{{ phone }}</td>
-<td>{{ phone1 }}</td>
-<td>{{ email }}</td>
-<td>{{ email1 }}</td>
-<td>{{ comment }}</td>
-<!--<td style="text-align:center;">
-  <a href="/index.php/dobavit-poluchennoe-iz-mvd-pismo-v-bazu-dannykh?where={ ("employee=" ~ record.id) | base64encode }}" target="_blank">
-  <button class="btn btn-primary">{ record.joincount("migmvdlois") }}</button>
-  </a>
-  </td>-->
-<td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
-</tr>
-{% endblock %}
-</tbody>
-</table>
-
-</div>
-<br/><div style='text-align:center;'>{{ html.pagination }}</div>
+<br/>
+<div style='text-align:center;'>{{ html.pagination }}</div>
