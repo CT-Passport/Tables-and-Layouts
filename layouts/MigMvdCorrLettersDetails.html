@@ -2,52 +2,73 @@
 
 <!--<div class="form-horizontal">-->
 {tab:Основные детали}
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ ornum.title }}</div>:<div class="detailsValue">{{ ornum }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ regnum.title }}</div>:<div class="detailsValue">{{ regnum }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date }}</div>
-	</div>
-  
 <div class="control-group detailsLine">
-		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
-	</div>
+    <div class="detailsLabel">{{ ornum.title }}</div>
+    :
+    <div class="detailsValue">{{ ornum }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ regnum.title }}</div>
+    :
+    <div class="detailsValue">{{ regnum }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ date.title }}</div>
+    :
+    <div class="detailsValue">{{ date }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ status.title }}</div>
+    :
+    <div class="detailsValue">{{ status }}</div>
+</div>
 
 <legend>Проект и партия</legend>
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
-	</div>
-  
 <div class="control-group detailsLine">
-		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
-	</div>  
- 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
-	</div>  
+    <div class="detailsLabel">{{ project.title }}</div>
+    :
+    <div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ projsite.title }}</div>
+    :
+    <div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ projectbatch.title }}</div>
+    :
+    <div class="detailsValue">{{ projectbatch }}</div>
+</div>
 <legend>И.Т.Д.</legend>
 
 <div class="control-group detailsLine">
-		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
-	</div>
+    <div class="detailsLabel">{{ comment.title }}</div>
+    :
+    <div class="detailsValue">{{ comment }}</div>
+</div>
 
 {tab:{% if document.languagepostfix=="_ru" %}Сотрудник{% else %}Employee{% endif %}}
-<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ employee.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ employee.value }}" target="_blank">{{ employee }}</a></div>
-	</div>
+
+{{ employee.layout("EmployeePeopleDetailsLegend") }}
+
+<hr/>
 
 <div class="control-group detailsLine">
-		<div class="detailsLabel">{{ rescountry.title }}</div>:<div class="detailsValue">{{ rescountry }}</div>
-	</div>
+    <div class="detailsLabel">{{ rescountry.title }}</div>
+    :
+    <div class="detailsValue">{{ rescountry }}</div>
+</div>
 
 <div class="control-group detailsLine">
-		<div class="detailsLabel">{{ resplace.title }}</div>:<div class="detailsValue">{{ resplace }}</div>
-	</div>
+    <div class="detailsLabel">{{ resplace.title }}</div>
+    :
+    <div class="detailsValue">{{ resplace }}</div>
+</div>
 
 
 <legend>Должности</legend>
@@ -60,9 +81,11 @@ tab:{{ employee.title }}}
 
 {tab:{{ passport.title }}}
 {{ passport.layout("PassportsDetailsSimple") }}
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ passport.title }}</div>:<div class="detailsValue">{{ passport }}</div>
-	</div>
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ passport.title }}</div>
+    :
+    <div class="detailsValue">{{ passport }}</div>
+</div>
 {tab:{{ visa.title }}}
 
 {{ visa.layout("RussianVisasDetailsSimple") }}
@@ -72,16 +95,22 @@ tab:{{ employee.title }}}
 {{ visa.layout("VisaInvitingCompany") }}
 
 {tab:{% if document.languagepostfix=="_ru" %}Регистр{% else %}Register{% endif %}}
-	
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
-	</div>
 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate }}</div>
-	</div>
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ dbentrydate.title }}</div>
+    :
+    <div class="detailsValue">{{ dbentrydate }}</div>
+</div>
 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
-	</div>  
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ changedate.title }}</div>
+    :
+    <div class="detailsValue">{{ changedate }}</div>
+</div>
+
+<div class="control-group detailsLine">
+    <div class="detailsLabel">{{ changedby.title }}</div>
+    :
+    <div class="detailsValue">{{ changedby }}</div>
+</div>
 {/tabs}
