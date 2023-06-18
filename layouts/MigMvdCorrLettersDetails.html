@@ -20,6 +20,16 @@
     <div class="detailsValue">{{ date }}</div>
 </div>
 
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ rusentrydate.title }}</div><div class="detailsValue">{{ rusentrydate		 }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ rusexitdate.title }}</div><div class="detailsValue">{{ rusexitdate }}</div>
+	</div>
+ 
+
 <div class="control-group detailsLine">
     <div class="detailsLabel">{{ status.title }}</div>
     :
@@ -69,15 +79,6 @@
     :
     <div class="detailsValue">{{ resplace }}</div>
 </div>
-
-
-<legend>Должности</legend>
-
-{{ tables.getrecord("CompanyEmployeeSimpleList",employee.value) }}
-<!--
-tab:{{ employee.title }}}
-{ employee.layout("EmployeePeopleDetailsLegend") }}-->
-
 
 {tab:{{ passport.title }}}
 {{ passport.layout("PassportsDetailsSimple") }}

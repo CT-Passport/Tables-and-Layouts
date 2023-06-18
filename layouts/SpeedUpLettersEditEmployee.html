@@ -1,0 +1,10 @@
+<legend>{{ table.title }} - Select Employee</legend>
+{% set employeesList = projectbatch.getvalue("employees") %}
+
+<div class="form-horizontal">
+	<div class="control-group">
+		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','false','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
+	</div>
+</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

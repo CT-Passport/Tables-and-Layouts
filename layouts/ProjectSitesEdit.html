@@ -1,0 +1,27 @@
+<legend>{{ table.title }}</legend>
+
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">{{ project.title }}</div><div class="controls">{{ project.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ name.title }}</div><div class="controls">{{ name.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ location.title }}</div><div class="controls">{{ location.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ contractors.title }}</div><div class="controls">{{ contractors.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ employees.title }}</div><div class="controls">{{ employees.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

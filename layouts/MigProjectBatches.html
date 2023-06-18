@@ -1,0 +1,42 @@
+<legend>{{ table.title }}</legend>
+
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+
+<div class="datagrid">
+
+<div class="searchBox">
+  <div>{{ html.search("projsite") }}</div>
+  <div>{{ html.search("batchnum") }}</div>
+  <div>{{ html.search("employees") }}</div>
+<div>{{ html.searchbutton() }}</div>
+</div>
+  
+<table>
+<thead><tr><th>{{ html.batch("checkbox") }}</th>
+<th>Компания<br>Проект</th>
+<th>{{ projsite.title }}</th>
+<th>{{ batchnum.title }}</th>
+<th>{{ date.title }}</th>
+<th>{{ employees.title }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ html.toolbar("checkbox") }}</td>
+  <td><b>{{ tables.getrecord("CompanyNameByProject","_id="~project) }}</b><br><a href='{{ record.link(true) }}'>{{ tables.getvalue("migprojects","name","_id="~project) }}</a></td>
+<td>{{ projsite }}</td>
+<td>{{ batchnum }}</td>
+<td>{{ date("Y-m-d") }}</td>
+  <td><ol>{{ employees.layout("EmployeeList") }}</ol></td>
+<td>{{ html.toolbar("edit","delete") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

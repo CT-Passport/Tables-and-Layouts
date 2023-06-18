@@ -1,0 +1,59 @@
+<legend>{{ table.title}}</legend>
+
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<div class="datagrid">
+  
+<div class="searchBox">
+  <div>{{ html.search("company") }}</div>
+  <div>{{ html.search("name") }}</div>
+<div>{{ html.searchbutton() }}</div>
+</div>
+  
+<table>
+<thead><tr><th>{{ html.batch("checkbox") }}</th>
+<th>{{ company.title }}<br>{{ name.title }}</th>
+<th>{{ status.title }}</th>
+<th>{{ startdate.title }}</th>
+<th>{{ enddate.title }}</th>
+<th>{{ location.title }}</th>
+<th>{{ projectsites.title }}</th> 
+<th>{{ contractors.title }} </th> 
+<th>{{ contactperson.title }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Партии работников{% else %}Project batches{% endif %}</th>
+  <th>{% if document.languagepostfix=="_ru" %}Спорные кейсы проекта{% else %}Project cases{% endif %}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ html.toolbar("checkbox") }}</td>
+<td><b>{{ company }}</b><br><a href='{{ record.link(true) }}'>{{ name }}</a></td>
+<td>{% if status.value == 1 %}Активен{% else %}Не активен{% endif %}</td>
+<td>{{ startdate("Y-m-d") }}</td>
+<td>{{ enddate("Y-m-d") }}</td>
+<td>{{ location }}</td>
+<td style="text-align:center;">
+  <a href="/index.php/7-proektnye-zony?where={{ ("projectsite=" ~ record.id) | base64encode }}" target="_blank">
+  <button class="btn btn-primary">{{ record.joincount("migprojectsites") }}</button>
+  </a> 
+</td>
+<td><ol>{{ contractors.layout("ContractorList") }}</ol></td>   	
+ 
+  <td><ol>{{ contactperson.layout("EmployeeList") }}</ol></td>
+<td style="text-align:center;">
+  <a href="/index.php/8-partii-rabotnikov?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
+    <button class="btn btn-primary">{{ record.advancedjoin("count","migprojectbatches","_id","project","_id") }}</button></a>
+<td style="text-align:center;">
+  <a href="/index.php/5-2-spornye-kejsy-proekta?where={{ ("migprojectcases=" ~ record.id) | base64encode }}" target="_blank">
+    <button class="btn btn-primary">{{ cases }}</button></a></td>
+<td>{{ html.toolbar("edit","delete") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

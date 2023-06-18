@@ -1,0 +1,23 @@
+<legend>{{ table.title }}</legend>
+
+<div class="form-horizontal">
+  
+	<div class="control-group">
+		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ submdate.title }}</div><div class="controls">{{ submdate.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
+	</div>  
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("save") }} {{ html.button("saveandclose") }} {{ html.button("saveascopy") }} {{ html.button("cancel") }}</div>

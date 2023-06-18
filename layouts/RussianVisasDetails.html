@@ -1,0 +1,72 @@
+<h2>{{ table.title }}</h2>
+
+<div class="personalInfoBox">
+{{ tables.getrecord("PassportPhoto",'person='~person.value~' and _published=1','expirationdate desc') }}
+</div>  
+  
+<div class="personalInfoBox">
+  
+<div class="form-horizontal" style="vertical-align: top;">
+
+	<div class="control-group detailsLine" style="vertical-align: top;">
+		<div class="detailsLabel">Имя на русском</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ person }}</a></div><br>
+<div class="detailsLabel">Имя на английском</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ person.get("fullnamelat") }}</a></div><br>
+      
+<hr/>
+      
+<div class="detailsLabel" style="vertical-align: top;">Паспорт</div><div class="detailsValue">{{ tables.getrecord("passportLayout","person=" ~ person.value ~ " and _published=1","expirationdate desc") }}</div>      
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ num.title }}</div>:<div class="detailsValue">{{ num }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ issuedate.title }}</div>:<div class="detailsValue">{{ issuedate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visatermdates.title }}</div>:<div class="detailsValue">{{ visatermdates }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visatermdays.title }}</div>:<div class="detailsValue">{{ visatermdays }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ multiplicity.title }}</div>:<div class="detailsValue">{{ multiplicity }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visatype.title }}</div>:<div class="detailsValue">{{ visatype }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visitpurpose.title }}</div>:<div class="detailsValue">{{ visitpurpose }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ invcompanyname.title }}</div>:<div class="detailsValue"><a href="/index.php/kompanii?view=details&listing_id={{ invcompanyname.value }}" target="_blank">{{ invcompanyname }}</a></div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ stayplace.title }}</div>:<div class="detailsValue">{{ stayplace }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ loinum.title }}</div>:<div class="detailsValue">{{ loinum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>
+
+</div>

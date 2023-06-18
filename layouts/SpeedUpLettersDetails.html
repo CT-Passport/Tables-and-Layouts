@@ -1,0 +1,71 @@
+{{ html.goback }}
+<h2>{% if document.languagepostfix=="_ru" %}Письмо №{% else %}Letter #{% endif %} {{ ornum }}</h2>
+
+{tab:Детали}
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ ornum.title }}</div>:<div class="detailsValue">{{ ornum }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ regnum.title }}</div>:<div class="detailsValue">{{ regnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ text.title }}</div>:<div class="detailsValue">{{ text }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
+	</div>
+<hr/>
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName",project.value) }}</div>
+	</div>	
+  
+  <div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName",projsite.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
+	</div>
+<hr/>
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ employees.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ employee.value }}" target="_blank">{{ employees }}</a></div>
+	</div>
+<hr/>
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+{tab:{% if document.languagepostfix=="_ru" %}Приглашающая компания{% else %}Inviting Company{% endif %}}
+
+{{ tables.getrecord("ProjectCompany",project.value) }}
+
+{tab:Файлы}
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ speedletdocs.title }}</div>:<div class="detailsValue">{{ speedletdocs }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ speedletdocslink.title }}</div>:<div class="detailsValue">{{ speedletdocslink }}</div>
+	</div>
+  
+{tab:Регистр}
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ createdby.title }}</div>:<div class="detailsValue">{{ createdby }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>

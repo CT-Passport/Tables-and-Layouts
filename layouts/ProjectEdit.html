@@ -1,0 +1,61 @@
+<legend>
+{% if document.languagepostfix=='_ru' %}
+{% if record.id=='' %}
+Добавить новый проект
+{% else %}
+Редактировать проект
+{% endif %}
+{% else %}
+{% if record.id=='' %}
+Add new project
+{% else %}
+Edit project
+{% endif %}
+{% endif %}
+</legend>
+
+<div class="form-horizontal">
+{{ html.goback() }}
+	<div class="control-group">
+		<div class="control-label">{{ status.title }}</div><div class="controls">{{ status.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ company.title }}</div><div class="controls">{{ company.edit("",'onchange="companyChange()"') }}</div>
+	</div>  
+  
+	<div class="control-group">
+		<div class="control-label">{{ name.title }}</div><div class="controls">{{ name.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ startdate.title }}</div><div class="controls">{{ startdate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ enddate.title }}</div><div class="controls">{{ enddate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ location.title }}</div><div class="controls">{{ location.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ projectsites.title }}</div><div class="controls">{{ projectsites.edit }}</div>
+	</div>  
+  
+	<div class="control-group">
+		<div class="control-label">{{ contractors.title }}</div><div class="controls">{{ contractors.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ contactperson.title }}</div><div class="controls">{{ contactperson.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

@@ -1,0 +1,60 @@
+<legend>{{ table.title }}</legend>
+
+{% set personId = "" %}
+{% set whereList = url.getstringanddecode("where")|split(" and ") %}
+{% for where in whereList %}
+{% set w = where|split("=") %}
+{% if w[0] == "person" %}
+{% set personId = w[1] %}
+{% endif %}
+{% endfor %}
+
+<div style="float:right;">{{ html.recordcount }}</div>
+{% if personId != "" %}
+<div style="float:left;"><a href="/index.php?option=com_customtables&view=edititem&returnto={{ url.base64 }}&Itemid=679&person={{ personId }}" id="ctToolBarAddNew64" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить" title="Добавить"></a></div>
+{% endif %}
+
+<div class="datagrid">
+
+  <div class="searchBox">
+  <div>{{ html.search("person") }}</div>
+  <div>{{ html.search("visatermdays") }}</div>
+  <div>{{ html.search("visatype") }}</div>
+  <div>{{ html.search("visitpurpose") }}</div>
+  <div>{{ html.search("invcompanyname") }}</div>
+<div>{{ html.searchbutton() }}</div>
+</div>
+
+<table>
+<thead><tr>
+<th>{{ html.batch("checkbox") }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Полное имя{% else %}Full name{% endif %}</th>
+<th>{{ issuedate.title }}</th>
+<th>{{ visatermdays.title }}</th>
+<th>{{ multiplicity.title }}</th>
+<th>{{ visatype.title }}</th>
+<th>{{ visitpurpose.title }}</th>
+<th>{{ invcompanyname.title }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ html.toolbar("checkbox") }}</td>
+<td><a href='{{ record.link(true) }}'>{{ person }}</a></td>  
+<td>{{ issuedate("Y-m-d") }}</td>
+<td>{{ visatermdays }}</td>
+<td>{{ multiplicity }}</td>
+<td>{{ visatype }}</td>
+<td>{{ visitpurpose }}</td>
+<td>{{ invcompanyname }}</td>
+
+<td>{{ html.toolbar("edit","delete") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>
