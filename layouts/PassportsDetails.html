@@ -1,0 +1,140 @@
+{{ html.goback() }}
+
+{tab:Персональная информация}
+<div class="form-horizontal">
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ person.title }}</div>:<div class="detailsValue">{{ person }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ birthdate.title }}</div>:<div class="detailsValue">{{ birthdate }}</div>
+	</div>  
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ gender.title }}</div>:<div class="detailsValue">{{ gender }}</div>
+	</div>  
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ birthcountry.title }}</div>:<div class="detailsValue">{{ birthcountry }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ birthplace.title }}</div>:<div class="detailsValue">{{ birthplace }}</div>
+	</div>
+
+<hr/>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate("Y-m-d") }}</div>
+	</div>
+  
+</div>
+
+{tab:Сведения о паспорте}  
+<div class="form-horizontal">
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ primstatus.title }}</div>:<div class="detailsValue">{{ primstatus }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ validitystatus.title }}</div>:<div class="detailsValue">{{ validitystatus }}</div>
+	</div>	
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ ethnicity.title }}</div>:<div class="detailsValue">{{ ethnicity }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ namelinelat.title }}</div>:<div class="detailsValue">{{ namelinelat }}</div>
+	</div>
+ 
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ passtype.title }}</div>:<div class="detailsValue">{{ passtype }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ passportseries.title }}</div>:<div class="detailsValue">{{ passportseries }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ number.title }}</div>:<div class="detailsValue">{{ number }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ issuedate.title }}</div>:<div class="detailsValue">{{ issuedate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ expirationdate.title }}</div>:<div class="detailsValue">{{ expirationdate("Y-m-d") }}</div>
+	</div>
+</div>  
+
+{tab:Место выдачи и прописка}
+<div class="form-horizontal">
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ issuecountry.title }}</div>:<div class="detailsValue">{{ issuecountry }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ issueplace.title }}</div>:<div class="detailsValue">{{ issueplace }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ issueauthority.title }}</div>:<div class="detailsValue">{{ issueauthority }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ subdivisioncode.title }}</div>:<div class="detailsValue">{{ subdivisioncode }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ id.title }}</div>:<div class="detailsValue">{{ id }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ residenceaddress.title }}</div>:<div class="detailsValue">{{ residenceaddress }}</div>
+	</div>
+</div>
+  
+{tab:Дополнительные сведения}
+<div class="form-horizontal">
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ eyescolor.title }}</div>:<div class="detailsValue">{{ eyescolor }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ children.title }}</div>:<div class="detailsValue">{{ children }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ spouse.title }}</div>:<div class="detailsValue">{{ spouse }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ militaryduty.title }}</div>:<div class="detailsValue">{{ militaryduty }}</div>
+	</div>
+</div>
+  
+{tab:Фото и копия паспорта}
+<div class="form-horizontal">
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ personphoto.title }}</div>:<div class="detailsValue">{{ personphoto }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ passportphotocopy.title }}</div>:<div class="detailsValue">{{ passportphotocopy("","icon-filename-link",32,"_blank") }}</div>
+	</div>
+  
+<hr/>
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ externaldocuments.title }}</div>:<div class="controls">{{ externaldocuments }}</div>
+	</div>
+  
+	</div>
+
+{/tabs}

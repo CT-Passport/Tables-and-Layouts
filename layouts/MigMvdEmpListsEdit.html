@@ -1,0 +1,48 @@
+<legend>{{ table.title }}</legend>
+
+<div class="form-horizontal">
+	<div class="control-group">
+		<div class="control-label">{{ regnum.title }}</div><div class="controls">{{ regnum.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ submitdate.title }}</div><div class="controls">{{ submitdate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ status.title }}</div><div class="controls">{{ status.edit }}</div>
+	</div>
+
+	<hr/>
+{% if projectbatch.value == "" %}
+    <div class="control-group">
+      <div class="control-label">{{ projectbatch.title }}</div>
+      <div class="controls">{{
+        projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]])
+        }}
+      </div>
+    </div>
+{% else %}
+    <div class="control-label">{{ projectbatch.title }}: <b>{{ projectbatch }}</b></div>
+  
+  
+  	<div class="control-group">
+            <div class="control-label">{{ comment.title }}</div>
+            <div class="controls">{{ comment.edit }}</div>
+  </div>
+{% endif %}
+	
+
+</div>
+
+<input type="hidden" name="comes_changedby" value="{{ user.id }}" />
+
+{% if projectbatch.value == "" %}
+<div style="text-align:center;">{{ html.button("save","Далее","","btn btn-primary offset-md-") }} {{
+  html.button("cancel","","","btn btn-primary offset-md-") }}
+</div>
+{% else %}
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{
+  html.button("cancel","","","btn btn-primary offset-md-") }}
+</div>
+{% endif %}

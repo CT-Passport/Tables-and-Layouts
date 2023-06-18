@@ -1,0 +1,19 @@
+<legend>{{ table.title }}</legend>
+
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">Проект и {{ projsite.title }}</div><div class="controls">{{ projsite.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ batchnum.title }}</div><div class="controls">{{ batchnum.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ employees.title }}</div><div class="controls">{{ employees.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

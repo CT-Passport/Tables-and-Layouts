@@ -1,0 +1,66 @@
+{{ html.goback }}
+<h2>{% if document.languagepostfix=="_ru" %}Опись в МВД по работникам партии{% else %}Letter to MVD{% endif %}</h2>
+
+{tab:Детали}
+
+
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ ordnum.title }}</div>:<div class="detailsValue">{{ ordnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ regnum.title }}</div>:<div class="detailsValue">{{ regnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ submitdate.title }}</div>:<div class="detailsValue">{{ submitdate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
+	</div>
+
+<hr/>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+{tab:{% if document.languagepostfix=="_ru" %}Приглашающая компания{% else %}Inviting Company{% endif %}}
+
+{{ tables.getrecord("ProjectCompany",project.value) }}
+
+{tab:Файлы}
+  
+{tab:Регистр}
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ createdby.title }}</div>:<div class="detailsValue">{{ createdby }}</div>
+	</div>
+
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>
+
+{/tabs}

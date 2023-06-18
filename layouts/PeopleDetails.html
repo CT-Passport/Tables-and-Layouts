@@ -1,6 +1,7 @@
 {{ html.goback }}
 <legend>Информация о человеке</legend>
-
+<h4>{{ id.title }}: {{ id }}</h4>
+	
 {tab:Персональная информация}
 
 <div class="personalInfoBox">
@@ -58,4 +59,11 @@
 {tab:Должности}
 {{ tables.getrecords("CompanyEmployeeList",'person='~record.id) }}
 
+{tab:Документы}
+<a href="/documents-misc?view=edititem&person={{ record.id }}&returnto={{ url.base64 }}" id="ctToolBarAddNewDocument" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить документ" title="Добавить документ"> Добавить документ</a>
+
+<a href="/documents-misc?person={{ record.id }}&returnto={{ url.base64 }}" id="ctToolBarAddNewDocument" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" alt="Изменить / Удалить" title="Изменить / Удалить"> Изменить / Удалить</a>
+
+
+{{ tables.getrecords("DocumentsMisc","","person=" ~ record.id) }}
 {/tabs}
