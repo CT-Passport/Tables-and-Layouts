@@ -1,0 +1,73 @@
+<legend>Заявления в МВД на приглашение на въезд</legend>
+
+{tab:Детали}
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ regnum.title }}</div>:<div class="detailsValue">{{ regnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ submdate.title }}</div>:<div class="detailsValue">{{ submdate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
+	</div>
+ 
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ employee.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ employee }}</a></div>
+	</div>  
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ rusentrydate.title }}</div>:<div class="detailsValue">{{ rusentrydate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visaenddate.title }}</div>:<div class="detailsValue">{{ visaenddate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>
+
+{tab:DOCX MSWord Документ}
+
+{% set monthValue = tables.getrecord("projectName","id="~project.value) %}
+
+{% set newfile = phpword.setvalues("images/DocumentTemplates/Zayavlebie-V-MVD.docx",{'month':monthValue}) %}
+
+{% if newfile == null %}
+
+<p>Could not create the file</p>
+{% else %}
+
+<iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
+
+Path: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
+{% endif %}
+
+{/tabs}
