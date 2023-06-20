@@ -1,17 +1,22 @@
-<legend>{{ table.title }}</legend>
+{% set projectId = "" %}
+{% set whereList = url.getstringanddecode("where")|split(" and ") %}
+{% for where in whereList %}
+{% set w = where|split("=") %}
+{% if w[0] == "project" %}
+{% set projectId = w[1] %}
+{% endif %}
+{% endfor %}
 
 <div style="float:right;">{{ html.recordcount }}</div>
-<div style="float:left;">{{ html.add }}</div>
-
+{% if projectId != "" %}
+{% set projectName = tables.getrecord("ProjectName",projectId) %}
+<legend>{{ table.title }}<br/>{{ projectName }}</legend>
+<div style="float:left;"><a href="/8-partii-rabotnikov?view=edititem&returnto={{ url.base64 }}&project={{ projectId }}" id="ctToolBarAddNew64" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить" title="Добавить"></a></div>
+{% else %}
+<legend>{{ table.title }}</legend>
+{% endif %}
 
 <div class="datagrid">
-
-<div class="searchBox">
-  <div>{{ html.search("projsite") }}</div>
-  <div>{{ html.search("batchnum") }}</div>
-  <div>{{ html.search("employees") }}</div>
-<div>{{ html.searchbutton() }}</div>
-</div>
   
 <table>
 <thead><tr><th>{{ html.batch("checkbox") }}</th>

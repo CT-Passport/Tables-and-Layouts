@@ -1,4 +1,23 @@
-<legend>{{ table.title }}</legend>
+<legend>{% if record.id == "" %}Добавить Партию работников{% else %}Партию работников{% endif %}</legend>
+
+{% set projectId = "" %}
+  
+{% if record.id == "" %}
+{% set projectId = url.getint("project") %}
+{% set projectName = tables.getrecord("ProjectName",projectId) %}
+{% else %}
+{% set projectId = project.value %}
+{% set projectName = project %}
+{% endif %}
+  
+	{% if projectName == "" %}
+{{ html.message("Проект не указан или не найден.","Error") }}Проект не указан или не найден.
+{% else %}
+<input type="hidden" name="comes_project" value="{{ projectId }}" />
+
+<h4>{{ projectName }}</h4>
+
+{% endif %}
 
 <div class="form-horizontal">
 

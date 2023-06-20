@@ -1,6 +1,18 @@
 <legend>{{ table.title }}</legend>
+
+{% set projectId = "" %}
+{% set whereList = url.getstringanddecode("where")|split(" and ") %}
+{% for where in whereList %}
+{% set w = where|split("=") %}
+{% if w[0] == "project" %}
+{% set projectId = w[1] %}
+{% endif %}
+{% endfor %}
+
 <div style="float:right;">{{ html.recordcount }}</div>
-<div style="float:left;">{{ html.add }}</div>
+{% if projectId != "" %}
+<div style="float:left;"><a href="/7-proektnye-zony?view=edititem&returnto={{ url.base64 }}&project={{ projectId }}" id="ctToolBarAddNew64" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить" title="Добавить"></a></div>
+{% endif %}
 
 
 <div class="datagrid">
@@ -8,10 +20,7 @@
 <div class="searchBox">
   <div>{{ html.search("project") }}</div>
   <div>{{ html.search("name") }}</div>
-  <div>{{ html.search("location") }}</div>
-  <div>{{ html.search("contractors") }}</div>
-  <div>{{ html.search("employees") }}</div>
-<div>{{ html.searchbutton() }}</div>
+  <div>{{ html.searchbutton() }}</div>
 </div>
 
 <table>
@@ -19,8 +28,6 @@
 <th>{{ project.title }}</th>
 <th>{{ name.title }}</th>
 <th>{{ location.title }}</th>
-<th>{{ contractors.title }}</th>
-<th>{{ employees.title }}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></thead>
 
@@ -31,8 +38,6 @@
 <td><a href='{{ record.link(true) }}'>{{ project }}</a></td>
 <td>{{ name }}</td>
 <td>{{ location }}</td>
-<td>{{ contractors }}</td>
-<td>{{ employees }}</td>
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}

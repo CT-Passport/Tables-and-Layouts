@@ -49,5 +49,12 @@ let companyObject = document.getElementById("comes_company0");
                                      
 window.onload = function()
 	{
+let contactpersonValue = document.getElementById("comes_contactperson").value;
 		companyChange()
+                            
+setTimeout(() => {
+  document.getElementById("comes_contactperson").value = contactpersonValue;
+    document.getElementById("comes_contactperson0").value = contactpersonValue;
+}, 2000);
+                                     
 };

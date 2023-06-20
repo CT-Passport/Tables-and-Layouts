@@ -1,0 +1,47 @@
+{{ html.goback }}
+{tab:Проект}
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ company.title }}</div>:<div class="detailsValue">{{ company.layout("companyName") }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ name.title }}</div>:<div class="detailsValue">{{ name }}</div>
+	</div>  
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ startdate.title }}</div>:<div class="detailsValue">{{ startdate("Y-m-d") }}</div>
+	</div>
+ 
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ enddate.title }}</div>:<div class="detailsValue">{{ enddate("Y-m-d") }}</div>
+	</div>  
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ location.title }}</div>:<div class="detailsValue">{{ location }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ contactperson.title }}</div>:<div class="detailsValue">{{ contactperson.layout("employeeName") }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+<hr/>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">ID</div>:<div class="detailsValue">{{ record.id }}</div>
+	</div>
+{tab:Проектные зоны}
+{tab:Партии работников}
+{tab:Спорные кейсы}
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ cases.title }}</div>:<div class="detailsValue">{{ cases }}</div>
+	</div>
+{/tabs}

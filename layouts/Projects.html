@@ -38,7 +38,7 @@
 <td>{{ contactperson.layout("employeeName") }}</td>
   
 <td style="text-align:center;">
-  <a href="/index.php/7-proektnye-zony?where={{ ("projectsite=" ~ record.id) | base64encode }}" target="_blank">
+  <a href="/index.php/7-proektnye-zony?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
   <button class="btn btn-primary">{{ record.joincount("migprojectsites") }}</button>
   </a> 
 </td>
@@ -46,7 +46,7 @@
   <a href="/index.php/8-partii-rabotnikov?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
     <button class="btn btn-primary">{{ record.advancedjoin("count","migprojectbatches","_id","project","_id") }}</button></a>
 <td style="text-align:center;">
-  <a href="/index.php/5-2-spornye-kejsy-proekta?where={{ ("migprojectcases=" ~ record.id) | base64encode }}" target="_blank">
+  <a href="/index.php/5-2-spornye-kejsy-proekta?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
     <button class="btn btn-primary">{{ cases }}</button></a></td>
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>

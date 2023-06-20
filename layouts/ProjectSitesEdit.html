@@ -1,9 +1,25 @@
-<legend>{{ table.title }}</legend>
+<legend>{% if record.id == "" %}Добавить Зону Проекта{% else %}Редактировать Зону Проекта{% endif %}</legend>
+
+{% set projectId = "" %}
+  
+{% if record.id == "" %}
+{% set projectId = url.getint("project") %}
+{% set projectName = tables.getrecord("ProjectName",projectId) %}
+{% else %}
+{% set projectId = project.value %}
+{% set projectName = project %}
+{% endif %}
+  
+	{% if projectName == "" %}
+{{ html.message("Проект не указан или не найден.","Error") }}Проект не указан или не найден.
+{% else %}
+<input type="hidden" name="comes_project" value="{{ projectId }}" />
+{% endif %}
 
 <div class="form-horizontal">
 
 	<div class="control-group">
-		<div class="control-label">{{ project.title }}</div><div class="controls">{{ project.edit }}</div>
+<div class="control-label">{{ project.title }}: {% if projectName == "" %}{{ project.edit }}{% else %}<b>{{ projectName }}</b>{% endif %}</div>
 	</div>
 
 	<div class="control-group">
@@ -12,14 +28,6 @@
 
 	<div class="control-group">
 		<div class="control-label">{{ location.title }}</div><div class="controls">{{ location.edit }}</div>
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">{{ contractors.title }}</div><div class="controls">{{ contractors.edit }}</div>
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">{{ employees.title }}</div><div class="controls">{{ employees.edit }}</div>
 	</div>
 
 </div>
