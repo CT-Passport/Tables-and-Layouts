@@ -1,15 +1,20 @@
 <tr>
 <td style="width:auto;max-width:auto;"><a href="{{ record.link }}">{{ id }}</a></td>
 <td style="width:auto;max-width:auto;">
-  
   {% if isemployee.value == 1 %}
-  <b><a href="{{ record.link }}">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</a></b>
+  <b><a href="{{ record.link }}">{{ lastnamelat }} {{ firstnamelat }} {{ middlenamelat }}</a></b>
   {% else %}
-  <a href="{{ record.link }}">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</a>
+  <a href="{{ record.link }}">{{ lastnamelat }} {{ firstnamelat }} {{ middlenamelat }}</a>
+  {% endif %}
+</td>
+  
+<td style="width:auto;max-width:auto;">
+  {% if isemployee.value == 1 %}
+  <b><a href="{{ record.link }}">{{ lastnamerussubj }} {{ firstnamerussubj }} {{ middlenamerussubj }}</a></b>
+  {% else %}
+  <a href="{{ record.link }}">{{ lastnamerussubj }} {{ firstnamerussubj }} {{ middlenamerussubj }}</a>
   {% endif %}
   </td>
-  
-<td style="width:auto;max-width:auto;">{{ firstnamerussubj }} {{ middlenamerussubj }} {{ lastnamerussubj }}</td>
 <td>{{ dateofbirth("Y-m-d") }}</td>
   
 <td style="text-align:center;">

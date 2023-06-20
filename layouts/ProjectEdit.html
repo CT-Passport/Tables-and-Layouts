@@ -21,7 +21,7 @@ Edit project
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ company.title }}</div><div class="controls">{{ company.edit("",'onchange="companyChange()"') }}</div>
+		<div class="control-label">{{ company.title }}</div><div class="controls">{{ company.edit("",'onchange="companyChange()"',['companies','layout:companyName']) }}</div>
 	</div>  
   
 	<div class="control-group">
@@ -40,16 +40,18 @@ Edit project
 		<div class="control-label">{{ location.title }}</div><div class="controls">{{ location.edit }}</div>
 	</div>
 
+<!-- imposible to have it here
 <div class="control-group">
-		<div class="control-label">{{ projectsites.title }}</div><div class="controls">{{ projectsites.edit }}</div>
-	</div>  
-  
-	<div class="control-group">
-		<div class="control-label">{{ contractors.title }}</div><div class="controls">{{ contractors.edit }}</div>
+		<div class="control-label">{ projectsites.title }}</div><div class="controls">{ projectsites.edit }}</div>
 	</div>
+-->
+<!--
+	<div class="control-group">
+		<div class="control-label">{ contractors.title }}</div><div class="controls">{ contractors.edit }}</div>
+	</div>-->
   
 	<div class="control-group">
-		<div class="control-label">{{ contactperson.title }}</div><div class="controls">{{ contactperson.edit }}</div>
+		<div class="control-label">{{ contactperson.title }}</div><div class="controls">{{ contactperson.edit("","",['companyemployees','layout:employeeName']) }}</div>
 	</div>
 
 	<div class="control-group">
@@ -58,4 +60,4 @@ Edit project
 
 </div>
 
-<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

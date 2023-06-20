@@ -1,0 +1,230 @@
+<legend>Добавление или редактирование компании</legend>
+
+{tab:Наименование}
+
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamerus.title }}</div><div class="controls">{{ fullnamerus.edit }}</div>
+	</div>
+  
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamelat.title }}</div><div class="controls">{{ fullnamelat.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamenative.title }}</div><div class="controls">{{ fullnamenative.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamerus.title }}</div><div class="controls">{{ shortnamerus.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamelat.title }}</div><div class="controls">{{ shortnamelat.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamenative.title }}</div><div class="controls">{{ shortnamenative.edit }}</div>
+	</div>
+  
+</div>  
+
+{tab:Контактная информация}
+
+<div class="form-horizontal">
+ 
+	<div class="control-group">
+		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ phone1.title }}</div><div class="controls">{{ phone1.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email.title }}</div><div class="controls">{{ email.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email1.title }}</div><div class="controls">{{ email1.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ website.title }}</div><div class="controls">{{ website.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+</div>
+  
+{tab:Адрес}
+  
+<div class="form-horizontal">
+  
+	<div class="control-group">
+		<div class="control-label">{{ address.title }}</div><div class="controls">{{ address.edit("","",[["addrob","layout:FormalNameShortName","","","formalname","parent"]]) }}</div>{# ,["house","housenum"] #}
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ addressrus.title }}</div><div class="controls">{{ addressrus.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ addresslat.title }}</div><div class="controls">{{ addresslat.edit }}</div>
+	</div>
+ 
+	<div class="control-group">
+		<div class="control-label">{{ address1rus.title }}</div><div class="controls">{{ address1rus.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ address1lat.title }}</div><div class="controls">{{ address1lat.edit }}</div>
+	</div>
+  
+<hr/>
+  
+	<div class="control-group">
+		<div class="control-label">{{ addressoutsideofrussia.title }}</div><div class="controls">{{ addressoutsideofrussia.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ addressoutsideofrussia1.title }}</div><div class="controls">{{ addressoutsideofrussia1.edit }}</div>
+	</div>
+  
+</div>
+
+{tab:Регистрационные данные}
+	
+<div class="form-horizontal">
+
+<div class="control-group">
+		<div class="control-label">{{ ceo.title }}</div><div class="controls">{{ ceo.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ regnumber.title }}</div><div class="controls">{{ regnumber.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ taxnumber.title }}</div><div class="controls">{{ taxnumber.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ taxreasoncode.title }}</div><div class="controls">{{ taxreasoncode.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ estdate.title }}</div><div class="controls">{{ estdate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ activitycodes.title }}</div><div class="controls">{{ activitycodes.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ statisticscodes.title }}</div><div class="controls">{{ statisticscodes.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ mvdregnum.title }}</div><div class="controls">{{ mvdregnum.edit }}</div>
+	</div>
+  
+</div>
+{tab:Банковские счета}
+
+<h5>Банковский счет №1</h5>
+<hr/>
+
+<div class="form-horizontal">
+  
+	<div class="control-group">
+		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc1bank.edit }}</div></div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Номер счета</div><div class="controls">{{ bacc1accnumb.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Валюта</div><div class="controls">{{ bacc1currency.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc1corrbank.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc1corracc.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Свифт код</div><div class="controls">{{ bacc1swift.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc1misc.edit }}</div>
+	</div>
+  
+<br/><br/>
+
+<h5>Банковский счет №2</h5>
+<hr/>
+  
+<div class="control-group">
+		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc2bank.edit }}</div></div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Номер счета</div><div class="controls">{{ bacc2accnumb.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Валюта</div><div class="controls">{{ bacc2currency.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc2corrbank.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc2corracc.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Свифт код</div><div class="controls">{{ bacc2swift.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc2misc.edit }}</div>
+	</div>
+
+</div>
+
+{tab:Файлы}
+<div class="form-horizontal">
+
+<div class="control-group">
+		<div class="control-label">{{ documents.title }}</div><div class="controls">{{ documents.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ compcontracts.title }}</div><div class="controls">{{ compcontracts.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ shared.title }}</div><div class="controls">{{ shared.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ externalfiles.title }}</div><div class="controls">{{ externalfiles.edit }}</div>
+	</div>
+  
+</div>
+
+{/tabs}
+<br/>
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

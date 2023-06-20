@@ -1,0 +1,53 @@
+<legend>{% if record.id == "" %}Добавить сотрудника{% else %}Редактировать сотрудника{% endif %}</legend>
+
+{% set companyId = "" %}
+  
+{% if record.id == "" %}
+{% set companyId = url.getint("company") %}
+{% set companyName = tables.getrecord("companyName",companyId) %}
+<input type="text" name="comes_company" value="{{ companyId }}" style="visibility:hidden;" />
+{% else %}
+{% set companyId = company.value %}
+{% set companyName = company %}
+{% endif %}
+
+{% if companyName == "" %}
+<p>Компания не указана или не найдена.</p>
+{% endif %}
+
+<div class="form-horizontal">
+	<div class="control-group">
+		<div class="control-label">{{ person.title }}: <b>{{ companyName }}</b></div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","isemployee==1","firstnamerussubj"],"PeopleFullName") }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj"]) }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ phone1.title }}</div><div class="controls">{{ phone1.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email.title }}</div><div class="controls">{{ email.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email1.title }}</div><div class="controls">{{ email1.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

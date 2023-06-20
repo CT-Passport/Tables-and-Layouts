@@ -1,6 +1,8 @@
 function companyChange()
 {
 
+updateChildTableJoinField('contactperson', 'company','company');
+
 {% if document.languagepostfix  == '_ru' %}
 let projectLabel="Проект_";
 {% else %}
@@ -44,3 +46,8 @@ let companyObject = document.getElementById("comes_company0");
   }
                                      return false;
 }
+                                     
+window.onload = function()
+	{
+		companyChange()
+};

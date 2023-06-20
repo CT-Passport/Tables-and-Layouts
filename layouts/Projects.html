@@ -18,9 +18,8 @@
 <th>{{ startdate.title }}</th>
 <th>{{ enddate.title }}</th>
 <th>{{ location.title }}</th>
-<th>{{ projectsites.title }}</th> 
-<th>{{ contractors.title }} </th> 
 <th>{{ contactperson.title }}</th>
+<th>Проектные Зоны</th>
 <th>{% if document.languagepostfix=="_ru" %}Партии работников{% else %}Project batches{% endif %}</th>
   <th>{% if document.languagepostfix=="_ru" %}Спорные кейсы проекта{% else %}Project cases{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
@@ -35,14 +34,14 @@
 <td>{{ startdate("Y-m-d") }}</td>
 <td>{{ enddate("Y-m-d") }}</td>
 <td>{{ location }}</td>
+ 
+<td>{{ contactperson.layout("employeeName") }}</td>
+  
 <td style="text-align:center;">
   <a href="/index.php/7-proektnye-zony?where={{ ("projectsite=" ~ record.id) | base64encode }}" target="_blank">
   <button class="btn btn-primary">{{ record.joincount("migprojectsites") }}</button>
   </a> 
 </td>
-<td><ol>{{ contractors.layout("ContractorList") }}</ol></td>   	
- 
-  <td><ol>{{ contactperson.layout("EmployeeList") }}</ol></td>
 <td style="text-align:center;">
   <a href="/index.php/8-partii-rabotnikov?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
     <button class="btn btn-primary">{{ record.advancedjoin("count","migprojectbatches","_id","project","_id") }}</button></a>
