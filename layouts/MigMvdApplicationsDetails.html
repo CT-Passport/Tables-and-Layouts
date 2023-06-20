@@ -54,20 +54,4 @@
 		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
 	</div>
 
-{tab:DOCX MSWord Документ}
-
-{% set monthValue = tables.getrecord("projectName","id="~project.value) %}
-
-{% set newfile = phpword.setvalues("images/DocumentTemplates/Zayavlebie-V-MVD.docx",{'month':monthValue}) %}
-
-{% if newfile == null %}
-
-<p>Could not create the file</p>
-{% else %}
-
-<iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
-
-Path: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
-{% endif %}
-
 {/tabs}

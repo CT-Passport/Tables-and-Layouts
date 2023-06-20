@@ -13,8 +13,15 @@
 	
 {% if personName == "" %}
 {{ html.message("Человек не указан или не найден.","Error") }}Человек не указан или не найден.
+
+{% set PeopleBirthDate = '' %}
+{% set personGender = '' %}
 {% else %}
-<input type="text" name="comes_person" value="{{ personId }}" style="visibility:hidden;" />
+<input type="hidden" name="comes_person" value="{{ personId }}" style="visibility:hidden;" />
+
+{% set PeopleBirthDate = tables.getrecord("PeopleBirthDate",personId) %}
+{% set personGender = tables.getrecord("PeopleGenderValue",personId) %}
+
 {% endif %}
 {tab:Персональная информация}
 
@@ -24,13 +31,17 @@
 		<div class="control-label">{{ person.title }}: {% if personName == "" %}{{ person.edit }}{% else %}<b>{{ personName }}</b>{% endif %}</div>
 	</div>
   
-<div class="control-group">
-		<div class="control-label">{{ birthdate.title }}</div><div class="controls">{{ birthdate.edit }}</div>
-	</div>   
+{% if birthdate.value == '' %}
+<input type="hidden" name="comes_birthdate" value="{{ PeopleBirthDate }}" style="visibility:hidden;" />
+{% else %}
+<div class="control-group">{{ birthdate.title }}: <b>{{ PeopleBirthDate }}</b></div>
+{% endif %}
 
-<div class="control-group">
-		<div class="control-label">{{ gender.title }}</div><div class="controls">{{ gender.edit }}</div>
-	</div>   
+{% if gender.value == '' %}
+<input type="hidden" name="comes_gender" value="{{ personGender }}" style="visibility:hidden;" />
+{% else %}
+<div class="control-group">{{ gender.title }}: <b>{{ gender }}</b></div>
+{% endif %}
   
 <div class="control-group">
 		<div class="control-label">{{ birthcountry.title }}</div><div class="controls">{{ birthcountry.edit }}</div>
