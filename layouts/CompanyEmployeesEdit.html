@@ -1,11 +1,21 @@
-<legend>{% if record.id == "" %}Добавить сотрудника{% else %}Редактировать сотрудника{% endif %}</legend>
+{% set URLisMigrant = url.getint("ismigrant") %}
+<legend>
+  {% if URLisMigrant == "0" %}
+  {% if record.id == "" %}Добавить сотрудника{% else %}Редактировать сотрудника{% endif %}
+  {% else %}
+  {% if record.id == "" %}Добавить мигранта{% else %}Редактировать мигранта{% endif %}
+  {% endif %}
+</legend>
 
 {% set companyId = "" %}
-  
+
+
+<input type="hidden" name="comes_ismigrant" value="{{ URLisMigrant }}" />
+
 {% if record.id == "" %}
 {% set companyId = url.getint("company") %}
 {% set companyName = tables.getrecord("companyName",companyId) %}
-<input type="text" name="comes_company" value="{{ companyId }}" style="visibility:hidden;" />
+<input type="hidden" name="comes_company" value="{{ companyId }}" />
 {% else %}
 {% set companyId = company.value %}
 {% set companyName = company %}
@@ -17,13 +27,14 @@
 
 <div class="form-horizontal">
 	<div class="control-group">
-		<div class="control-label">{{ person.title }}: <b>{{ companyName }}</b></div>
+		<div class="control-label">{{ company.title }}: <b>{{ companyName }}</b></div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","isemployee==1","firstnamerussubj"],"PeopleFullName") }}</div>
+		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","isemployee==1","firstnamerussubj"],"PeopleFullName","add-person?ismigrant=" ~ URLisMigrant) }}</div>
 	</div>
-
+  
+{% if URLisMigrant == 0 %}
 	<div class="control-group">
 		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj"]) }}</div>
 	</div>
@@ -47,7 +58,7 @@
 	<div class="control-group">
 		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
 	</div>
-
+{% endif %}
 </div>
 
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

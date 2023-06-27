@@ -1,0 +1,26 @@
+{{ html.goback }}
+<legend>{% if document.languagepostfix=="_ru" %}Опись - Майкрософт Ворд Документ{% else %}An Application for MVD for an Entry Invitation - MS Word Document{% endif %}</legend>
+
+{% set monthValue = tables.getrecord("projectName","id="~project.value) %}
+
+
+{% set values = 
+{
+'OrdNum':ordnum,
+'RegNum':regnum,
+'Comment':comment,
+'Company':tables.getrecord("ProjectCompanyName",project.value)
+}
+%}
+
+{% set newfile = phpword.setvalues("images/DocumentTemplates/Opis-V-MVD.docx",values) %}
+
+{% if newfile == null %}
+
+<p>{% if document.languagepostfix=="_ru" %}Не возможно создать файл{% else %}Could not create the file{% endif %}</p>
+{% else %}
+
+<iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
+
+{% if document.languagepostfix=="_ru" %}Файл{% else %}File{% endif %}: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
+{% endif %}

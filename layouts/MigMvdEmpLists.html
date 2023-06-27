@@ -20,7 +20,9 @@
 <th>{{ submitdate.title }}</th>
 <th>{{ status.label(true) }}</th>
 <th>{{ project.title }}</th>
+<th>{{ projsite.title }}</th>
 <th>{{ projectbatch.title }}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></thead>
 
@@ -33,7 +35,10 @@
 <td>{{ submitdate("Y-m-d") }}</td>
 <td>{{ status }}</td>
 <td>{{ tables.getrecord("projectName",project.value) }}</td>
+<td>{{ tables.getrecord("projectsiteName",projsite.value) }}</td>
 <td>{{ projectbatch }}</td>
+<td style="text-align:center;"><a href="/index.php/opis-v-mvd?listing_id={{ record.id }}&returnto={{ url.base64 }}">
+  <img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a></td>
 <td>{{ html.toolbar("edit","publish","delete") }}</td>
 </tr>
 {% endblock %}
@@ -45,7 +50,9 @@
 <th>{{ submitdate.title }}</th>
 <th>{{ status.title }}</th>
 <th>{{ project.title }}</th>
+<th>{{ projsite.title }}</th>
 <th>{{ projectbatch.title }}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></tfoot>
   

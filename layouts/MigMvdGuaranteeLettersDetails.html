@@ -1,0 +1,62 @@
+{{ html.goback }}
+<legend>{{ table.title }}</legend>
+
+{tab:Детали}
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ regnum.title }}</div>:<div class="detailsValue">{{ regnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date }}</div>
+	</div>
+
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ submdate.title }}</div>:<div class="detailsValue">{{ submdate }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
+	</div>  
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ employee.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ employee.value }}" target="_blank">{{ employee }}</a></div>
+	</div>  
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+<hr/>
+<div class="control-group">
+		<div class="control-label">{{ gletdocslink.title }}</div><div class="controls">{{ gletdocslink.edit }}</div>
+	</div>
+  
+{tab:Регистр}
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>
+
+{/tabs}

@@ -38,7 +38,7 @@
 <td>{{ ornum }}</td>
 <td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо # {% else %}Letter #{% endif %} {{ regnum }}</a></td>
 <td>{{ date("Y-m-d") }}</td>
-<td>{{ tables.getrecord("ProjectCompanyName","_id="~project.value) }}<hr/>
+<td>{{ tables.getrecord("ProjectCompanyNameLink","_id="~project.value) }}<hr/>
 <a href='{{ record.link(true) }}'>{{ tables.getrecord("projectName","_id="~project.value) }}</a></td>
 <td>{{ tables.getrecord("projectsiteName","_id="~projsite.value) }}</td>
 <td>{{ projectbatch }}</td>

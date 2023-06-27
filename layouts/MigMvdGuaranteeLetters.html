@@ -1,0 +1,70 @@
+<legend>{{ table.title }}</legend>
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<div style="text-align:center;"></div>
+<div class="datagrid">
+  
+<div class="searchBox">
+  <div>{{ html.search("projectbatch","","reload") }}</div>
+  <div>{{ html.search("project","","reload") }}</div>
+  <div>{{ html.search("person","","reload") }}</div>
+<div>{{ html.searchbutton() }}</div>
+</div>  
+
+<table>
+<thead><tr>
+<th class="short">{{ html.batch("checkbox") }}</th>
+<th>{{ regnum.title }}</th>
+<th>{{ date.label(true) }}</th>
+<th>{{ status.label(true) }}</th>
+<th>{{ submdate.label(true) }}</th>
+<th>{{ project.title }}<br>
+{{ projsite.title }}</th>
+<th>{{ projectbatch.label(true) }}</th>
+<th>{{ employee.label }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td style="text-align:center;">{{ html.toolbar("checkbox") }}</td>
+<td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо # {% else %}Letter #{% endif %}{{ regnum }}</a></td>
+<td>{{ date("Y-m-d") }}</td>
+<td>{{ status }}</td>
+<td>{{ submdate("Y-m-d") }}</td>
+  <td><b>{{ tables.getrecord("projectName","id="~project.value) }}</b><br>
+{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</td>
+<td>{{ projectbatch }}</td>
+<td><a href="/index.php/garantijnye-pisma-vybor-rabotnika?batch={{ projectbatch.value }}&listing_id={{ record.id }}">
+    <button class="btn btn-primary">Add / Edit Employee
+
+  {% if employee.value != 0 %}
+      <br/><b>{{ employee }}</b>
+  {% endif %}
+  
+  </button></a></td>
+<td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+  
+<tfoot><tr>
+<th class="short">{{ html.batch('delete') }}</th>
+<th>{{ regnum.title }}</th>
+<th>{{ date.title }}</th>
+<th>{{ status.title }}</th>
+<th>{{ submdate.title }}</th>
+<th>{{ project.title }}<br>
+{{ projsite.title }}</th>
+<th>{{ projectbatch.title }}</th>
+<th>{{ employee.label }}</th>
+<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
+</tr></tfoot>
+  
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

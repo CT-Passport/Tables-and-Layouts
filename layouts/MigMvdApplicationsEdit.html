@@ -1,0 +1,30 @@
+<legend>Создание заявления в МВД на приглашение на въезд</legend>
+
+<div class="form-horizontal">
+	<div class="control-group">
+		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ submdate.title }}</div><div class="controls">{{ submdate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
+	</div>  
+
+	<div class="control-group">
+		<div class="control-label">{{ rusentrydate.title }}</div><div class="controls">{{ rusentrydate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ visaenddate.title }}</div><div class="controls">{{ visaenddate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

@@ -23,27 +23,50 @@
 
 <hr/>
 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+<div class="control-group detailsLine">
+		<div class="detailsLabel">Компания</div>:<div class="detailsValue">{{ tables.getrecord("ProjectCompanyNameLink",project.value) }}</div>
 	</div>
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName",project.value) }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName",projsite.value) }}</div>
 	</div>
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
 	</div>
+<hr/>
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ visamultiplicity.title }}</div>:<div class="detailsValue">{{ visamultiplicity }}</div>
+	</div>
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
 	</div>
+{tab:{% if document.languagepostfix=="_ru" %}Работники{% else %}Employees{% endif %}}
+{{ url.set("visamultiplicity",visamultiplicity.value) }}
+<table>
+<thead><tr>
+<th>№ п/п</th>
+<th>Гражданство</th>
+<th>Ф.И.О.</th>
+<th>Кратность</th>
+</tr></thead>
+<tbody>
+{{ projectbatch.layout("MigMvdEmpListsEmployees","published","") }}
+</tbody>
+</table>
+
+
 {tab:{% if document.languagepostfix=="_ru" %}Приглашающая компания{% else %}Inviting Company{% endif %}}
 
 {{ tables.getrecord("ProjectCompany",project.value) }}
 
 {tab:Файлы}
-  
+  Таблица Партии Работнико не содержит ссулку на папку с фалами.
 {tab:Регистр}
   
 	<div class="control-group detailsLine">

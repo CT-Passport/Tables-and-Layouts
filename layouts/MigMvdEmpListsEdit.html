@@ -23,13 +23,22 @@
       </div>
     </div>
 {% else %}
-    <div class="control-label">{{ projectbatch.title }}: <b>{{ projectbatch }}</b></div>
+  
+  <div class="control-label">Компания: <b>{{ tables.getrecord("ProjectCompanyNameLink",project.value) }}</b></div>
+  <div class="control-label">{{ project.title }}: <b>{{ tables.getrecord("projectName",project.value) }}</b></div>
+  <div class="control-label">{{ projsite.title }}: <b>{{ tables.getrecord("projectsiteName",projsite.value) }}</b></div>
+  <div class="control-label">{{ projectbatch.title }}: <b>{{ projectbatch }}</b></div>
+  
   
   
   	<div class="control-group">
-            <div class="control-label">{{ comment.title }}</div>
-            <div class="controls">{{ comment.edit }}</div>
+            <div class="control-label">{{ visamultiplicity.title }}</div><div class="controls">{{ visamultiplicity.edit }}</div>
   </div>
+  
+  <div class="control-group">
+            <div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+  </div>
+    
 {% endif %}
 	
 
