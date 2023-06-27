@@ -1,0 +1,49 @@
+<legend>{{ table.title }}</legend>
+{tab:Персональная информация}
+
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">{{ loinum.title }}</div><div class="controls">{{ loinum.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+{% if projectbatch.value == "" %}
+<div class="control-group">
+		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
+</div>
+{% else %}
+<div class="control-group"><div class="control-label">{{ projectbatch.title }}: <b>{{ projectbatch }}</b></div></div>
+  
+{% if employee.value == "" %}
+<div class="control-group">
+		<div class="control-label">{{ employee.title }}</div><div class="controls">{{ employee.edit("","",[["companyemployees","person","published","_id="~projectbatch.layout("ProjectBatchEmployeesIDs")]]) }}</div>
+	</div>
+{% else %}
+<div class="control-group"><div class="control-label">{{ employee.title }}: <b>{{ employee }}</b></div></div>
+
+<div class="control-group">
+		<div class="control-label">{{ passport.title }}</div><div class="controls">{{ passport.edit("","",[["passports","layout:passportSelectLayout","published","person="~employee.getvalue("person")]]) }}</div>
+</div>
+	{% endif %}
+	  
+{% endif %}
+
+</div>
+  
+{tab:Файлы}
+
+<div class="control-group detailsLine">
+		{{ folderlink.title }}<br/>{{ folderlink.edit }}
+	</div>
+
+{/tabs}
+
+{% if projectbatch.value == "" or employee.value == "" or passport.value == "" %}
+<div style="text-align:center;">{{ html.button("save","Далее","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
+{% else %}
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
+{% endif %}

@@ -6,7 +6,7 @@
 {% set projectName = tables.getrecord("ProjectName",projectId) %}
 {% else %}
 {% set projectId = project.value %}
-{% set projectName = project %}
+{% set projectName = tables.getrecord("ProjectName",project.value) %}
 {% endif %}
 
 {% if projectName == "" %}
@@ -15,6 +15,10 @@
 
 {% endif %}
 
+
+{{companyID}}
+
+<h4>{{ tables.getrecord("CompanyNameByProject","_id="~projectId) }}</h4>
 <h4>{{ projectName }}</h4>
 
 <div class="form-horizontal">
@@ -30,7 +34,8 @@
 
     <div class="control-group">
         <div class="control-label">{{ employees.title }}</div>
-        <div class="controls">{{ employees.edit }}</div>
+        {% set companyID = tables.getrecord("ProjectCompanyID","_id="~projectId) %}
+        <div class="controls">{{ employees.edit("","","","employeeName","","company="~companyID~" and ismigrant=1") }}</div>
     </div>
 
 </div>

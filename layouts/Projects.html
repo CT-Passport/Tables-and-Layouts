@@ -29,7 +29,7 @@
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td><b>{{ company }}</b><br><a href='{{ record.link(true) }}'>{{ name }}</a></td>
+<td><b>{{ company.layout("companyName") }}</b><br><a href='{{ record.link(true) }}'>{{ name }}</a></td>
 <td>{% if status.value == 1 %}Активен{% else %}Не активен{% endif %}</td>
 <td>{{ startdate("Y-m-d") }}</td>
 <td>{{ enddate("Y-m-d") }}</td>
@@ -59,7 +59,7 @@
     <button class="btn btn-primary">{{ projectBatchesCount }}</button></a>
   {% else %}
   <a href="/8-partii-rabotnikov?view=edititem&returnto={{ url.base64 }}&project={{ record.id }}">
-  <button class="btn btn-primary" style="background-color:lightgray;">+{{ projectBatchesCount }}</button>
+  <button class="btn btn-primary" style="background-color:lightgray;">+</button>
   </a>
   {% endif %}
   

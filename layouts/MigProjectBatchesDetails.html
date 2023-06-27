@@ -1,0 +1,38 @@
+{{ html.goback }}
+<legend>Партия Работников</legend>
+
+<div class="form-horizontal">
+
+{% set projectName = tables.getrecord("ProjectName",project.value) %}
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">Компания</div>:<div class="detailsValue">{{ tables.getrecord("CompanyNameByProject","_id="~project.value) }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">Проект</div>:<div class="detailsValue">{{ projectName }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ projsite }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ batchnum.title }}</div>:<div class="detailsValue">{{ batchnum }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ employees.title }}</div>:<div class="detailsValue">{{ employees.layout("employeeList") }}</div>
+	</div>
+
+<hr/>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">ID</div>:<div class="detailsValue">{{ record.id }}</div>
+	</div>  
+  
+</div>

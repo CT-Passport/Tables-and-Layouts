@@ -1,1 +1,1 @@
-<a href="/index.php/kompanii?view=details&listing_id={{ company.value }}" target="_blank">{{ fullnamelat }}</a>
+{% if fullnamelat != "" %}{{ fullnamelat }}{% endif %}{% if fullnamerus != "" %}{% if fullnamelat != "" %} - {% endif %}{{ fullnamerus }}{% endif %}

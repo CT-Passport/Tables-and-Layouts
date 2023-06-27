@@ -1,27 +1,41 @@
-<legend>{{ table.title }}</legend>
+{% set URLisMigrant = url.getcmd("ismigrant") %}
 
-{tab:Персональная информация}
+<legend>{{ table.title }} - 
+{% if URLisMigrant == "1" %}
+{% if record.id =="" %}Добавить мигранта{% else %}Редактировать мигранта{% endif %}
+{% else %}
+{% if record.id =="" %}Добавить сотрудника компании{% else %}Редактировать сотрудника компании{% endif %}
+{% endif %}
+</legend><br>
 
-<div class="form-horizontal">
+
+
+{{ task }}
+<input type="hidden" name="comes_ismigrant" value="{{ URLisMigrant }}" />
 
 <div class="control-group">
 		<div class="control-label">{{ isemployee.label }}</div><div class="controls">{{ isemployee.edit }}</div>
 	</div>
 
-  <hr/>
+{% if URLisMigrant == "0" %}
+  
+<hr/>
 
 <div class="control-group">
 		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
 	</div>
 
-<div class="control-group">
-		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
-	</div>
-  
 	<div class="control-group">
 		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
 	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
+	</div>
 	 
+{% endif %}
+  
+{% if URLisMigrant == "1" or URLisMigrant == "" %}
 <hr/>
   
 <div class="control-group">
@@ -35,7 +49,7 @@
 	<div class="control-group">
 		<div class="control-label">{{ firstnamelat.label }}</div><div class="controls">{{ firstnamelat.edit }}</div>
 	</div>
-
+  
 <hr/>
 	
 	<div class="control-group">
@@ -48,7 +62,7 @@
   
 	<div class="control-group">
 		<div class="control-label">{{ firstnamenative.label }}</div><div class="controls">{{ firstnamenative.edit }}</div>
-	</div>
+	</div>  
   
 <hr/>
   
@@ -59,12 +73,8 @@
 	<div class="control-group">
 		<div class="control-label">{{ gender.label }}</div><div class="controls">{{ gender.edit }}</div>
 	</div>  
-  
-</div>
 
-{tab:Сведения о гражданстве и национальности}
-
-<br>
+<hr/>
 
 <div class="form-horizontal">
   
@@ -73,13 +83,10 @@
 	</div>  
   
 	<div class="control-group">
-		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit("","",[],null,"ethnicity-edit") }}</div>
-	</div>
-
-</div>
-
-{/tabs}
-
-<br>
+		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit }}</div>
+	</div>  
+{% endif %}
+ 
+<br/>
 
 <div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
