@@ -1,0 +1,35 @@
+<div class="form-horizontal">
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ company.title }}</div>:<div class="detailsValue"><a href="/index.php/kompanii?view=details&listing_id={{ company.value }}" target="_blank">{{ company }}</a></div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ person.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ person.layout("PersonName") }}</a></div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ position.title }}</div>:<div class="detailsValue">{{ position }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ phone.title }}</div>:<div class="detailsValue">{{ phone }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ phone1.title }}</div>:<div class="detailsValue">{{ phone1 }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ email.title }}</div>:<div class="detailsValue">{{ email }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ email1.title }}</div>:<div class="detailsValue">{{ email1 }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+</div>

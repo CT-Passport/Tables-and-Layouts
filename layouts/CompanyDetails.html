@@ -1,0 +1,245 @@
+<legend>О компании</legend>
+
+{tab:Наименование}
+
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamerus.title }}</div><div class="controls">{{ fullnamerus }}</div>
+	</div>
+  
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamelat.title }}</div><div class="controls">{{ fullnamelat }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ fullnamenative.title }}</div><div class="controls">{{ fullnamenative }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamerus.title }}</div><div class="controls">{{ shortnamerus }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamelat.title }}</div><div class="controls">{{ shortnamelat }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ shortnamenative.title }}</div><div class="controls">{{ shortnamenative }}</div>
+	</div>
+  
+</div>  
+
+{tab:Контактная информация}
+
+<div class="form-horizontal">
+ 
+	<div class="control-group">
+		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ phone1.title }}</div><div class="controls">{{ phone1 }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email.title }}</div><div class="controls">{{ email }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ email1.title }}</div><div class="controls">{{ email1 }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ website.title }}</div><div class="controls">{{ website }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment }}</div>
+	</div>
+  <hr/>
+  <b>Сотрудники компании</b>
+  
+{{ tables.getrecords("CompanyEmployeesList",'company='~record.id) }}
+
+</div>
+  
+{tab:Адрес}
+  
+<div class="form-horizontal">
+  
+	<div class="control-group">
+		<div class="control-label">{{ address.title }}</div><div class="controls">{{ address }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ addressrus.title }}</div><div class="controls">{{ addressrus }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ addresslat.title }}</div><div class="controls">{{ addresslat }}</div>
+	</div>
+ 
+	<div class="control-group">
+		<div class="control-label">{{ address1rus.title }}</div><div class="controls">{{ address1rus }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ address1lat.title }}</div><div class="controls">{{ address1lat }}</div>
+	</div>
+  
+<hr/>
+  
+	<div class="control-group">
+		<div class="control-label">{{ addressoutsideofrussia.title }}</div><div class="controls">{{ addressoutsideofrussia }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ addressoutsideofrussia1.title }}</div><div class="controls">{{ addressoutsideofrussia1 }}</div>
+	</div>
+  
+</div>
+
+{tab:Регистрационные данные}
+	
+<div class="form-horizontal">
+
+<div class="control-group">
+		<div class="control-label">{{ ceo.title }}</div><div class="controls"><a href="/ru/ludi?view=details&listing_id={{ ceo.getvalue('person') }}" target="_blank">{{ ceo }}</a></div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ regnumber.title }}</div><div class="controls">{{ regnumber }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ taxnumber.title }}</div><div class="controls">{{ taxnumber }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ taxreasoncode.title }}</div><div class="controls">{{ taxreasoncode }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ estdate.title }}</div><div class="controls">{{ estdate }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ activitycodes.title }}</div><div class="controls">{{ activitycodes }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ statisticscodes.title }}</div><div class="controls">{{ statisticscodes }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ mvdregnum.title }}</div><div class="controls">{{ mvdregnum }}</div>
+	</div>
+  
+</div>
+{tab:Банковские счета}
+
+<h5>Банковский счет №1</h5>
+<hr/>
+
+<div class="form-horizontal">
+  
+	<div class="control-group">
+		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc1bank }}</div></div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Номер счета</div><div class="controls">{{ bacc1accnumb }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Валюта</div><div class="controls">{{ bacc1currency }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc1corrbank }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc1corracc }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Свифт код</div><div class="controls">{{ bacc1swift }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc1misc }}</div>
+	</div>
+  
+<br/><br/>
+
+<h5>Банковский счет №2</h5>
+<hr/>
+  
+<div class="control-group">
+		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc2bank }}</div></div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Номер счета</div><div class="controls">{{ bacc2accnumb }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Валюта</div><div class="controls">{{ bacc2currency }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc2corrbank }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc2corracc }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Свифт код</div><div class="controls">{{ bacc2swift }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc2misc }}</div>
+	</div>
+
+</div>
+
+{tab:Файлы}
+<div class="form-horizontal">
+
+<div class="control-group">
+  
+		<div class="control-label">{{ documents.title }}<div id="esFileBoxIcon9x3" class="toolbarIcons"><a href="/ru/kompanii?view=editfiles&establename=companies&fileboxname=documents&listing_id={{ record.id }}&returnto={{ url.base64 }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/filemanager.png" alt="Папка с документами компании" title="Папка с документами компании" border="0"></a></div></div><div class="controls">{{ documents("","icon-filename-link",32) }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ compcontracts.title }}<div id="esFileBoxIcon9x3" class="toolbarIcons"><a href="/ru/kompanii?view=editfiles&establename=companies&fileboxname=compcontracts&listing_id={{ record.id }}&returnto={{ url.base64 }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/filemanager.png" alt="Скан-копии договоров компании" title="Скан-копии договоров компании" border="0"></a></div></div><div class="controls">{{ compcontracts }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ shared.title }}<div id="esFileBoxIcon9x8" class="toolbarIcons"><a href="/ru/kompanii?view=editfiles&establename=companies&fileboxname=shared&listing_id={{ record.id }}&returnto={{ url.base64 }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/filemanager.png" alt="Разные файлы без ограничения по доступу" title="Разные файлы без ограничения по доступу" border="0"></a></div></div><div class="controls">{{ shared }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ externalfiles.title }}</div><div class="controls">{{ externalfiles }}</div>
+	</div>
+  
+</div>
+
+{tab:Регистр}
+
+<div class="control-group">
+		<div class="control-label">{{ dbentry.title }}</div><div class="controls">{{ dbentry }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ upddate.title }}</div><div class="controls">{{ upddate }}</div>
+	</div>
+
+{/tabs}
+<br/>
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

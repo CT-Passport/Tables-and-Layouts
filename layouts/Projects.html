@@ -37,17 +37,43 @@
  
 <td>{{ contactperson.layout("employeeName") }}</td>
   
+{% set projectSitesCount = record.joincount("migprojectsites") %}
 <td style="text-align:center;">
-  <a href="/index.php/7-proektnye-zony?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
-  <button class="btn btn-primary">{{ record.joincount("migprojectsites") }}</button>
+  {% if projectSitesCount > 0 %}
+  <a href="/7-proektnye-zony?where={{ ("project=" ~ record.id) | base64encode }}">
+  <button class="btn btn-primary">{{ projectSitesCount }}</button>
   </a> 
+  {% else %}
+  <a href="/7-proektnye-zony?view=edititem&returnto={{ url.base64 }}&project={{ record.id }}">
+  <button class="btn btn-primary" style="background-color:lightgray;">+</button>
+  </a>
+  {% endif %}
 </td>
+
+{% set projectBatchesCount = record.count("migprojectbatches","project="~record.id) %}
 <td style="text-align:center;">
-  <a href="/index.php/8-partii-rabotnikov?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
-    <button class="btn btn-primary">{{ record.advancedjoin("count","migprojectbatches","_id","project","_id") }}</button></a>
+  {% if projectSitesCount > 0 %}
+  
+  {% if projectBatchesCount > 0 %}
+    <a href="/8-partii-rabotnikov?where={{ ("project=" ~ record.id) | base64encode }}">
+    <button class="btn btn-primary">{{ projectBatchesCount }}</button></a>
+  {% else %}
+  <a href="/8-partii-rabotnikov?view=edititem&returnto={{ url.base64 }}&project={{ record.id }}">
+  <button class="btn btn-primary" style="background-color:lightgray;">+{{ projectBatchesCount }}</button>
+  </a>
+  {% endif %}
+  
+
+  {% endif %}
+</td>
+  
 <td style="text-align:center;">
-  <a href="/index.php/5-2-spornye-kejsy-proekta?where={{ ("project=" ~ record.id) | base64encode }}" target="_blank">
-    <button class="btn btn-primary">{{ cases }}</button></a></td>
+  {% if projectSitesCount > 0 %}
+  <a href="/index.php/5-2-spornye-kejsy-proekta?where={{ ("project=" ~ record.id) | base64encode }}">
+    <button class="btn btn-primary">{{ cases }}</button></a>
+  {% endif %}
+</td>
+
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}

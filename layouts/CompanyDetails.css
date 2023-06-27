@@ -1,0 +1,16 @@
+.detailsLine div{
+display:inline-block;
+}
+
+.detailsLabel{
+width:300px;
+}
+
+.detailsValue{
+margin-left:10px;
+font-weight:bold;
+}
+
+.control-label{
+font-weight:bold;
+}

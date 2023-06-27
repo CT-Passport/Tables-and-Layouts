@@ -1,4 +1,4 @@
-<legend>{% if record.id == "" %}Добавить Партию работников{% else %}Партию работников{% endif %}</legend>
+<legend>{% if record.id == "" %}Добавить Партию работников{% else %}Редактировать партию работников{% endif %}</legend>
 
 {% set projectId = "" %}
 {% if record.id == "" %}
@@ -12,7 +12,9 @@
 {% if projectName == "" %}
     {{ html.message("Проект не указан или не найден.","Error") }}Проект не указан или не найден.
 {% else %}
-<input type="hidden" name="comes_project" value="{{ projectId }}"/>
+
+{% endif %}
+
 <h4>{{ projectName }}</h4>
 
 <div class="form-horizontal">
@@ -33,8 +35,5 @@
 
 </div>
 
-<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{
-    html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary
-    offset-md-") }}
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}
 </div>
-{% endif %}

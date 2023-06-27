@@ -1,18 +1,33 @@
 {% set companyId = "" %}
+{% set isMigrant = "" %}
+
 {% set whereList = url.getstringanddecode("where")|split(" and ") %}
 {% for where in whereList %}
 {% set w = where|split("=") %}
 {% if w[0] == "company" %}
 {% set companyId = w[1] %}
 {% endif %}
+
+{% if w[0] == "ismigrant" %}
+{% set isMigrant = w[1] %}
+{% endif %}
+
+
 {% endfor %}
 
+{{ html.goback(nul,"","","/ru/kompanii") }}
+
+{% if isMigrant == 1 %}
+<legend>Мигранты</legend><br>
+{% else %}
 <legend>{{ table.title }}</legend><br>
+{% endif %}
+
 <div style="float:right;">{{ html.recordcount }}</div>
 
 {% if companyId != "" %}
 <div style="float:left;"><a
-        href="/index.php?option=com_customtables&view=edititem&returnto={{ url.base64 }}&Itemid=701&company={{ companyId }}"
+        href="/sotrudniki-kompanij?view=edititem&company={{ companyId }}&ismigrant={{ isMigrant }}&returnto={{ url.base64 }}"
         id="ctToolBarAddNew64" class="toolbarIcons"><img
         src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить сотрудника"
         title="Добавить сотрудника"></a></div>
@@ -20,14 +35,8 @@
 
 <div class="datagrid">
     <div class="searchBox">
-        <div style="display:inline-block;">{{ html.search("company") }}</div>
-        <div style="display:inline-block;">{{ html.search("person") }}</div>
-        <div style="display:inline-block;">{{ html.search("position") }}</div>
-        <div style="display:inline-block;">{{ html.search("phone") }}</div>
-        <div style="display:inline-block;">{{ html.search("phone1") }}</div>
-        <div style="display:inline-block;">{{ html.search("email") }}</div>
-        <div style="display:inline-block;">{{ html.search("email1") }}</div>
-        <div style="display:inline-block;">{{ html.search("comment") }}</div>
+        <div style="display:inline-block;">{{ html.search("company","","reload") }}</div>
+        <div style="display:inline-block;">{{ html.search("person","","reload") }}</div>
         <div style="display:inline-block;">{% if document.languagepostfix == "_ru" %}{{ html.searchbutton ("Поиск") }}{%
             else %}{{ html.searchbutton ("Search") }}{% endif %}
         </div>
@@ -58,7 +67,7 @@
             <td>{{ html.toolbar("checkbox") }}</td>
             <td>{{ record.id }}</td>
             <td><a href='{{ record.link(true) }}'>{{ company }}</a></td>
-            <td><a href='ludi?view=details&listing_id={{ person.value }}'>{{ person }}</a></td>
+            <td><a href='ludi?view=details&listing_id={{ person.value }}'>{{ person.layout("PersonName") }}</a></td>
             <td>{{ position }}</td>
             <td>{{ phone }}</td>
             <td>{{ phone1 }}</td>

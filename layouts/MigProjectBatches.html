@@ -32,7 +32,7 @@
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-  <td><b>{{ tables.getrecord("CompanyNameByProject","_id="~project) }}</b><br><a href='{{ record.link(true) }}'>{{ tables.getvalue("migprojects","name","_id="~project) }}</a></td>
+<td><b>{{ tables.getrecord("CompanyNameByProject","_id="~project) }}</b><br><a href='{{ record.link(true) }}'>{{ tables.getvalue("migprojects","name","_id="~project) }}</a></td>
 <td>{{ projsite }}</td>
 <td>{{ batchnum }}</td>
 <td>{{ date("Y-m-d") }}</td>
