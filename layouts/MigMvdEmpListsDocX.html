@@ -13,7 +13,23 @@
 }
 %}
 
-{% set newfile = phpword.setvalues("images/DocumentTemplates/Opis-V-MVD.docx",values) %}
+{{ url.set("visamultiplicity",visamultiplicity.value) }}
+{% set theTable = '
+<table>
+<thead><tr>
+<th>№ п/п</th>
+<th>Гражданство</th>
+<th>Ф.И.О.</th>
+<th>Кратность</th>
+</tr></thead>
+<tbody>
+' ~ projectbatch.layout("MigMvdEmpListsEmployees","published","") ~ '
+</tbody>
+</table>' %}
+
+*{{ theTable }}*
+
+% set newfile = phpword.setvalues("images/DocumentTemplates/Opis-V-MVD.docx",values) %}
 
 {% if newfile == null %}
 
