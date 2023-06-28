@@ -4,15 +4,6 @@
 {% set monthValue = tables.getrecord("projectName","id="~project.value) %}
 
 
-{% set values = 
-{
-'OrdNum':ordnum,
-'RegNum':regnum,
-'Comment':comment,
-'Company':tables.getrecord("ProjectCompanyName",project.value)
-}
-%}
-
 {{ url.set("visamultiplicity",visamultiplicity.value) }}
 {% set theTable = '
 <table>
@@ -27,9 +18,17 @@
 </tbody>
 </table>' %}
 
-*{{ theTable }}*
+{% set values = 
+{
+'OrdNum':ordnum,
+'RegNum':regnum,
+'Comment':comment,
+'Company':tables.getrecord("ProjectCompanyName",project.value),
+'Table':theTable
+}
+%}
 
-% set newfile = phpword.setvalues("images/DocumentTemplates/Opis-V-MVD.docx",values) %}
+{% set newfile = phpword.setvalues("images/DocumentTemplates/Opis-V-MVD.docx",values) %}
 
 {% if newfile == null %}
 
