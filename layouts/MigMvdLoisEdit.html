@@ -1,19 +1,8 @@
 <legend>{{ table.title }}</legend>
-{tab:Персональная информация}
-
-<div class="form-horizontal">
-
-	<div class="control-group">
-		<div class="control-label">{{ loinum.title }}</div><div class="controls">{{ loinum.edit }}</div>
-	</div>
-  
-<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
 
 {% if projectbatch.value == "" %}
 <div class="control-group">
-		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
+		<div class="control-label">{{ projectbatch.label }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
 </div>
 {% else %}
 <div class="control-group"><div class="control-label">{{ projectbatch.title }}: <b>{{ projectbatch }}</b></div></div>
@@ -28,22 +17,34 @@
 <div class="control-group">
 		<div class="control-label">{{ passport.title }}</div><div class="controls">{{ passport.edit("","",[["passports","layout:passportSelectLayout","published","person="~employee.getvalue("person")]]) }}</div>
 </div>
-	{% endif %}
+
+<div class="control-group">
+		<div class="control-label">{{ loinum.title }}</div><div class="controls">{{ loinum.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+	<hr/>
+<div class="control-group">
+		<div class="control-label">{{ folderlink.title }}</div><div class="controls">{{ folderlink.edit }}</div>
+</div>
+<div class="control-group detailsLine">
+		{{ files.title }}<br/>{{ files.edit }}
+	</div>
+
+{% endif %}
 	  
 {% endif %}
 
-</div>
-  
-{tab:Файлы}
+<hr/>
+<br/>
 
-<div class="control-group detailsLine">
-		{{ folderlink.title }}<br/>{{ folderlink.edit }}
-	</div>
-
-{/tabs}
 
 {% if projectbatch.value == "" or employee.value == "" or passport.value == "" %}
-<div style="text-align:center;">{{ html.button("save","Далее","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
+<div style="text-align:center;">
+  Нажмите Далее, что бы сохранить форму и продолжить заполнять остальные поля.<br/>
+  {{ html.button("save","Далее","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
 {% else %}
 <div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
 {% endif %}

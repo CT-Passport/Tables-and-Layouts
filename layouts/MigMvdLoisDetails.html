@@ -1,0 +1,59 @@
+{{ html.goback }}
+<h3>Приглашение, полученное из МВД</h3>
+{tab:Персональная информация}
+<div class="form-horizontal">
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ loinum.title }}</div>:<div class="detailsValue">{{ loinum }}</div>
+	</div>
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">Местоположения проекта</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projsite.value) }}</div>
+	</div>
+  
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ employee.title }}</div>:<div class="detailsValue">{{ employee.layout("CompanyEmployeeFullName") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ passport.title }}</div>:<div class="detailsValue">{{ passport }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+	</div>
+
+</div>
+
+{tab:Файлы}
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ folderlink.title }}</div>:<div class="detailsValue">{{ folderlink }}</div>
+	</div>
+<hr/>
+<div class="control-group detailsLine">
+<div class="detailsValue">{{ files.edit }}</div>
+	</div>
+		
+{tab:Регистр}
+<div class="form-horizontal">
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate("Y-m-d") }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate("Y-m-d") }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
+	</div>
+  
+</div>
+
+{/tabs}

@@ -12,11 +12,11 @@
 	</div>  
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName","id="~project.value) }}</div>
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectName",project.value) }}</div>
 	</div>
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</div>
+		<div class="detailsLabel">{{ projsite.title }}</div>:<div class="detailsValue">{{ tables.getrecord("projectsiteName",projectsite.value) }}</div>
 	</div>
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
@@ -86,4 +86,3 @@
 
 
 </div>
-

@@ -1,0 +1,6 @@
+{
+"passportseries": "{{ passportseries ~ number }}",
+"issuecountry": "{{ issuecountry }}",
+"citizenshipGenitive": "{{ issuecountry.get("namerusgen") }}",
+"birthDate": "{{ birthdate("d.m.Y") }}"
+}

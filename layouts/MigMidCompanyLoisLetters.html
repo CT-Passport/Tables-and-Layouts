@@ -18,7 +18,9 @@
 {% if document.languagepostfix=="_ru" %}Проектная зона{% else %}Project site{% endif %}</th> 
 <th>{{ projectbatch.label }}</th>   
 <th>{{ status.label(true) }}</th>
-<th>Employee</th>
+
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Работник{% else %}Employee{% endif %}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></thead>
 
@@ -30,18 +32,46 @@
 <td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо #{% else %}Letter #{% endif %} {{ record.id }}</a></td>
 <td>{{ date("Y-m-d") }}</td>
 <td>{{ submdate("Y-m-d") }}</td>
-<td>{{ tables.getrecord("projectName","id="~project.value) }}<br>
-{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</td>
+<td><b>{{ tables.getrecord("projectName",project.value) }}</b> ({{project.value}})<br>
+{{ tables.getrecord("projectsiteName",projectsite.value) }}</td>
 <td>{{ projectbatch }}</td>
 <td>{{ status }}</td>
-<td><a href="pisma-priglasheniya-v-konsulstvo-rf?view=edititem&batch={{ projectbatch.value }}&listing_id={{ record.id }}">
-    <button class="btn btn-primary">Add / Edit Employee
-
-  {% if employee.value != 0 %}
-      <br/><b>{{ employee }}</b>
-  {% endif %}
+<td>
   
-  </button></a></td>
+ 
+  
+  {% if projectbatch.value != "" %}
+  
+  <a href="pisma-priglasheniya-v-konsulstvo-rf?view=edititem&batch={{ projectbatch.value }}&listing_id={{ record.id }}">
+    
+  {% if employee.value == "" %}
+<button class="btn btn-primary" style="background-color:lightgray;">{% if document.languagepostfix=="_ru" %}Выбрать работника{% else %}Select Employee{% endif %}</button>
+  {% else %}
+    
+    {% if passport.value == "" %}
+  <button class="btn btn-primary" style="background-color:lightgray;">{% if document.languagepostfix=="_ru" %}Выбрать паспорт работника{% else %}Select Employee's Passport{% endif %}</button>
+    {% else %}
+    
+    
+    {% if rescountry.value == "" %}
+    <button class="btn btn-primary" style="background-color:lightgray;">{% if document.languagepostfix=="_ru" %}Выбрать страну{% else %}Select Employee's Country{% endif %}</button>
+    {% else %}<button class="btn btn-primary">{{ employee }}<br/>{% if document.languagepostfix=="_ru" %}Паспорт{% else %}Passport{% endif %} {{ passport.get("passportseriesnumber") }}</button>  {% endif %} 
+    
+    
+  {% endif %}  
+    
+  {% endif %}
+  </a>
+  
+  {% endif %}
+ 
+  
+
+</td>
+  
+<td style="text-align:center;"><a href="/index.php/pismo-priglashenie-v-konsulstvo-rf-za-granitsej?listing_id={{ record.id }}&returnto={{ url.base64 }}">
+  <img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a></td>
+  
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}

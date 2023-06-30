@@ -1,0 +1,50 @@
+{{ table.title }}
+
+{{ html.goback }}
+<legend>{% if document.languagepostfix=="_ru" %}Письмо-приглашение в консульство РФ за границей - 
+ Ворд Документ{% else %}Invitation Application - MS Word Document{% endif %}</legend>
+
+{% set monthValue = tables.getrecord("projectName","id="~project.value) %}
+
+{% set personId = employee.getvalue("person") %}
+
+{% set passport =tables.getrecord("PassportJSON","person="~personId) | json_decode %}
+{% set person =tables.getrecord("EmployeeJSON",employee.value) | json_decode %}
+{% set company =tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
+
+{% set values = 
+{
+'regnum':regnum,
+'date':date("d.m.Y"),
+'comment':comment,
+'company':company.fullnamerus | base64decode,
+'companyDirector':company.Director,
+'companyOGRN':company.OGRN,
+'companyINN':company.INN,
+'companyAddress':company.Address,
+'companyLegalAddress':company.LegalAddress,
+'namerus':person.nameRus,
+'namelat':person.nameLat,
+'gender':person.genderNameRus,
+'genderShort':person.genderCitizenShipsShort,
+'citizenship':passport.issuecountry,
+'citizenshipGenitive':passport.citizenshipGenitive,
+'passport':passport.passportseries,
+'birthDate':passport.birthDate,
+'visaType':visatype.get("typesingledat")|lower,
+'visaMaxDates':visamultiplicity.get("termdays"),
+'rusEntryPurpose':rusentrypurpose|lower
+}
+%}
+
+{% set newfile = phpword.setvalues("images/DocumentTemplates/Invitation-Application.docx",values) %}
+
+{% if newfile == null %}
+
+<p>{% if document.languagepostfix=="_ru" %}Не возможно создать файл{% else %}Could not create the file{% endif %}</p>
+{% else %}
+
+<iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
+
+{% if document.languagepostfix=="_ru" %}Файл{% else %}File{% endif %}: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
+{% endif %}
