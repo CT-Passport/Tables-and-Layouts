@@ -1,0 +1,31 @@
+<legend>{{ table.title }}</legend>
+
+{tab:Детали}
+
+	<div class="control-group">
+		<div class="control-label">{{ status.title }}</div><div class="controls">{{ status.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ project.title }}</div><div class="controls">{{ project.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ startdate.title }}</div><div class="controls" style="font-weight:bold;">{{ startdate.edit }}</div>
+	</div>  
+
+	<div class="control-group">
+		<div class="control-label">{{ enddate.title }}</div><div class="controls">{{ enddate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ name.title }}</div><div class="controls">{{ name.edit }}</div>
+	</div>
+
+{tab:{{ essence.title }}}
+			{{ essence.edit("","","100%") }}
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
+
+<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

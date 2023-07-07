@@ -13,7 +13,7 @@
   
 <table>
 <thead><tr><th>{{ html.batch("checkbox") }}</th>
-<th>{{ company.title }}<br>{{ name.title }}</th>
+<th>{{ name.title }}</th>
 <th>{{ status.title }}</th>
 <th>{{ startdate.title }}</th>
 <th>{{ enddate.title }}</th>
@@ -29,7 +29,7 @@
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td><b>{{ company.layout("companyName") }}</b><br><a href='{{ record.link(true) }}'>{{ name }}</a></td>
+<td><a href='{{ record.link(true) }}'>{{ name }}</a></td>
 <td>{% if status.value == 1 %}Активен{% else %}Не активен{% endif %}</td>
 <td>{{ startdate("Y-m-d") }}</td>
 <td>{{ enddate("Y-m-d") }}</td>

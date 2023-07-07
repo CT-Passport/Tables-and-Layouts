@@ -1,0 +1,35 @@
+{tab:Детали}
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ project }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ startdate.title }}</div>:<div class="detailsValue">{{ startdate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ enddate.title }}</div>:<div class="detailsValue">{{ enddate("Y-m-d") }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ name.title }}</div>:<div class="detailsValue">{{ name }}</div>
+	</div>
+
+{tab:{{ essence.title }}}
+			{{ essence }}
+{tab:{{ comment.title }}}
+{{ comment }}
+{tab:Регистр}
+<div class="control-group detailsLine">
+		<div class="detailsLabel">ID</div>:<div class="detailsValue">{{ record.id }}</div>
+	</div>
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.label }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
+	</div>
+
+{/tabs}

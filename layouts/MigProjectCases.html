@@ -1,49 +1,40 @@
 <legend>{{ table.title }}</legend>
-
 <div style="float:right;">{{ html.recordcount }}</div>
 <div style="float:left;">{{ html.add }}</div>
 
 <div class="datagrid">
 
 <div class="searchBox">
-  <div>{{ html.search("contractor1") }}</div>
-  <div>{{ html.search("contractor2") }}</div>
-  <div>{{ html.search("contractor3") }}</div>
+  <div>{{ html.search("status") }}</div>
+  <div>{{ html.search("project") }}</div>
   <div>{{ html.search("name") }}</div>
 <div>{{ html.searchbutton() }}</div>
 </div>
   
 <table>
 <thead><tr><th>{{ html.batch("checkbox") }}</th>
-<th>{{ record.label }}</th>
-<th>{{ number.title }}</th>
-<th>{{ contractor1.title }}</th>
-<th>{{ contractor2.title }}</th>
-<th>{{ contractor3.title }}</th>
-<th>{{ date.title }}</th>
+<th>{{ project.title }}</th>  
+<th>{{ status.title }}</th>
+<th>{{ startdate.title }}</th>
+<th>{{ enddate.title }}</th>
 <th>{{ name.title }}</th>
 <th>{{ essence.title }}</th>
 <th>{{ comment.title }}</th>
-<th>{{ file.title }}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></thead>
-
 
 <tbody>
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td>{{ record.id }}</td>
-<td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Договор №{% else %}Contract #{% endif %} {{ number }}</a></td>
-<td>{{ contractor1 }}</td>
-<td>{{ contractor2 }}</td>
-<td>{{ contractor3 }}</td>
-<td>{{ date("Y-m-d") }}</td>
+<td><a href='{{ record.link(true) }}'>{{ project }}</a></td>
+<td>{% if status.value == 1 %}Активен{% else %}Не активен{% endif %}</td>
+<td>{{ startdate("Y-m-d") }}</td>
+<td>{{ enddate("Y-m-d") }}</td>
 <td>{{ name }}</td>
 <td>{{ essence }}</td>
 <td>{{ comment }}</td>
-<td>{{ file("","icon-filename-link",32) }}</td>
-<td>{{ html.toolbar("edit","delete","filebox") }}</td>
+<td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}
 </tbody>

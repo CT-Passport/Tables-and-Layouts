@@ -19,23 +19,9 @@
 		<div class="control-label">{{ ismigrant.title }}</div><div class="controls">{{ ismigrant.edit }}</div>
 	</div>
 
-  <hr/>
-{% if ismigrant.value == "0" or ismigrant.value == "" %}
-
-<div class="control-group">
-		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
-	</div>
-
-<div class="control-group">
-		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
-	</div>
-  
-	<div class="control-group">
-		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
-	</div>
-	 
-{% else %}
 <hr/>
+{% if ismigrant.value == "1" or ismigrant.value == "" %}
+
 
 <div class="control-group">
 		<div class="control-label">{{ lastnamelat.label }}</div><div class="controls">{{ lastnamelat.edit }}</div>
@@ -50,6 +36,20 @@
 	</div>
 
 <hr/>
+
+<div class="control-group">
+		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
+	</div>
+  
+<hr/>
 	
 	<div class="control-group">
 		<div class="control-label">{{ lastnamenative.label }}</div><div class="controls">{{ lastnamenative.edit }}</div>
@@ -62,20 +62,21 @@
 <div class="control-group">
 		<div class="control-label">{{ middlenamenative.label }}</div><div class="controls">{{ middlenamenative.edit }}</div>
 	</div>
-
-<hr/>
+{% else %}
 
 <div class="control-group">
 		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
 	</div>
-  
+
 <div class="control-group">
 		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
 	</div>
-
+  
 <div class="control-group">
 		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
 	</div>
+	 
+
 	
 	{% endif %}
   

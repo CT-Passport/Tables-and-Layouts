@@ -58,15 +58,16 @@
 		<div class="control-label">{{ website.title }}</div><div class="controls">{{ website.edit }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
 
 </div>
   
 {tab:Адрес}
-  
+
 <div class="form-horizontal">
+  
+<div class="control-group">
+		<div class="control-label">{{ zipcode.title }}</div><div class="controls">{{ zipcode.edit }}</div>
+	</div>
   
 	<div class="control-group">
 		<div class="control-label">{{ address.title }}</div><div class="controls">{{ address.edit("","",[["addrob","layout:FormalNameShortName","","","formalname","parent"]]) }}</div>{# ,["house","housenum"] #}
@@ -99,6 +100,7 @@
 	<div class="control-group">
 		<div class="control-label">{{ addressoutsideofrussia1.title }}</div><div class="controls">{{ addressoutsideofrussia1.edit }}</div>
 	</div>
+
   
 </div>
 
@@ -166,6 +168,10 @@
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc1corracc.edit }}</div>
 	</div>
 
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc1bik.edit }}</div>
+	</div>
+  
 	<div class="control-group">
 		<div class="control-label">Свифт код</div><div class="controls">{{ bacc1swift.edit }}</div>
 	</div>
@@ -199,6 +205,10 @@
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc2corracc.edit }}</div>
 	</div>
 
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc2bik.edit }}</div>
+	</div>
+  
 	<div class="control-group">
 		<div class="control-label">Свифт код</div><div class="controls">{{ bacc2swift.edit }}</div>
 	</div>
@@ -209,6 +219,8 @@
 
 </div>
 
+{tab:Комментарий}
+{{ comment.edit("","","100%") }}
 {tab:Файлы}
 <div class="form-horizontal">
 

@@ -55,11 +55,8 @@
 		<div class="control-label">{{ website.title }}</div><div class="controls">{{ website }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment }}</div>
-	</div>
-  <hr/>
-  <b>Сотрудники компании</b>
+<hr/>
+<b>Сотрудники компании</b>
   
 {{ tables.getrecords("CompanyEmployeesList",'company='~record.id) }}
 
@@ -68,6 +65,10 @@
 {tab:Адрес}
   
 <div class="form-horizontal">
+  
+<div class="control-group">
+		<div class="control-label">{{ zipcode.title }}</div><div class="controls">{{ zipcode }}</div>
+	</div>
   
 	<div class="control-group">
 		<div class="control-label">{{ address.title }}</div><div class="controls">{{ address }}</div>
@@ -164,6 +165,10 @@
 	<div class="control-group">
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc1corracc }}</div>
 	</div>
+  
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc1bik }}</div>
+	</div>
 
 	<div class="control-group">
 		<div class="control-label">Свифт код</div><div class="controls">{{ bacc1swift }}</div>
@@ -197,6 +202,10 @@
 	<div class="control-group">
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc2corracc }}</div>
 	</div>
+  
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc1bik }}</div>
+	</div>
 
 	<div class="control-group">
 		<div class="control-label">Свифт код</div><div class="controls">{{ bacc2swift }}</div>
@@ -207,6 +216,9 @@
 	</div>
 
 </div>
+
+{tab:Комментарий}
+{{ comment }}
 
 {tab:Файлы}
 <div class="form-horizontal">
