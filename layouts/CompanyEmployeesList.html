@@ -1,0 +1,23 @@
+<div class="datagrid">
+
+<table>
+<thead><tr>
+  <th style="width:auto;min-width:auto;max-width:auto;text-align:left;">{{ person.title }}</th>
+  <th>{{ position.title }}</th>
+  <th>{{ phone.title }}</th>
+  <th>{{ email.title }}</th>
+  <th>{{ comment.title }}</th>
+</tr></thead>
+<tbody>
+{% block record %}
+<tr>
+<td style="width:auto;min-width:auto;max-width:auto;"><a href='/ru/ludi?view=details&listing_id={{ person.value }}' target="_blank">{{ person }}</a></td>
+<td>{{ position }}</td>
+<td>{{ phone }}{% if phone1!="" %}<br/>{{ phone1 }}{% endif %}</td>
+<td>{{ email }}{% if email1!="" %}<br/>{{ email1 }}{% endif %}</td>
+<td>{{ comment }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+</div>

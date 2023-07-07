@@ -1,14 +1,26 @@
 <legend>{{ table.title }}</legend>
 
+<legend>{{ table.title }} - 
+
+{% if record.id != "" %}
+
+  {% if ismigrant.value == "1" %}Редактировать мигранта{% else %}Редактировать сотрудника компании{% endif %}
+{% else %}
+  Добавить мигранта или сотрудника компании
+{% endif %}
+</legend><br>
+
+
 {tab:Персональная информация}
 
 <div class="form-horizontal">
 
 <div class="control-group">
-		<div class="control-label">{{ isemployee.label }}</div><div class="controls">{{ isemployee.edit }}</div>
+		<div class="control-label">{{ ismigrant.title }}</div><div class="controls">{{ ismigrant.edit }}</div>
 	</div>
 
   <hr/>
+{% if ismigrant.value == "0" or ismigrant.value == "" %}
 
 <div class="control-group">
 		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
@@ -22,18 +34,19 @@
 		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
 	</div>
 	 
+{% else %}
 <hr/>
-  
+
 <div class="control-group">
 		<div class="control-label">{{ lastnamelat.label }}</div><div class="controls">{{ lastnamelat.edit }}</div>
 	</div>
-
+  
 <div class="control-group">
-		<div class="control-label">{{ middlenamelat.label }}</div><div class="controls">{{ middlenamelat.edit }}</div>
+		<div class="control-label">{{ firstnamelat.label }}</div><div class="controls">{{ firstnamelat.edit }}</div>
 	</div>
   
-	<div class="control-group">
-		<div class="control-label">{{ firstnamelat.label }}</div><div class="controls">{{ firstnamelat.edit }}</div>
+<div class="control-group">
+		<div class="control-label">{{ middlenamelat.label }}</div><div class="controls">{{ middlenamelat.edit }}</div>
 	</div>
 
 <hr/>
@@ -41,14 +54,30 @@
 	<div class="control-group">
 		<div class="control-label">{{ lastnamenative.label }}</div><div class="controls">{{ lastnamenative.edit }}</div>
 	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ firstnamenative.label }}</div><div class="controls">{{ firstnamenative.edit }}</div>
+	</div>
   
 <div class="control-group">
 		<div class="control-label">{{ middlenamenative.label }}</div><div class="controls">{{ middlenamenative.edit }}</div>
 	</div>
-  
-	<div class="control-group">
-		<div class="control-label">{{ firstnamenative.label }}</div><div class="controls">{{ firstnamenative.edit }}</div>
+
+<hr/>
+
+<div class="control-group">
+		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
 	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
+	</div>
+	
+	{% endif %}
   
 <hr/>
   

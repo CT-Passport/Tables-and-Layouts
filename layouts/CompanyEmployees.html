@@ -36,7 +36,7 @@
 <div class="datagrid">
     <div class="searchBox">
         <div style="display:inline-block;">{{ html.search("company","","reload") }}</div>
-        <div style="display:inline-block;">{{ html.search("person","","reload") }}</div>
+        <div style="display:inline-block;">{{ html.search("ismigrant","","reload") }}</div>
         <div style="display:inline-block;">{% if document.languagepostfix == "_ru" %}{{ html.searchbutton ("Поиск") }}{%
             else %}{{ html.searchbutton ("Search") }}{% endif %}
         </div>
@@ -46,14 +46,12 @@
         <thead>
         <tr>
             <th>{{ html.batch("checkbox") }}</th>
-            <th>#</th>
             <th>{{ company.title }}</th>
             <th>{{ person.title }}</th>
             <th>{{ position.title }}</th>
-            <th>{{ phone.title }}</th>
-            <th>{{ phone1.title }}</th>
-            <th>{{ email.title }}</th>
-            <th>{{ email1.title }}</th>
+            <th>{{ phone.title }}<br/>{{ email.title }}</th>
+            <th>Дата Рождения</th>
+            <th>{{ ismigrant.title }}</th>
             <th>{{ comment.title }}</th>
             <!--<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Письма из МВД{% else %}Letters from MVD{% endif %}</th> -->
 
@@ -65,14 +63,26 @@
         {% block record %}
         <tr>
             <td>{{ html.toolbar("checkbox") }}</td>
-            <td>{{ record.id }}</td>
             <td><a href='{{ record.link(true) }}'>{{ company }}</a></td>
-            <td><a href='ludi?view=details&listing_id={{ person.value }}'>{{ person.layout("PersonName") }}</a></td>
-            <td>{{ position }}</td>
-            <td>{{ phone }}</td>
-            <td>{{ phone1 }}</td>
-            <td>{{ email }}</td>
-            <td>{{ email1 }}</td>
+            <td><a href='ludi?view=details&listing_id={{ person.value }}'>
+              
+              {% if ismigrant.value == 0 %}
+              <img src="/images/flags/ru.png" style="margin-right:10px;" /><b>{{ person.layout("PersonName") }}</b>
+              {% else %}
+              {{ person.layout("PersonName") }}
+              {% endif %}
+              
+              
+              </a>
+          
+          </td>
+            <td>{{ position.get("namerussubj") }}</td>
+            <td>{{ phone }}{% if phone1 != '' %}, {{ phone1 }}{% endif %}<br/>{{ email }}{% if email1 != '' %}, {{ email1 }}{% endif %}</td>
+            <td>{{ person.get("dateofbirth",["Y-m-d"])}}</td>
+            <td style="text-align:center;">
+              
+              {% if ismigrant.value == 1 %}<b>{{ ismigrant }}</b>{% endif %}
+            </td>
             <td>{{ comment }}</td>
             <!--<td style="text-align:center;">
               <a href="/index.php/dobavit-poluchennoe-iz-mvd-pismo-v-bazu-dannykh?where={ ("employee=" ~ record.id) | base64encode }}" target="_blank">
@@ -83,6 +93,22 @@
         </tr>
         {% endblock %}
         </tbody>
+
+      <tfoot>
+        <tr>
+            <th></th>
+            <th>{{ company.title }}</th>
+            <th>{{ person.title }}</th>
+            <th>{{ position.title }}</th>
+            <th>{{ phone.title }}<br/>{{ email.title }}</th>
+            <th>Дата Рождения</th>
+            <th>{{ ismigrant.title }}</th>
+            <th>{{ comment.title }}</th>
+            <!--<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Письма из МВД{% else %}Letters from MVD{% endif %}</th> -->
+
+            <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
+        </tr>
+        </tfoot>
     </table>
 
 </div>

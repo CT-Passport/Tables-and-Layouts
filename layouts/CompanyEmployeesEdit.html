@@ -1,4 +1,12 @@
+{% if url.getcmd("ismigrant") != '' %}
 {% set URLisMigrant = url.getint("ismigrant") %}
+{% else %}
+
+{% if record.id != "" %}
+{% set URLisMigrant = person.getvalue("ismigrant") %}
+{% endif %}
+
+{% endif %}
 <legend>
   {% if URLisMigrant == "0" %}
   {% if record.id == "" %}Добавить сотрудника{% else %}Редактировать сотрудника{% endif %}
@@ -7,10 +15,11 @@
   {% endif %}
 </legend>
 
+<input type="hidden" name="comes_ismigrant" value="{{ URLisMigrant }}" />
+
 {% set companyId = "" %}
 
 
-<input type="hidden" name="comes_ismigrant" value="{{ URLisMigrant }}" />
 
 {% if record.id == "" %}
 {% set companyId = url.getint("company") %}
@@ -31,14 +40,15 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","isemployee==1","firstnamerussubj"],"PeopleFullName","add-person?ismigrant=" ~ URLisMigrant) }}</div>
+		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","ismigrant=="~URLisMigrant,"firstnamerussubj"],"PeopleFullName","add-person?ismigrant=" ~ URLisMigrant) }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj","published",null,"namerussubj"],null,"dobavit-dolzhnost") }}</div>
 	</div>
   
 {% if URLisMigrant == 0 %}
-	<div class="control-group">
-		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj"]) }}</div>
-	</div>
-
+	
 	<div class="control-group">
 		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone.edit }}</div>
 	</div>
