@@ -16,10 +16,6 @@
 	</div>
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ text.title }}</div>:<div class="detailsValue">{{ text }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ status.title }}</div>:<div class="detailsValue">{{ status }}</div>
 	</div>
 <hr/>
@@ -36,17 +32,20 @@
 	</div>
 <hr/>
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ employees.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ employee.value }}" target="_blank">{{ employees }}</a></div>
+      
+      <!--<a href="/index.php/ludi?view=details&listing_id={ employee.value }}" target="_blank"></a>-->
+		<div class="detailsLabel">{{ employees.title }}</div>:<div class="detailsValue">{{ employees }}</div>
 	</div>
-<hr/>
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
-	</div>
+
 
 {tab:{% if document.languagepostfix=="_ru" %}Приглашающая компания{% else %}Inviting Company{% endif %}}
 
 {{ tables.getrecord("ProjectCompany",project.value) }}
 
+{tab:{{ text.title }}}
+{{ text }}
+{tab:{{ comment.title }}}
+{{ comment }}
 {tab:Файлы}
 
 <div class="control-group detailsLine">
@@ -68,4 +67,6 @@
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
-	</div>
+	</div>  
+
+{/tabs}

@@ -1,0 +1,20 @@
+<table>
+<thead>
+<tr>
+<th>Компания<br>Проект</th>
+<th>{{ batchnum.title }}</th>
+<th>{{ date.title }}</th>
+<th>{{ employees.title }}</th>
+</tr></thead>
+
+<tbody>
+{% block record %}
+<tr>
+<td><b>{{ tables.getrecord("CompanyNameByProject","_id="~project) }}</b><br><a href='{{ record.link(true) }}' target="_blank">{{ tables.getvalue("migprojects","name","_id="~project) }}</a></td>
+<td>{{ batchnum }}</td>
+<td>{{ date("Y-m-d") }}</td>
+<td><ol>{{ employees.layout("EmployeeList","published","") }}</ol></td>
+</tr>
+{% endblock %}
+</tbody>
+</table>

@@ -1,6 +1,6 @@
 <legend>Создание письма об ускорении</legend>
 
-<div class="form-horizontal">
+{tab:Детали}
 
 	<div class="control-group">
 		<div class="control-label">{{ ornum.title }}</div><div class="controls">{{ ornum.edit }}</div>
@@ -9,19 +9,12 @@
 	<div class="control-group">
 		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
 	</div>
-
-	<div class="control-group">
-		<div class="control-label">{{ text.title }}</div><div class="controls">{{ text.edit }}</div>
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
-
+  
 	<div class="control-group">
 		<div class="control-label">{{ status.title }}</div><div class="controls">{{ status.edit }}</div>
 	</div>
 
+<hr/>
 {% if projectbatch.value == '' %}
 	<div class="control-group">
 		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
@@ -42,15 +35,29 @@ fullname") }}</b></div>
 	</div>
   
 {% set employeesList = projectbatch.getvalue("employees") %}
+{{ employeesList }}
 <div class="control-group">
-		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','false','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
+		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','published','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
 	</div>
 {% endif %}
-
   
-</div>
-<input type="hidden" name="comes_changedby" value="{{ user.id }}" />
 
+{tab:{{ text.title }}}
+{{ text.edit }}
+{tab:{{ comment.title }}}
+{{ comment.edit }}
+{tab:Файлы}
+	<div class="control-group">
+		<div class="control-label">{{ speedletdocs.title }}</div><div class="controls">{{ speedletdocs.edit }}</div>
+	</div>
+	<div class="control-group">
+		<div class="control-label">{{ speedletdocslink.title }}</div><div class="controls">{{ speedletdocslink.edit }}</div>
+	</div>
+{/tabs}
+
+
+<input type="hidden" name="comes_changedby" value="{{ user.id }}" />
+<br/>
 {% if projectbatch.value == '' %}
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
 {% else %}

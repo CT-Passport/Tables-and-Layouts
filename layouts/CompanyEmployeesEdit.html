@@ -14,8 +14,15 @@
   {% if record.id == "" %}Добавить мигранта{% else %}Редактировать мигранта{% endif %}
   {% endif %}
 </legend>
-
+<div class="form-horizontal">
+  
+{% if record.id != "" %}
+	<div class="control-group">
+		<div class="control-label">{{ ismigrant.title }}: <b>{{ ismigrant.edit }}</b></div>
+	</div>
+{% else %}
 <input type="hidden" name="comes_ismigrant" value="{{ URLisMigrant }}" />
+{% endif %}
 
 {% set companyId = "" %}
 
@@ -34,7 +41,7 @@
 <p>Компания не указана или не найдена.</p>
 {% endif %}
 
-<div class="form-horizontal">
+
 	<div class="control-group">
 		<div class="control-label">{{ company.title }}: <b>{{ companyName }}</b></div>
 	</div>

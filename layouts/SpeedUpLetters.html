@@ -34,7 +34,7 @@
 <td style="text-align:center;">{{ html.toolbar("checkbox") }}</td>
 <td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо #{% else %}Letter #{% endif %} {{ ornum }}</a></td>
 <td>{{ date("Y-m-d") }}</td>
-<td>{{ text }}</td>
+<td>{{ text("words",15) }}</td>
 <td>{{ status }}</td>
 <td>{{ tables.getrecord("projectName",project.value) }}</td>
 <td>{{ projectbatch }}</td>

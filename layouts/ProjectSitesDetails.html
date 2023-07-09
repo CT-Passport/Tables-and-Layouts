@@ -1,4 +1,4 @@
-<div class="form-horizontal">
+{tab:Детали}
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ project.title }}</div>:<div class="detailsValue">{{ project }}</div>
@@ -12,18 +12,11 @@
 		<div class="detailsLabel">{{ location.title }}</div>:<div class="detailsValue">{{ location }}</div>
 	</div>
 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ contractors.title }}</div>:<div class="detailsValue">{{ contractors }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ employees.title }}</div>:<div class="detailsValue">{{ employees }}</div>
-	</div>
-
 <hr/>
-  
 <div class="control-group detailsLine">
 		<div class="detailsLabel">ID</div>:<div class="detailsValue">{{ record.id }}</div>
 	</div>
   
-</div>
+{tab:Партии Работников}
+{{ tables.getrecords("MigProjectBatchesSimple","projsite="~record.id ) }}
+{/tabs}

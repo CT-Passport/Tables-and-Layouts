@@ -36,7 +36,7 @@
 <td>{{ projsite }}</td>
 <td>{{ batchnum }}</td>
 <td>{{ date("Y-m-d") }}</td>
-  <td><ol>{{ employees.layout("EmployeeList") }}</ol></td>
+  <td><ol>{{ employees.layout("EmployeeList","published","") }}</ol></td>
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}
