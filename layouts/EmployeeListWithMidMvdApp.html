@@ -16,7 +16,7 @@
 <td><a href="/index.php/sotrudniki-kompanij?view=details&listing_id={{ record.id }}" target="_blank">{{ person.layout("personName") }}</a>
   <div style="color:gray;font-size:0.7em;">{{ tables.getrecord("MigMvdAppWorkerString","migmvdapplication="~appid~" and employee="~record.id) }}</div></td>
 <td>
-<a href="/index.php/zayavlenie-v-mvd-na-priglashenie-na-vezd-v-rossiyu?listing_id={{ appid }}&employee={{ record.id }}" target="_blank">
+<a href="/index.php/zayavlenie-v-mvd-na-priglashenie-na-vezd-v-rossiyu?listing_id={{ appid }}&employee={{ record.id }}" target="_blank" title="{{ person.layout("personName") }}">
 <img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a>
 </td>
 </tr>

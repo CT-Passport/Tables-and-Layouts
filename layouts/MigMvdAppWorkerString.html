@@ -15,7 +15,23 @@
 {% if position=="" %}<span style="color:red;">{{ position.title }}</span>{% else %}{{ position.title }}: <b>{{ position }}</b>{% endif %}<br/>
 {% if empworkaddress=="" %}<span style="color:red;">{{ empworkaddress.title }}</span>{% else %}{{ empworkaddress.title }}: <b>{{ empworkaddress }}</b>{% endif %}<br/>
 
-{% set stayaddressinrusTEMP = stayaddressinrus %}{% if stayaddressinrusTEMP=="" %}<span style="color:red;">{{ stayaddressinrus.title }}</span>{% else %}{{ stayaddressinrus.title }}: <b>{{ stayaddressinrusTEMP }}</b>{% endif %}<br/>
+{% set stayaddressinrusTEMP = stayaddressinrus.layout("FormalNameShortName") %}
+{% if stayaddressinrusTEMP=="" %}<span style="color:red;">{{ stayaddressinrus.title }}</span>
+{% else %}
+
+{% set l3Parent = stayaddressinrus.getvalue("parent") %}
+{% if l3Parent !="" %}
+{% set l2Parent = tables.getvalue("addrob","parent","_id=" ~ l3Parent) %}
+{% set l2Label=tables.getrecord("FormalNameShortName","_id=" ~ l3Parent) %}
+{% if l2Parent !="" %}
+{% set l1Label=tables.getrecord("FormalNameShortName","_id=" ~ l2Parent) %}
+{% endif %}
+{% endif %}
+{{ stayaddressinrus.title }}: <b>{{ l1Label }}, {{ l2Label }}, {{ stayaddressinrusTEMP }}</b>
+
+
+{% endif %}<br/>
+
 {% if stayaddressinrushouse=="" %}<span style="color:red;">{{ stayaddressinrushouse.title }}</span>{% else %}{{ stayaddressinrushouse.title }}: <b>{{ stayaddressinrushouse }}</b>{% endif %}
 {% if stayaddressinrussframe!="" %}, {{ stayaddressinrussframe.title }}: <b>{{ stayaddressinrussframe }}</b>{% endif %}
 {% if stayaddressinrusstructure!="" %}, {{ stayaddressinrusstructure.title }}: <b>{{ stayaddressinrusstructure }}</b>{% endif %}

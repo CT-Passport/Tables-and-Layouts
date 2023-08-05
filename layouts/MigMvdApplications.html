@@ -32,8 +32,10 @@
 <td>{{ submdate }}</td>
 <td>{{ tables.getrecord("projectName",project.value) }}</td>
 <td>{{ projectbatch }}</td>
-<td style="text-align:center;"><a href="/index.php/zayavlenie-v-mvd-na-priglashenie-na-vezd-v-rossiyu?listing_id={{ record.id }}&returnto={{ url.base64 }}">
-  <img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a></td>
+<td style="text-align:center;">
+{{ url.set("appid",record.id) }}
+{{ employees.layout("EmployeeListWithMidMvdAppSimple",null,"") }}  
+</td>
 <td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
 </tr>
 {% endblock %}

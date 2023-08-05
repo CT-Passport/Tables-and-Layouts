@@ -12,8 +12,8 @@
 {% set d="X" %}
 {% endif %}
 
+{% set employeeIdFromURL = url.getint("employee") %}
 {% set MigMvdAppWorker =tables.getrecord("MigMvdAppWorkerJSON","migmvdapplication=" ~ record.id ~ " and employee=" ~ employeeIdFromURL)| json_decode  %}
-
 
 {% set e="" %}{% set f="" %}{% set g="" %}
 
@@ -39,7 +39,6 @@
 {% set l="X" %}
 {% endif %}
 
-{% set employeeIdFromURL = url.getint("employee") %}
 {% set listOfEmployees = employees.value|split(',') %}
 
 {% if employeeIdFromURL in listOfEmployees %}
@@ -119,9 +118,10 @@ Employee not found
 'PassportIssueAuthority':person.issueauthority,
 'PassportIssueDate':person.issuedate,
 'PassportEndDate':person.expirationdate,
-'PlannedPlaceToStay':MigMvdAppWorker.stayaddressinrus,
-'PlannedCityToStay':"CITY",
-'PlannedStreetToStay':"HOUSE",
+
+'PlannedPlaceToStay':MigMvdAppWorker.stayaddressRegion,
+'PlannedCityToStay':MigMvdAppWorker.stayaddressCity,
+'PlannedStreetToStay':MigMvdAppWorker.stayaddressStreet,
 'PlannedHouseToStay':MigMvdAppWorker.stayaddressinrushouse,
 'PlannedFrame':MigMvdAppWorker.stayaddressinrussframe,
 'PlannedStructure':MigMvdAppWorker.stayaddressinrusstructure,

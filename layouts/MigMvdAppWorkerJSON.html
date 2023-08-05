@@ -18,7 +18,26 @@
 "position": "{{ position }}",
 "empworkaddress": "{{ empworkaddress }}",
 
-"stayaddressinrus": "{{ stayaddressinrus }}",
+{% set stayaddressinrusTEMP = stayaddressinrus.layout("FormalNameShortName") %}
+{% if stayaddressinrusTEMP=="" %}
+"stayaddressRegion": "-",
+"stayaddressCity": "-",
+"stayaddressStreet": "-",
+{% else %}
+"stayaddressStreet": "{{ stayaddressinrusTEMP }}",
+{% set l3Parent = stayaddressinrus.getvalue("parent") %}
+{% if l3Parent !="" %}
+ {% set l2Parent = tables.getvalue("addrob","parent","_id=" ~ l3Parent) %}
+ {% set l2Label=tables.getrecord("FormalNameShortName","_id=" ~ l3Parent) %}
+ "stayaddressCity": "{{ l2Label }}",
+ {% if l2Parent !="" %}
+  {% set l1Label=tables.getrecord("FormalNameShortName","_id=" ~ l2Parent) %}
+  "stayaddressRegion": "{{ l1Label }}",
+ {% endif %}
+{% endif %}
+
+{% endif %}
+
 "stayaddressinrushouse": "{{ stayaddressinrushouse }}",
 "stayaddressinrussframe": "{{ stayaddressinrussframe }}",
 "stayaddressinrusstructure": "{{ stayaddressinrusstructure }}",
