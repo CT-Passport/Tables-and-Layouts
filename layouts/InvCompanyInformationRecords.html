@@ -1,0 +1,4 @@
+<li>Название компании: <a href="/ru/kompanii?view=details&listing_id={{ record.id }}&returnto={{ url.base64 }}" target="_blank">
+  
+  {% if shortnamerus !="" %}{{ shortnamerus }}{% elseif fullnamerus !="" %}{{ fullnamerus }}{% else %}{{ fullnamelat }}{% endif %}
+  </a><br> Адрес: {{ address }}<br> Регистрационный номер: {{ regnumber }}<br> Номер налогоплательщика: {{ taxnumber }}<br> Телефон: {{ phone }}</li>

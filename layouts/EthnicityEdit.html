@@ -1,6 +1,8 @@
 <legend>{{ table.title }}</legend>
 
-<div class="form-horizontal">	<div class="control-group">
+{tab:Детали}
+
+<div class="control-group">
 		<div class="control-label">{{ namelat.title }}</div><div class="controls">{{ namelat.edit }}</div>
 	</div>
 
@@ -36,10 +38,8 @@
 		<div class="control-label">{{ nativelang.title }}</div><div class="controls">{{ nativelang.edit }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
-
-</div>
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
 <div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

@@ -14,6 +14,9 @@
   {% if record.id == "" %}Добавить мигранта{% else %}Редактировать мигранта{% endif %}
   {% endif %}
 </legend>
+
+{tab:Детали}
+
 <div class="form-horizontal">
   
 {% if record.id != "" %}
@@ -47,11 +50,12 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ person.title }}</div><div class="controls">{{ person.edit("","",["people","layout:PeopleFullName","","ismigrant=="~URLisMigrant,"firstnamerussubj"],"PeopleFullName","add-person?ismigrant=" ~ URLisMigrant) }}</div>
+		<div class="control-label">{{ person.title }}</div><div class="controls">
+      {{ person.edit("","",["people","layout:PeopleFullName","","ismigrant=="~URLisMigrant,"firstnamerussubj"],"PeopleFullName","add-person?ismigrant=" ~ URLisMigrant,"improved") }}</div>
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj","published",null,"namerussubj"],null,"dobavit-dolzhnost") }}</div>
+		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj","published",null,"namerussubj"],null,"dobavit-dolzhnost","improved") }}</div>
 	</div>
   
 {% if URLisMigrant == 0 %}
@@ -72,10 +76,12 @@
 		<div class="control-label">{{ email1.title }}</div><div class="controls">{{ email1.edit }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
 {% endif %}
 </div>
+
+
+{tab:Комментарий}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

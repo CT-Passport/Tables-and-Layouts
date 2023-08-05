@@ -2,7 +2,7 @@
 <td style="width:auto;max-width:auto;"><a href="{{ record.link }}">{{ id }}</a></td>
 
 <td style="width:auto;max-width:auto;">
-  {% if isemployee.value == 1 %}
+  {% if ismigrant.value == 1 %}
   <b><a href="{{ record.link }}">{{ lastnamerussubj }} {{ firstnamerussubj }} {{ middlenamerussubj }}</a></b>
   {% else %}
   <a href="{{ record.link }}">{{ lastnamerussubj }} {{ firstnamerussubj }} {{ middlenamerussubj }}</a>
@@ -10,7 +10,7 @@
 </td>
   
 <td style="width:auto;max-width:auto;">
-  {% if isemployee.value == 1 %}
+  {% if ismigrant.value == 1 %}
   <b><a href="{{ record.link }}">{{ lastnamelat }} {{ firstnamelat }} {{ middlenamelat }}</a></b>
   {% else %}
   <a href="{{ record.link }}">{{ lastnamelat }} {{ firstnamelat }} {{ middlenamelat }}</a>

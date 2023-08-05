@@ -1,6 +1,7 @@
 <legend>{{ table.title }}</legend>
 
-<div class="form-horizontal">
+{tab:Детали}
+
 	<div class="control-group">
 		<div class="control-label">{{ regnum.title }}</div><div class="controls">{{ regnum.edit }}</div>
 	</div>
@@ -41,8 +42,9 @@
     
 {% endif %}
 	
-
-</div>
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
 <input type="hidden" name="comes_changedby" value="{{ user.id }}" />
 

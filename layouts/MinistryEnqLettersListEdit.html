@@ -1,0 +1,54 @@
+{{ html.goback }}
+<legend>{{ table.title }}</legend>
+  
+{tab:Детали}
+  
+	<div class="control-group">
+		<div class="control-label">{{ letterlink.title }}</div><div class="controls">{{ letterlink.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ ornum.title }}</div><div class="controls">{{ ornum.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ empnamelat.title }}</div><div class="controls">{{ empnamelat.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ empbirthdate.title }}</div><div class="controls">{{ empbirthdate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ rusvisitperiod.title }}</div><div class="controls">{{ rusvisitperiod.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ rusentrydate.title }}</div><div class="controls">{{ rusentrydate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ empworkplace.title }}</div><div class="controls">{{ empworkplace.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ empposition.title }}</div><div class="controls">{{ empposition.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ rusentrypurpose.title }}</div><div class="controls">{{ rusentrypurpose.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ invcompany.title }}</div><div class="controls">{{ invcompany.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ invcompcontacts.title }}</div><div class="controls">{{ invcompcontacts.edit }}</div>
+	</div>
+
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
+
+<div style="text-align:center;">{{ html.button("save") }} {{ html.button("saveandclose") }} {{ html.button("saveascopy") }} {{ html.button("cancel") }}</div>

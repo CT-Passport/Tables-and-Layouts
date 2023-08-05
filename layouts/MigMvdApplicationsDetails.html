@@ -7,15 +7,11 @@
 	</div>
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ date.title }}</div>:<div class="detailsValue">{{ date }}</div>
+		<div class="detailsLabel">{{ applicationdate.title }}</div>:<div class="detailsValue">{{ applicationdate }}</div>
 	</div>
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ submdate.title }}</div>:<div class="detailsValue">{{ submdate }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
 	</div>
 
 	<div class="control-group detailsLine">
@@ -29,10 +25,6 @@
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
 	</div>
- 
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ employee.title }}</div>:<div class="detailsValue"><a href="/index.php/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ employee }}</a></div>
-	</div>  
   
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ rusentrydate.title }}</div>:<div class="detailsValue">{{ rusentrydate }}</div>
@@ -42,9 +34,28 @@
 		<div class="detailsLabel">{{ visaenddate.title }}</div>:<div class="detailsValue">{{ visaenddate }}</div>
 	</div>
 
+{tab:{{ employees.title }}}
+
+
+{{ url.set("appid",record.id) }}
+<table>
+<tbody>
+{{ employees.layout("EmployeeListWithMidMvdApp",null,"") }}
+</tbody>
+</table>
+
+{tab:{{ comment.title }}}
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ comment.title }}</div>:<div class="detailsValue">{{ comment }}</div>
+		<div class="detailsLabel"></div>:<div class="detailsValue">{{ comment }}</div>
 	</div>
+
+{tab:Регистр}
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dbentrydate.title }}</div>:<div class="detailsValue">{{ dbentrydate }}</div>
+	</div>
+
+<hr/>
 
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ changedate.title }}</div>:<div class="detailsValue">{{ changedate }}</div>
@@ -53,5 +64,4 @@
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ changedby.title }}</div>:<div class="detailsValue">{{ changedby }}</div>
 	</div>
-
 {/tabs}

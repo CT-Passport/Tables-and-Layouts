@@ -141,13 +141,8 @@
 	</div>
   
 </div>
-{tab:Банковские счета}
+{tab:Банковский счета №1}
 
-<h5>Банковский счет №1</h5>
-<hr/>
-
-<div class="form-horizontal">
-  
 	<div class="control-group">
 		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc1bank.edit }}</div></div>
 	</div>
@@ -156,9 +151,19 @@
 		<div class="control-label">Номер счета</div><div class="controls">{{ bacc1accnumb.edit }}</div>
 	</div>
 
+<div class="control-group">
+		<div class="control-label">Счет корреспондент в России</div><div class="controls">{{ bacc1corraccrus.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc1bik.edit }}</div>
+	</div>
+
 	<div class="control-group">
 		<div class="control-label">Валюта</div><div class="controls">{{ bacc1currency.edit }}</div>
 	</div>
+
+<hr/>
 
 <div class="control-group">
 		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc1corrbank.edit }}</div>
@@ -167,10 +172,6 @@
 	<div class="control-group">
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc1corracc.edit }}</div>
 	</div>
-
-<div class="control-group">
-		<div class="control-label">БИК</div><div class="controls">{{ bacc1bik.edit }}</div>
-	</div>
   
 	<div class="control-group">
 		<div class="control-label">Свифт код</div><div class="controls">{{ bacc1swift.edit }}</div>
@@ -178,13 +179,9 @@
 
 	<div class="control-group">
 		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc1misc.edit }}</div>
-	</div>
-  
-<br/><br/>
+	</div>  
+{tab:Банковский счета №2}
 
-<h5>Банковский счет №2</h5>
-<hr/>
-  
 <div class="control-group">
 		<div class="control-label">Название банка на двух языках</div><div class="controls"><div style="padding:10px;border:1px solid #cccccc;border-radius:5px;width:70%">{{ bacc2bank.edit }}</div></div>
 	</div>
@@ -193,9 +190,19 @@
 		<div class="control-label">Номер счета</div><div class="controls">{{ bacc2accnumb.edit }}</div>
 	</div>
 
+<div class="control-group">
+		<div class="control-label">Счет корреспондент в России</div><div class="controls">{{ bacc2corraccrus.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">БИК</div><div class="controls">{{ bacc2bik.edit }}</div>
+	</div>
+
 	<div class="control-group">
 		<div class="control-label">Валюта</div><div class="controls">{{ bacc2currency.edit }}</div>
 	</div>
+
+<hr/>
 
 <div class="control-group">
 		<div class="control-label">Банк корреспондент</div><div class="controls">{{ bacc2corrbank.edit }}</div>
@@ -203,10 +210,6 @@
   
 	<div class="control-group">
 		<div class="control-label">Счет корреспондент</div><div class="controls">{{ bacc2corracc.edit }}</div>
-	</div>
-
-<div class="control-group">
-		<div class="control-label">БИК</div><div class="controls">{{ bacc2bik.edit }}</div>
 	</div>
   
 	<div class="control-group">
@@ -217,8 +220,9 @@
 		<div class="control-label">Другие данные счета</div><div class="controls">{{ bacc2misc.edit }}</div>
 	</div>
 
-</div>
-
+  
+  
+  
 {tab:Комментарий}
 {{ comment.edit("","","100%") }}
 {tab:Файлы}

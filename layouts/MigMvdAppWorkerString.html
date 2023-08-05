@@ -1,0 +1,23 @@
+{% if rescountry=="" %}<span style="color:red;">{{ rescountry.title }}</span>{% else %}{{ rescountry.title }}: <b>{{ rescountry }}</b>{% endif %}, 
+{% if resplacerus=="" %}<span style="color:red;">{{ resplacerus.title }}</span>{% else %}<b>{{ resplacerus }}</b>{% endif %}, 
+
+{% if rusentrydate=="" %}<span style="color:red;">{{ rusentrydate.title }}</span>{% else %}{{ rusentrydate.title }}: <b>{{ rusentrydate("d.m.Y") }}</b>{% endif %}, 
+{% if visaenddate=="" %}<span style="color:red;">{{ visaenddate.title }}</span>{% else %}{{ visaenddate.title }}: <b>{{ visaenddate("d.m.Y") }}</b>{% endif %}, 
+{% if visitpurpose=="" %}<span style="color:red;">{{ visitpurpose.title }}</span>{% else %}{{ visitpurpose.title }}: <b>{{ visitpurpose }}</b>{% endif %}<br/>
+{% if visamultiplicity=="" %}<span style="color:red;">{{ visamultiplicity.title }}</span>{% else %}{{ visamultiplicity.title }}: <b>{{ visamultiplicity }}</b>{% endif %}, 
+{% if visatype=="" %}<span style="color:red;">{{ visatype.title }}</span>{% else %}{{ visatype.title }}: <b>{{ visatype }}</b>{% endif %}, 
+{% if rusvisitplaces=="" %}<span style="color:red;">{{ rusvisitplaces.title }}</span>{% else %}{{ rusvisitplaces.title }}: <b>{{ rusvisitplaces }}</b>{% endif %}<br/>
+
+{% if visaisscountry=="" %}<span style="color:red;">{{ visaisscountry.title }}</span>{% else %}{{ visaisscountry.title }}: <b>{{ visaisscountry }}</b>{% endif %}, 
+{% if visaisscity=="" %}<span style="color:red;">{{ visaisscity.title }}</span>{% else %}{{ visaisscity.title }}: <b>{{ visaisscity }}</b>{% endif %}<br/>
+
+{% if empworkplace=="" %}<span style="color:red;">{{ empworkplace.title }}</span>{% else %}{{ empworkplace.title }}: <b>{{ empworkplace }}</b>{% endif %}, 
+{% if position=="" %}<span style="color:red;">{{ position.title }}</span>{% else %}{{ position.title }}: <b>{{ position }}</b>{% endif %}<br/>
+{% if empworkaddress=="" %}<span style="color:red;">{{ empworkaddress.title }}</span>{% else %}{{ empworkaddress.title }}: <b>{{ empworkaddress }}</b>{% endif %}<br/>
+
+{% set stayaddressinrusTEMP = stayaddressinrus %}{% if stayaddressinrusTEMP=="" %}<span style="color:red;">{{ stayaddressinrus.title }}</span>{% else %}{{ stayaddressinrus.title }}: <b>{{ stayaddressinrusTEMP }}</b>{% endif %}<br/>
+{% if stayaddressinrushouse=="" %}<span style="color:red;">{{ stayaddressinrushouse.title }}</span>{% else %}{{ stayaddressinrushouse.title }}: <b>{{ stayaddressinrushouse }}</b>{% endif %}
+{% if stayaddressinrussframe!="" %}, {{ stayaddressinrussframe.title }}: <b>{{ stayaddressinrussframe }}</b>{% endif %}
+{% if stayaddressinrusstructure!="" %}, {{ stayaddressinrusstructure.title }}: <b>{{ stayaddressinrusstructure }}</b>{% endif %}
+{% if stayaddressinrussapartment!="" %}, {{ stayaddressinrussapartment.title }}: <b>{{ stayaddressinrussapartment }}</b>{% endif %}
+{% if stayaddressinrussphone!="" %}, {{ stayaddressinrussphone.title }}: <b>{{ stayaddressinrussphone }}</b>{% endif %}

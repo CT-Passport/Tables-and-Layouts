@@ -3,11 +3,132 @@
 
 {% set monthValue = tables.getrecord("projectName","id="~project.value) %}
 
+{% set company =tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
+
+{% set c="" %}{% set d="" %}
+{% if reasonsforurgentregistrationareattached.value == 1 %}
+{% set c="X" %}
+{% else %}
+{% set d="X" %}
+{% endif %}
+
+{% set MigMvdAppWorker =tables.getrecord("MigMvdAppWorkerJSON","migmvdapplication=" ~ record.id ~ " and employee=" ~ employeeIdFromURL)| json_decode  %}
+
+
+{% set e="" %}{% set f="" %}{% set g="" %}
+
+{% if MigMvdAppWorker.visamultiplicity == 1 %}
+{% set e="X" %}
+{% elseif MigMvdAppWorker.visamultiplicity == 2 %}
+{% set f="X" %}
+{% elseif MigMvdAppWorker.visamultiplicity == 3 %}
+{% set g="X" %}
+{% endif %}
+
+{% set h="" %}{% set i="" %}{% set j="" %}{% set k="" %}{% set l="" %}
+
+{% if MigMvdAppWorker.visaTypeCategory == 1 %}
+{% set h="X" %}
+{% elseif MigMvdAppWorker.visaTypeCategory == 2 %}
+{% set i="X" %}
+{% elseif MigMvdAppWorker.visaTypeCategory == 3 %}
+{% set j="X" %}
+{% elseif MigMvdAppWorker.visaTypeCategory == 4 %}
+{% set k="X" %}
+{% elseif MigMvdAppWorker.visaTypeCategory == 5 %}
+{% set l="X" %}
+{% endif %}
+
+{% set employeeIdFromURL = url.getint("employee") %}
+{% set listOfEmployees = employees.value|split(',') %}
+
+{% if employeeIdFromURL in listOfEmployees %}
+{% set person =tables.getrecord("EmployeeJSON",employeeIdFromURL) | json_decode %}
+{% else %}
+Employee not found
+{% endif %}
+
+
+{% set m="" %}{% set n="" %}
+{% if person.genderValue == 1 %}
+{% set m="X" %}
+{% else %}
+{% set n="X" %}
+{% endif %}
+
+{#
+{% set visa =tables.getrecord("VisaJSONPersonExtended","person=" ~ person.personID)  %}| json_decode
+{{ visa }}
+"issuecountry": "{{ visa.issuecountry }}",
+"issueplace": "{{ visa.issueplace }}"
+#}
+
 
 {% set values = 
 
-{'LastNameRus':employee}
+{'InitialNumber':regnum,
+'SubmitDate':submdate("d.m.Y"),
+'inn_number':company.INN,
+'ogrn':company.OGRN,
+'egrul':applicationdate("d.m.Y"),
+'CompanyFullName':company.fullnamerus | base64decode,
+'CompanyAddress':company.LegalAddress,
+'CompanyAddressPhysical':company.Address,
+'CompanyPhone':company.phone,
+'CompanyEmail':company.email,
+'SpeedupDate':planissdate("d.m.Y"),
+'VisitPurpose':MigMvdAppWorker.visitpurpose,
+'VisaLength':MigMvdAppWorker.visatermdays,
+'PlannedEntranceDate':MigMvdAppWorker.rusentrydate,
+'PlannedLeaveDate':MigMvdAppWorker.visaenddate,
+'PlannedPlacesToVisit':MigMvdAppWorker.rusvisitplaces,
+'c':c,
+'d':d,
+'e':e,
+'f':f,
+'g':g,
+'h':h,
+'i':i,
+'j':j,
+'k':k,
+'l':l,
+'LastNameRus':person.lastnamerussubj,
+'LastNameLat':person.lastnamelat,
+'FirstNameRus':person.firstnamerussubj,
+'FirstNameLat':person.firstnamelat,
+'MiddleNameRus':person.middlenamerussubj,
+'MiddleNameLat':person.middlenamelat,
+'m':m,
+'n':n,
+'birthDate':person.birthDate,
+'BirthCountry':person.birthcountry,
+'BirthPlace':person.birthplacerus,
+'Citizenship':person.issuecountry,
+'ResidencyCountry':MigMvdAppWorker.rescountry,
+'ResidencyState':MigMvdAppWorker.resplacerus,
 
+'VisaIssueCountry':MigMvdAppWorker.visaisscountry,
+'VisaIssueCity':MigMvdAppWorker.visaisscity,
+
+'CurrentWorkPlace':MigMvdAppWorker.empworkplace,
+'CurrentWorkPosition':MigMvdAppWorker.position,
+'CurrentWorkAddress':MigMvdAppWorker.empworkaddress,
+
+'PassportSeries':person.passportseries,
+'PassportNumber':person.number,
+'PassportIssueAuthority':person.issueauthority,
+'PassportIssueDate':person.issuedate,
+'PassportEndDate':person.expirationdate,
+'PlannedPlaceToStay':MigMvdAppWorker.stayaddressinrus,
+'PlannedCityToStay':"CITY",
+'PlannedStreetToStay':"HOUSE",
+'PlannedHouseToStay':MigMvdAppWorker.stayaddressinrushouse,
+'PlannedFrame':MigMvdAppWorker.stayaddressinrussframe,
+'PlannedStructure':MigMvdAppWorker.stayaddressinrusstructure,
+'PlannedApartment':MigMvdAppWorker.stayaddressinrussapartment,
+'PlannedPhone':MigMvdAppWorker.stayaddressinrussphone
+
+}
 %}
 
 {% set newfile = phpword.setvalues("images/DocumentTemplates/Zayavlebie-V-MVD.docx",values) %}

@@ -6,6 +6,10 @@
 		<div class="control-label">{{ ornum.title }}</div><div class="controls">{{ ornum.edit }}</div>
 	</div>
 
+<div class="control-group">
+		<div class="control-label">{{ regnum.title }}</div><div class="controls">{{ regnum.edit }}</div>
+	</div>
+
 	<div class="control-group">
 		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
 	</div>
@@ -30,17 +34,26 @@
 	</div>
   
 <div class="control-group">
-		<div class="control-label">{{ projectbatch.title }}</div><div class="controls"><b>{{ projectbatch.get("	
-fullname") }}</b></div>
+		<div class="control-label">{{ projectbatch.title }}</div><div class="controls"><b>{{ projectbatch.get("	fullname") }}</b></div>
 	</div>
   
 {% set employeesList = projectbatch.getvalue("employees") %}
-{{ employeesList }}
+
 <div class="control-group">
 		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','published','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
 	</div>
+
+<hr/>
+
+<div class="control-group">
+		<div class="control-label">{{ invcompany.title }}</div><div class="controls"> {{ invcompany.edit("checkbox") }}</div>
+	</div>
+
+
 {% endif %}
   
+
+
 
 {tab:{{ text.title }}}
 {{ text.edit }}

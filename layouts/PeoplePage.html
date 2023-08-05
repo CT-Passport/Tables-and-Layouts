@@ -5,17 +5,18 @@
 <div class="datagrid">
 
 <div class="searchBox">
-  <div>{{ html.search("id") }}</div>
-  <div>{{ html.search("firstnamelat","middlenamelat") }}</div>
-  <div>{{ html.search("firstnamerussubj","middlenamerussubj") }}</div>
-  <div>{{ html.search("isemployee","middlenamerussubj","reload") }}</div>
+  <div>{{ html.search("gender","","","improved") }}</div>
+  <div>{{ html.search("firstnamerussubj,middlenamerussubj") }}</div>
+  <div>{{ html.search("ismigrant") }}</div>
 <div>{{ html.searchbutton() }}</div>
 </div>
   
 <table><thead><tr>
 <th style="width:auto;max-width:auto;">ID</th>
-<th style="width:auto;max-width:auto;">{{ translatefullnamelat.title }}</th>
+
 <th style="width:auto;max-width:auto;">{{ translatefullnamerus.title }}</th>
+<th style="width:auto;max-width:auto;">{{ translatefullnamelat.title }}</th>
+
 <th>{{ dateofbirth.title }}</th>
 <th style="text-align:center;">{{ translatepassports.title }}</th>
 <th>{% if document.languagepostfix=="_ru" %}Визы{% else %}Visas{% endif %}</th>

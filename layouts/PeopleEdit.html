@@ -1,5 +1,3 @@
-<legend>{{ table.title }}</legend>
-
 <legend>{{ table.title }} - 
 
 {% if record.id != "" %}
@@ -42,40 +40,13 @@
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
-	</div>
-  
-<div class="control-group">
-		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
-	</div>
-  
-<hr/>
-	
-	<div class="control-group">
-		<div class="control-label">{{ lastnamenative.label }}</div><div class="controls">{{ lastnamenative.edit }}</div>
-	</div>
-
-<div class="control-group">
-		<div class="control-label">{{ firstnamenative.label }}</div><div class="controls">{{ firstnamenative.edit }}</div>
-	</div>
-  
-<div class="control-group">
-		<div class="control-label">{{ middlenamenative.label }}</div><div class="controls">{{ middlenamenative.edit }}</div>
-	</div>
-{% else %}
-
-<div class="control-group">
-		<div class="control-label">{{ lastnamerussubj.label }}</div><div class="controls">{{ lastnamerussubj.edit }}</div>
-	</div>
-
-<div class="control-group">
 		<div class="control-label">{{ firstnamerussubj.label }}</div><div class="controls">{{ firstnamerussubj.edit }}</div>
 	</div>
   
 <div class="control-group">
 		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
 	</div>
-	 
+  
 
 	
 	{% endif %}
@@ -87,7 +58,7 @@
 	</div>
   
 	<div class="control-group">
-		<div class="control-label">{{ gender.label }}</div><div class="controls">{{ gender.edit }}</div>
+		<div class="control-label">{{ gender.label }}</div><div class="controls">{{ gender.edit("","",[],"","","improved") }}</div>
 	</div>  
   
 </div>
@@ -103,10 +74,26 @@
 	</div>  
   
 	<div class="control-group">
-		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit("","",[],null,"ethnicity-edit") }}</div>
+		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit("","",[],"","ethnicity-edit","improved") }}</div>
 	</div>
 
 </div>
+
+{tab:Имя на родном языке}
+
+	<div class="control-group">
+		<div class="control-label">{{ lastnamenative.label }}</div><div class="controls">{{ lastnamenative.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ firstnamenative.label }}</div><div class="controls">{{ firstnamenative.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ middlenamenative.label }}</div><div class="controls">{{ middlenamenative.edit }}</div>
+	</div>
+
+
 
 {/tabs}
 

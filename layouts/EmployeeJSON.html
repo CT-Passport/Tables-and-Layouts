@@ -1,6 +1,12 @@
 {
+"personID": "{{ person.value }}",
 "nameRus": "{{ person.layout("PersonNameRus") }}",
 "nameLat": "{{ person.layout("PersonNameLat") }}",
 "genderNameRus": "{{ gendernamerus }}",
-"genderCitizenShipsShort": "{{ gendercitizenshipshort }}"
+"genderCitizenShipsShort": "{{ gendercitizenshipshort }}",
+
+{{ person.layout("EmployeeJSONPersonExtended") }},
+
+{{ tables.getrecord("PassportJSONPersonExtended",'person='~person.value) }}
+
 }

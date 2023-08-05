@@ -1,5 +1,7 @@
 <legend>{{ table.title }}</legend>
 
+{tab:Детали}
+
 {% if projectbatch.value == "" %}
 <div class="control-group">
 		<div class="control-label">{{ projectbatch.label }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
@@ -37,9 +39,11 @@
 	  
 {% endif %}
 
-<hr/>
-<br/>
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
+<br/>
 
 {% if projectbatch.value == "" or employee.value == "" or passport.value == "" %}
 <div style="text-align:center;">

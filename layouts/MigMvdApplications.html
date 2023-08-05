@@ -19,7 +19,6 @@
 <th>{{ submdate.title }}</th>
 <th>{{ project.title }}</th>
 <th>{{ projectbatch.title }}</th>
-<th></th>
 <th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></thead>
@@ -33,14 +32,6 @@
 <td>{{ submdate }}</td>
 <td>{{ tables.getrecord("projectName",project.value) }}</td>
 <td>{{ projectbatch }}</td>
-<td><a href="/index.php/sozdanie-zayavleniya-v-mvd-na-priglashenie-na-vezd-vybor-rabotnika?batch={{ projectbatch.value }}&listing_id={{ record.id }}">
-    <button class="btn btn-primary">{% if document.languagepostfix=="_ru" %}Добавить / Редактировать {% else %}Add / Edit Employee{% endif %}
-
-  {% if employee.value != 0 %}
-      <br/><b>{{ employee }}</b>
-  {% endif %}
-  
-  </button></a></td>
 <td style="text-align:center;"><a href="/index.php/zayavlenie-v-mvd-na-priglashenie-na-vezd-v-rossiyu?listing_id={{ record.id }}&returnto={{ url.base64 }}">
   <img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a></td>
 <td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
@@ -55,7 +46,6 @@
 <th>{{ submdate.title }}</th>
 <th>{{ project.title }}</th>
 <th>{{ projectbatch.title }}</th>
-<th></th>
 <th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>
 </tr></tfoot>

@@ -38,9 +38,10 @@
 	</div>
 
 
-{tab:{% if document.languagepostfix=="_ru" %}Приглашающая компания{% else %}Inviting Company{% endif %}}
-
-{{ tables.getrecord("ProjectCompany",project.value) }}
+{tab:{% if document.languagepostfix=="_ru" %}Приглашающая(ие) компания{% else %}Inviting Company(s){% endif %}}
+<ul>
+{{ invcompany.layout("InvCompanyInformationRecords","","") }}
+</ul>
 
 {tab:{{ text.title }}}
 {{ text }}

@@ -1,0 +1,22 @@
+{% set appid = url.getint("appid") %}
+<tr>
+<td>
+  {% set appWorkerID = tables.getvalue("migmvdapplicationssub","_id","migmvdapplication="~appid~" and employee="~record.id) %}
+
+  {% if appWorkerID == "" %}
+  <a href="javascript:ctEditModal('/application-to-mvd-edit-worker?appid={{ appid }}&employee={{ record.id }}',null)"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить" title="Добавить" style="width:24px;"></a>
+  {% else %}
+  <a href="javascript:ctEditModal('/application-to-mvd-edit-worker?appid={{ appid }}&listing_id={{ appWorkerID }}',null)"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="Редактировать" title="Редактировать"></a>
+
+{% endif %}
+  
+  
+  
+</td>  
+<td><a href="/index.php/sotrudniki-kompanij?view=details&listing_id={{ record.id }}" target="_blank">{{ person.layout("personName") }}</a>
+  <div style="color:gray;font-size:0.7em;">{{ tables.getrecord("MigMvdAppWorkerString","migmvdapplication="~appid~" and employee="~record.id) }}</div></td>
+<td>
+<a href="/index.php/zayavlenie-v-mvd-na-priglashenie-na-vezd-v-rossiyu?listing_id={{ appid }}&employee={{ record.id }}" target="_blank">
+<img src="/components/com_customtables/libraries/customtables/media/images/fileformats/32px/docx.png" /></a>
+</td>
+</tr>

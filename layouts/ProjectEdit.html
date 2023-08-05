@@ -1,3 +1,4 @@
+{{ html.goback() }}
 <legend>
 {% if document.languagepostfix=='_ru' %}
 {% if record.id=='' %}
@@ -14,8 +15,9 @@ Edit project
 {% endif %}
 </legend>
 
-<div class="form-horizontal">
-{{ html.goback() }}
+{tab:Детали}
+
+
 	<div class="control-group">
 		<div class="control-label">{{ status.title }}</div><div class="controls">{{ status.edit }}</div>
 	</div>
@@ -54,10 +56,9 @@ Edit project
 		<div class="control-label">{{ contactperson.title }}</div><div class="controls">{{ contactperson.edit("","",['companyemployees','layout:employeeName','published','ismigrant=0']) }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
-	</div>
+	{tab:Комментарий}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
-</div>
-
+<br/>
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

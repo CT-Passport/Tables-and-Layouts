@@ -1,6 +1,6 @@
 <legend>{{ table.title }}</legend>
 
-<div class="form-horizontal">
+{tab:Детали}
   
 	<div class="control-group">
 		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
@@ -26,8 +26,8 @@
 <div class="control-group">
 		<div class="control-label">{{ gletdocslink.title }}</div><div class="controls">{{ gletdocslink.edit }}</div>
 	</div>
-
-  
-</div>
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
 <div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}

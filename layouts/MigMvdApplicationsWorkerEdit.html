@@ -1,0 +1,109 @@
+<legend>{{ table.title }}</legend>
+
+{% set appId = url.getint("appid") %}
+{% set employeeId = url.getint("employee") %}
+
+<div class="form-horizontal">
+
+{% if employee.value == "" %}
+<div class="control-group">{{ migmvdapplication.title }}: <b>{{ tables.getvalue("migmvdapplications","regnum",appId) }}</b></div>
+		<div class="control-group">{{ employee.title }}: <b>{{ tables.getrecord("employeeName",employeeId) }}</b></div>
+<input type="hidden" name="comes_migmvdapplication" value="{{ appId }}" />
+<input type="hidden" name="comes_employee" value="{{ employeeId }}" />
+{% else %}
+<div class="control-group">{{ migmvdapplication.title }}: <b>{{ migmvdapplication }}</b></div>
+		<div class="control-group">{{ employee.title }}: <b>{{ employee }}</b></div>
+{% endif %}
+	<hr/>
+
+	<div class="control-group">
+		<div class="control-label">{{ rescountry.title }}</div><div class="controls">{{ rescountry.edit("","",[],"","","improved") }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ resplace.title }}</div><div class="controls">{{ resplace.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ resplacerus.title }}</div><div class="controls">{{ resplacerus.edit }}</div>
+	</div>
+
+<hr/>
+  
+	<div class="control-group">
+		<div class="control-label">{{ stayaddressinrus.title }}</div><div class="controls">{{ stayaddressinrus.edit("","",[["addrob","layout:FormalNameShortName","","","formalname","parent"]]) }}</div>{# ,["house","housenum"] #}
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ stayaddressinrushouse.title }}</div><div class="controls">{{ stayaddressinrushouse.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ stayaddressinrussframe.title }}</div><div class="controls">{{ stayaddressinrussframe.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ stayaddressinrusstructure.title }}</div><div class="controls">{{ stayaddressinrusstructure.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ stayaddressinrussapartment.title }}</div><div class="controls">{{ stayaddressinrussapartment.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ stayaddressinrussphone.title }}</div><div class="controls">{{ stayaddressinrussphone.edit }}</div>
+	</div>
+  
+<hr/>
+  
+  
+	<div class="control-group">
+		<div class="control-label">{{ rusentrydate.title }}</div><div class="controls">{{ rusentrydate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ visaenddate.title }}</div><div class="controls">{{ visaenddate.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ visitpurpose.title }}</div><div class="controls">{{ visitpurpose.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ visamultiplicity.title }}</div><div class="controls">{{ visamultiplicity.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ visatype.title }}</div><div class="controls">{{ visatype.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ rusvisitplaces.title }}</div><div class="controls">{{ rusvisitplaces.edit }}</div>
+	</div>
+<hr/>
+  
+<div class="control-group">
+		<div class="control-label">{{ visaisscountry.title }}</div><div class="controls">{{ visaisscountry.edit }}</div>
+	</div>
+<div class="control-group">
+		<div class="control-label">{{ visaisscity.title }}</div><div class="controls">{{ visaisscity.edit }}</div>
+	</div>
+  
+<hr/>
+  
+<div class="control-group">
+		<div class="control-label">{{ empworkplace.title }}</div><div class="controls">{{ empworkplace.edit }}</div>
+	</div>
+<div class="control-group">
+		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit }}</div>
+	</div>
+<div class="control-group">
+		<div class="control-label">{{ empworkaddress.title }}</div><div class="controls">{{ empworkaddress.edit }}</div>
+	</div>
+    
+</div>
+{% if employee.value == "" %}
+<div style="text-align:center;">{{ html.button("saveandclose","Сохранить","/zayavleniya-v-mvd-na-priglashenie-na-vezd-v-rossiyu?view=details&listing_id="~appId,"btn btn-primary offset-md-") }}</div>
+{% else %}
+<div style="text-align:center;">{{ html.button("saveandclose","Обновить","/zayavleniya-v-mvd-na-priglashenie-na-vezd-v-rossiyu?view=details&listing_id="~migmvdapplication.value,"btn btn-primary offset-md-") }}</div>
+{% endif %}

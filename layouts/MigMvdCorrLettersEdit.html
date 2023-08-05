@@ -1,6 +1,6 @@
 <legend>{{ table.title }}</legend>
 
-<div class="form-horizontal">
+{tab:Детали}
 	
 <div class="control-group">
 		<div class="control-label">{{ date.title }}</div><div class="controls">{{ date.edit }}</div>
@@ -102,7 +102,10 @@
       {% endif %}
     {% endif %}
   {% endif %}
-</div>
+
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{/tabs}
 
 {% if projectbatch.value == "" or employee.value == "" or passport.value == "" or rescountry.value == "" %}
 <div style="text-align:center;">{{ html.button("save","Далее","","btn btn-primary offset-md-") }} {{
