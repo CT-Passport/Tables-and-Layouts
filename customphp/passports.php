@@ -56,7 +56,6 @@ function ESCustom_passports($row_new, $row_old)
                 JSONtoTable($row_new);
 
             connect2Person($row_new);
-            die;
         }
     }
 }
