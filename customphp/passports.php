@@ -61,7 +61,7 @@ function ESCustom_passports($row_new, $row_old)
     }
 }
 
-function getPersonIDOrAddTheRecord($lastName, $firstName, $dateOfBirth, $gender)
+function getPersonIDOrAddTheRecord($lastName, $firstName, $dateOfBirth, $gender, int $isMigrant, $citizenshipType, $ethnicity)
 {
     $db = Factory::getDBO();
     $query = 'SELECT id FROM #__customtables_table_people WHERE es_lastnamelat=' . $db->quote($lastName) . ' AND es_firstnamelat=' . $db->quote($firstName) . ' AND es_dateofbirth=' . $db->quote($dateOfBirth) .
@@ -71,8 +71,9 @@ function getPersonIDOrAddTheRecord($lastName, $firstName, $dateOfBirth, $gender)
     $recs = $db->loadAssocList();
 
     if (count($recs) == 0) {
-        $query = 'INSERT INTO #__customtables_table_people (es_lastnamelat,es_firstnamelat,es_dateofbirth,es_gender)'
-            . ' VALUES (' . $db->quote($lastName) . ',' . $db->quote($firstName) . ',' . $db->quote($dateOfBirth) . ',' . $db->quote($gender) . ')';
+        $query = 'INSERT INTO #__customtables_table_people (es_lastnamelat,es_firstnamelat,es_dateofbirth,es_gender,es_ismigrant,es_citizenshiptype,es_ethnicity)'
+            . ' VALUES (' . $db->quote($lastName) . ',' . $db->quote($firstName) . ',' . $db->quote($dateOfBirth) . ',' . $db->quote($gender) . ',' . $db->quote($isMigrant)
+            . ',' . $db->quote($citizenshipType) . ',' . $db->quote($ethnicity) . ')';
 
         $db->setQuery($query);
         $db->execute();
@@ -88,12 +89,22 @@ function connect2Person(array $row_new)
 
         $db = Factory::getDBO();
         $listing_id = $row_new['id'];
-        
+
         $nameList = explode(',', $row_new['es_namelinelat']);
         $lastName = $nameList[0];
         $firstName = $nameList[1];
 
-        $personId = getPersonIDOrAddTheRecord($lastName, $firstName, $row_new['es_birthdate'], $row_new['es_gender']);
+        if ((int)($row_new['es_type']) == 3)
+            $isMigrant = 1;
+        else
+            $isMigrant = 0;
+
+        if ((int)($row_new['es_issuecountry']) == 1823)
+            $citizenshipType = 1;
+        else
+            $citizenshipType = 2;
+
+        $personId = getPersonIDOrAddTheRecord($lastName, $firstName, $row_new['es_birthdate'], $row_new['es_gender'], $isMigrant, $citizenshipType, $row_new['es_ethnicity']);
 
         $sets[] = $db->quoteName('es_person') . '=' . $db->quote($personId);
         if (count($sets) > 0) {
