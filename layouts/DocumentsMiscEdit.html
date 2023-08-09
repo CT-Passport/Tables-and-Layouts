@@ -2,7 +2,7 @@
   
 {% if record.id == "" %}
 {% set personId = url.getint("person") %}
-{% set personName = tables.getrecord("PeopleFullName",personId) %}
+{% set personName = tables.getrecord("PersonName",personId) %}
 {% else %}
 {% set personId = person.value %}
 {% set personName = person %}
