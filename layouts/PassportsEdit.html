@@ -23,42 +23,14 @@
 {% set personGender = tables.getrecord("PeopleGenderValue",personId) %}
 
 {% endif %}
-{tab:Персональная информация}
-
-<div class="form-horizontal">
-
-	<div class="control-group">
-		<div class="control-label">{{ person.title }}: {% if personName == "" %}{{ person.edit }}{% else %}<b>{{ personName }}</b>{% endif %}</div>
-	</div>
-  
-{% if birthdate.value == '' %}
-<input type="hidden" name="comes_birthdate" value="{{ PeopleBirthDate }}" style="visibility:hidden;" />
-{% else %}
-<div class="control-group">{{ birthdate.title }}: <b>{{ PeopleBirthDate }}</b></div>
-{% endif %}
-
-{% if gender.value == '' %}
-<input type="hidden" name="comes_gender" value="{{ personGender }}" style="visibility:hidden;" />
-{% else %}
-<div class="control-group">{{ gender.title }}: <b>{{ gender }}</b></div>
-{% endif %}
-  
-<div class="control-group">
-		<div class="control-label">{{ birthcountry.title }}</div><div class="controls">{{ birthcountry.edit("","",[],"","","improved") }}</div>
-	</div>
-  
-<div class="control-group">
-		<div class="control-label">{{ birthplace.title }}</div><div class="controls">{{ birthplace.edit }}</div>
-	</div>
-  
-<div class="control-group">
-		<div class="control-label">{{ birthplacerus.title }}</div><div class="controls">{{ birthplacerus.edit }}</div>
-	</div>
-  
-</div>
 
 {tab:Сведения о паспорте}  
 <div class="form-horizontal">
+  
+<div class="control-group">
+		<div class="control-label">{{ person.title }}: {% if personName == "" %}{{ person.edit }}{% else %}<b>{{ personName }}</b>{% endif %}</div>
+	</div>
+  
 
 	<div class="control-group">
 		<div class="control-label">{{ type.title }}</div><div class="controls">{{ type.edit }}</div>
@@ -79,6 +51,10 @@
 <div class="control-group">
 		<div class="control-label">{{ namelinelat.title }}</div><div class="controls">{{ namelinelat.edit }}</div>
 	</div>
+  
+<div class="control-group"><div class="control-label">{{ birthdate.title }}</div><div class="controls">{{ birthdate.edit }}</div></div>
+<div class="control-group"><div class="control-label">{{ gender.title }}</div><div class="controls">{{ gender.edit }}</div></div>
+
 
 	<div class="control-group">
 		<div class="control-label">{{ passtype.title }}</div><div class="controls">{{ passtype.edit }}</div>
@@ -104,6 +80,10 @@
 {tab:Место выдачи и прописка}
 <div class="form-horizontal">
 
+<div class="control-group">
+		<div class="control-label">{{ birthplace.title }}</div><div class="controls">{{ birthplace.edit }}</div>
+	</div>
+  
 	<div class="control-group">
 		<div class="control-label">{{ issuecountry.title }}</div><div class="controls">{{ issuecountry.edit }}</div>
 	</div>
@@ -136,7 +116,7 @@
 	</div>
 </div>
 
-{tab:Дополнительные сведения}  
+{tab:Дополнительно}  
 <div class="form-horizontal">
   
 	<div class="control-group">
@@ -156,7 +136,7 @@
 	</div>
 </div>
 
-{tab:Фото человека и копия паспорта} 
+{tab:Фото} 
 <div class="form-horizontal">
   
 	<div class="control-group">
@@ -175,7 +155,10 @@
   
 </div>
 
-
+{tab:JSON}
+<div class="control-group">
+		<div class="control-label">{{ ocrjson.title }}</div><div class="controls">{{ ocrjson.edit }}</div>
+	</div>
 {/tabs}
 <br>
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
