@@ -10,12 +10,8 @@
   
 <div class="personalInfoBox">
 <div class="form-horizontal">
-
-  <div class="control-group detailsLine">
-		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на латинице{% else %}Name in English{% endif %}</div>:<div class="detailsValue">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</div>
-	</div>
 	
-  <div class="control-group detailsLine">
+<div class="control-group detailsLine">
 		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на латинице{% else %}Name in English{% endif %}</div>:<div class="detailsValue">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</div>
 	</div>
 
@@ -29,7 +25,7 @@
 	</div>
 
 	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ dateofbirth.title }}</div>:<div class="detailsValue">{{ dateofbirth("d-m-Y") }}</div>
+		<div class="detailsLabel">{{ dateofbirth.title }}</div>:<div class="detailsValue">{{ dateofbirth("d.m.Y") }}</div>
 	</div>
   
 <div class="control-group detailsLine">
