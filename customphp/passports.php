@@ -16,48 +16,140 @@ function ESCustom_passports($row_new, $row_old)
     if (isset($row_new['id']) and (int)$row_new['listing_published'] == 1) {
 
         if ($row_new['es_passportphotocopy'] != '') {
-            if ($row_new['es_ocrjson'] == '') {
 
-                $path = 'http://188.166.79.138/images/passports/';
-                $file = $row_new['es_passportphotocopy'];
+            $filePath = JPATH_SITE . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'passports' . DIRECTORY_SEPARATOR . $row_new['es_passportphotocopy'];
+            if (file_exists($filePath)) {
+                $listing_id = findPassportIDByFile($row_new);
 
-                $modelId = 'f9d4afd8-fb08-4e67-80cd-3b92e781231c';
-                $url = 'https://app.nanonets.com/api/v2/OCR/Model/' . $modelId . '/LabelUrls/?async=false';
-                //$url = 'https://joomlaboat.com';
-                $payload = 'urls=' . $path . $file;
-                $result_str = makePostRequest($url, $payload);
+                if ($listing_id === null) {
+                    processPassportFile($row_new);
+                } else {
+                    echo '$listing_id=' . $listing_id . '<br/>';
+                    //Delete uploaded file
+                    unlink($filePath);
 
-                $app = Factory::getApplication();
+                    //Delete new (extra) record
+                    $db = Factory::getDBO();
+                    $query = 'DELETE FROM #__customtables_table_passports WHERE id=' . $row_new['id'];
+                    $db->setQuery($query);
+                    $db->execute();
 
-                if ($result_str == '') {
-                    $app->enqueueMessage('Could not run the Passport recognition. Result is empty.', 'error');
-                    return '';
+                    //Redirect
+                    $returnto = '';//aHR0cDovL2xvY2FsaG9zdC9pbmRleC5waHAvcnUvcGFzc3BvcnRzLXJ1I2EzNQ==
+                    $link = '/passports-ru?view=details&listing_id=' . $listing_id . '&returnto=';
+                    $jinput = Factory::getApplication()->input;
+
+                    $jinput->set('returnto', base64_encode($link));
+                    //$this->setRedirect($link);
                 }
-
-                try {
-                    $result = json_decode($result_str);
-                } catch (Exception $e) {
-                    $app->enqueueMessage('Caught exception: ' . $e->getMessage(), 'error');
-                    return '';
-                }
-
-                if ($result->message != 'Success') {
-                    $app->enqueueMessage('Caught exception: ' . $result->message . ' File: ' . $path . $file, 'error');
-                    return '';
-                }
-                saveJSONString($row_new['id'], $result_str);
-                $row_new['es_ocrjson'] = $result_str;
             }
-
-            if ($row_new['es_ocrjson'] != '') {
-                JSONtoTable($row_new);
-            }
-
-            if($row_new['First_Name1']!== null and $row_new['First_Name1']!='' and $row_new['Surname1']!== null and $row_new['Surname1']!='')
-                connect2Person($row_new);
         }
     }
 }
+
+function processPassportFile($row_new)
+{
+    if ($row_new['es_ocrjson'] == '') {
+
+        $path = 'http://188.166.79.138/images/passports/';
+        $file = $row_new['es_passportphotocopy'];
+
+        $modelId = 'f9d4afd8-fb08-4e67-80cd-3b92e781231c';
+        $url = 'https://app.nanonets.com/api/v2/OCR/Model/' . $modelId . '/LabelUrls/?async=false';
+        //$url = 'https://joomlaboat.com';
+        $payload = 'urls=' . $path . $file;
+        $result_str = makePostRequest($url, $payload);
+
+        $app = Factory::getApplication();
+
+        if ($result_str == '') {
+            $app->enqueueMessage('Could not run the Passport recognition. Result is empty.', 'error');
+            return '';
+        }
+
+        try {
+            $result = json_decode($result_str);
+        } catch (Exception $e) {
+            $app->enqueueMessage('Caught exception: ' . $e->getMessage(), 'error');
+            return '';
+        }
+
+        if ($result->message != 'Success') {
+            $app->enqueueMessage('Caught exception: ' . $result->message . ' File: ' . $path . $file, 'error');
+            return '';
+        }
+        saveJSONString($row_new['id'], $result_str);
+        $row_new['es_ocrjson'] = $result_str;
+    }
+
+    if ($row_new['es_ocrjson'] != '') {
+        JSONtoTable($row_new);
+    }
+
+    if ($row_new['First_Name1'] !== null and $row_new['First_Name1'] != '' and $row_new['Surname1'] !== null and $row_new['Surname1'] != '')
+        connect2Person($row_new);
+}
+
+function findPassportIDByFile($row_new)
+{
+    $filePath = JPATH_SITE . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'passports' . DIRECTORY_SEPARATOR . $row_new['es_passportphotocopy'];
+    //echo 'Uploaded file: ' . $filePath . '<br/>';
+
+    $matchingFiles = compareFileByCRC($filePath);
+
+    if (count($matchingFiles) == 0)
+        return null;
+
+    $existingPassportFileName = $matchingFiles[0];
+
+    $db = Factory::getDBO();
+    $query = 'SELECT id FROM #__customtables_table_passports WHERE es_passportphotocopy=' . $db->quote($existingPassportFileName) . ' LIMIT 1';
+
+    $db->setQuery($query);
+    $recs = $db->loadAssocList();
+
+    if (count($recs) == 0) {
+        echo 'File already exists: ' . $existingPassportFileName . '<br/>';
+        die;
+    }
+    return $recs[0]['id'];
+}
+
+function compareFileByCRC($filePath)
+{
+    $filePathList = explode(DIRECTORY_SEPARATOR, $filePath);
+    $originalFile = end($filePathList);
+    if (!is_file($filePath)) {
+        return null;
+    }
+
+    $fileCRC = hash_file('crc32b', $filePath);
+    $originalSHA256 = hash_file('sha256', $filePath);
+
+    $folderPath = dirname($filePath);
+
+    $matchingFiles = array();
+
+    if ($handle = opendir($folderPath)) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != '.' && $file != '..' && is_file($folderPath . '/' . $file)) {
+                $fileCRC2 = hash_file('crc32b', $folderPath . '/' . $file);
+                if ($fileCRC === $fileCRC2) {
+                    if ($file != $originalFile) {
+
+                        $fileSHA256 = hash_file('sha256', $folderPath . '/' . $file);
+                        if ($originalSHA256 == $fileSHA256)
+                            $matchingFiles[] = $file;
+                    }
+                }
+            }
+        }
+        closedir($handle);
+    }
+
+    return $matchingFiles;
+}
+
 
 function getPersonIDOrAddTheRecord($row_new)
 {
@@ -248,7 +340,7 @@ function JSONtoTable(&$row_new): bool
     $row_new['NativeFirst_Name'] = getPredictionValue($prediction, 'First_Name', true);
 
     $sets = [];
-    if($Surname1!='' and $First_Name1!='') {
+    if ($Surname1 != '' and $First_Name1 != '') {
         if ($row_new['es_namelinelat'] == '') {
             $row_new['es_namelinelat'] = $Surname1 . ($Surname2 != '' ? ' ' . $Surname2 : '') . ',' . $First_Name1 . ($First_Name2 != '' ? ' ' . $First_Name2 : '');
             $sets[] = $db->quoteName('es_namelinelat') . '=' . $db->quote($row_new['es_namelinelat']);
