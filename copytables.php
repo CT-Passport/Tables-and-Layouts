@@ -6,10 +6,13 @@ $password = "";
 $tables = ['h82im_customtables_categories', 'h82im_customtables_fields', 'h82im_customtables_layouts', 'h82im_customtables_tables', 'h82im_menu',
     'h82im_customtables_table_workhours'];
 
-truncateTables($servername, $username, $password,$tables);
-copyTables($servername, $username, $password,$tables);
+truncateTables($servername, $username, $password, $tables);
+copyTables($servername, $username, $password, $tables);
 echo '<br/>';
-echo 'DROP TABLE `h82im_customtables_categories`, `h82im_customtables_fields`, `h82im_customtables_layouts`, `h82im_customtables_tables`, `h82im_menu`;';
+foreach ($tables as $table) {
+    echo 'DROP TABLE IF EXISTS `' . $table . '`;';
+}
+
 echo '<br/>';
 
 function copyTable($servername, $username, $password, $tableName)
@@ -22,12 +25,13 @@ function copyTable($servername, $username, $password, $tableName)
     }
 
     $query = 'INSERT INTO `lwsp-ct`.`' . $tableName . '` SELECT * from `lwsp`.`' . $tableName . '`';
+    echo '$query=' . $query . '<br/>';
     $result = $conn->query($query);
 
     echo 'Table "' . $tableName . '" copied<br/>';
 }
 
-function copyTables($servername, $username, $password,$tables)
+function copyTables($servername, $username, $password, $tables)
 
 {
     $conn = new mysqli($servername, $username, $password);
@@ -43,7 +47,7 @@ function copyTables($servername, $username, $password,$tables)
     echo "Tables copied<br/>";
 }
 
-function truncateTables($servername, $username, $password,$tables)
+function truncateTables($servername, $username, $password, $tables)
 {
     $dbname = "lwsp-ct";
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -53,8 +57,11 @@ function truncateTables($servername, $username, $password,$tables)
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $query = 'TRUNCATE TABLE `'.implode('`,`',$tables).'`;';
-    $result = $conn->query($query);
+    foreach ($tables as $table) {
+        $query = 'TRUNCATE TABLE `' . $table . '`;';
+        echo '$query=' . $query . '<br/>';
+        $result = $conn->query($query);
+    }
 
     echo "Tables truncated<br/>";
 }
