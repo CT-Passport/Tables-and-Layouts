@@ -6,15 +6,14 @@
 <div class="datagrid">
 
 <div class="searchBox">
-  <div>{{ html.search("person","","reload") }}</div>
-  <div>{{ html.search("issuecountry","","reload") }}</div>
+  <div>{{ html.search("namelinelat","","reload") }}</div>
   <div>{{ html.search("passportseries,number") }}</div>
 <div>{{ html.searchbutton }}</div>
 </div>  
   
 <table>
 <thead><tr><th>{{ html.batch("checkbox") }}</th>
-<th>#</th>
+<th>{{ namelinelat.title }}</th>
 <th>{{ person.title }}</th>
 <th>{{ type.title }}</th>
 <th>{{ issuecountry.title }}</th>  
@@ -29,12 +28,12 @@
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td>{{ record.id }}</td>
-<td><a href='{{ record.link(true) }}'>{{ person }}</a></td>
+<td><a href='{{ record.link(true) }}'>{{ namelinelat }}</a></td>
+<td>{{ person }}</td>
 <td>{{ type }}</td>
 <td>{{ issuecountry }}</td>  
 <td>{{ passportseries }} {{ number }}</td>  
-<td>{{ issuedate("Y-m-d") }}<br/>{{ expirationdate }}</td>  
+<td>{{ issuedate("d.m.Y") }}<br/>{{ expirationdate("d.m.Y") }}</td>  
 <td>{{ passportphotocopy("","icon-link",32,"_blank") }}
   
   {% if ocrjson.value != "" %}
@@ -49,7 +48,7 @@
   
   
 <tfoot><tr><th>{{ html.batch('edit','delete') }}</th>
-<th>#</th>
+<th>{{ namelinelat.title }}</th>
 <th>{{ person.title }}</th>
 <th>{{ type.title }}</th>
 <th>{{ issuecountry.title }}</th>  
