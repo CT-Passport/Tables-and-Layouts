@@ -14,15 +14,12 @@ use Joomla\CMS\Factory;
 function ESCustom_passports($row_new, $row_old)
 {
     if (isset($row_new['id']) and (int)$row_new['listing_published'] == 1) {
-        $db = JFactory::getDBO();
 
         if ($row_new['es_passportphotocopy'] != '') {
             if ($row_new['es_ocrjson'] == '') {
 
                 $path = 'http://188.166.79.138/images/passports/';
                 $file = $row_new['es_passportphotocopy'];
-
-                echo $row_new['es_passportphotocopy'] . '<br/>';
 
                 $modelId = 'f9d4afd8-fb08-4e67-80cd-3b92e781231c';
                 $url = 'https://app.nanonets.com/api/v2/OCR/Model/' . $modelId . '/LabelUrls/?async=false';
@@ -49,30 +46,53 @@ function ESCustom_passports($row_new, $row_old)
                     return '';
                 }
                 saveJSONString($row_new['id'], $result_str);
-                $row_new['es_ocrjson'] == $result_str;
+                $row_new['es_ocrjson'] = $result_str;
             }
 
-            if ($row_new['es_ocrjson'] != '')
+            if ($row_new['es_ocrjson'] != '') {
                 JSONtoTable($row_new);
+            }
 
-            connect2Person($row_new);
+            if($row_new['First_Name1']!== null and $row_new['First_Name1']!='' and $row_new['Surname1']!== null and $row_new['Surname1']!='')
+                connect2Person($row_new);
         }
     }
 }
 
-function getPersonIDOrAddTheRecord($lastName, $firstName, $dateOfBirth, $gender, int $isMigrant, $citizenshipType, $ethnicity)
+function getPersonIDOrAddTheRecord($row_new)
 {
+    if ((int)($row_new['es_type']) == 3)
+        $isMigrant = 1;
+    else
+        $isMigrant = 0;
+
+    if ((int)($row_new['es_issuecountry']) == 1823)
+        $citizenshipType = 1;
+    else
+        $citizenshipType = 2;
+
+    $firstName = $row_new['First_Name1'] . ($row_new['First_Name2'] != '' ? ' ' . $row_new['First_Name2'] : '');
+
     $db = Factory::getDBO();
-    $query = 'SELECT id FROM #__customtables_table_people WHERE es_lastnamelat=' . $db->quote($lastName) . ' AND es_firstnamelat=' . $db->quote($firstName) . ' AND es_dateofbirth=' . $db->quote($dateOfBirth) .
-        ' AND es_gender=' . $db->quote($gender) . ' LIMIT 1';
+    $query = 'SELECT * FROM #__customtables_table_people WHERE es_lastnamelat=' . $db->quote($row_new['Surname1']) . ' AND es_firstnamelat=' . $db->quote($firstName)
+        . ' AND es_dateofbirth=' . $db->quote($row_new['es_birthdate']) .
+        ' AND es_gender=' . $db->quote($row_new['es_gender']) . ' LIMIT 1';
 
     $db->setQuery($query);
     $recs = $db->loadAssocList();
 
     if (count($recs) == 0) {
-        $query = 'INSERT INTO #__customtables_table_people (es_lastnamelat,es_firstnamelat,es_dateofbirth,es_gender,es_ismigrant,es_citizenshiptype,es_ethnicity)'
-            . ' VALUES (' . $db->quote($lastName) . ',' . $db->quote($firstName) . ',' . $db->quote($dateOfBirth) . ',' . $db->quote($gender) . ',' . $db->quote($isMigrant)
-            . ',' . $db->quote($citizenshipType) . ',' . $db->quote($ethnicity) . ')';
+        $query = 'INSERT INTO #__customtables_table_people ('
+            . 'es_lastnamelat,es_middlenamelat, es_firstnamelat,'
+            . 'es_lastnamenative, es_firstnamenative,'
+            . 'es_dateofbirth,es_gender,'
+            . 'es_ismigrant,es_citizenshiptype,es_ethnicity)'
+
+            . ' VALUES ('
+            . $db->quote($row_new['Surname1']) . ',' . $db->quote($row_new['Surname2']) . ',' . $db->quote($firstName) . ','
+            . $db->quote($row_new['NativeSurname']) . ',' . $db->quote($row_new['NativeFirst_Name']) . ','
+            . $db->quote($row_new['es_birthdate']) . ',' . $db->quote($row_new['es_gender']) . ','
+            . $db->quote($isMigrant) . ',' . $db->quote($citizenshipType) . ',' . ($row_new['es_ethnicity'] == '' ? 'NULL' : $db->quote($row_new['es_ethnicity'])) . ')';
 
         $db->setQuery($query);
         $db->execute();
@@ -88,26 +108,32 @@ function connect2Person(array $row_new)
 
         $db = Factory::getDBO();
         $listing_id = $row_new['id'];
-
-        $nameList = explode(',', $row_new['es_namelinelat']);
-        $lastName = $nameList[0];
-        $firstName = $nameList[1];
-
-        if ((int)($row_new['es_type']) == 3)
-            $isMigrant = 1;
-        else
-            $isMigrant = 0;
-
-        if ((int)($row_new['es_issuecountry']) == 1823)
-            $citizenshipType = 1;
-        else
-            $citizenshipType = 2;
-
-        $personId = getPersonIDOrAddTheRecord($lastName, $firstName, $row_new['es_birthdate'], $row_new['es_gender'], $isMigrant, $citizenshipType, $row_new['es_ethnicity']);
+        $personId = getPersonIDOrAddTheRecord($row_new);
 
         $sets[] = $db->quoteName('es_person') . '=' . $db->quote($personId);
+        //if (count($sets) > 0) {
+        $query = 'UPDATE #__customtables_table_passports SET ' . implode(',', $sets) . ' WHERE id = ' . $listing_id;
+        $db->setQuery($query);
+        $db->execute();
+        //}
+    } else {
+        $db = Factory::getDBO();
+        $query = 'SELECT * FROM #__customtables_table_people WHERE id= ' . $row_new['es_person'] . ' LIMIT 1';
+
+        $db->setQuery($query);
+        $recs = $db->loadAssocList();
+        if (count($recs) == 0) {
+            $row_new['es_person'] = null;
+            connect2Person($row_new);
+            return;
+        }
+        $sets = [];
+
+        if (($recs[0]['es_ethnicity'] === null or $recs[0]['es_ethnicity'] == '') and $row_new['es_ethnicity'] != '')
+            $sets[] = $db->quoteName('es_ethnicity') . '=' . $db->quote($row_new['es_ethnicity']);
+
         if (count($sets) > 0) {
-            $query = 'UPDATE #__customtables_table_passports SET ' . implode(',', $sets) . ' WHERE id = ' . $listing_id;
+            $query = 'UPDATE #__customtables_table_people SET ' . implode(',', $sets) . ' WHERE id = ' . $recs[0]['id'];
             $db->setQuery($query);
             $db->execute();
         }
@@ -124,26 +150,25 @@ function getPredictionValue(array $prediction, $label, $changeCase = false): ?st
             } else
                 return $p->ocr_text;
         }
-
     }
     return null;
 }
 
-function saveJSONValue(array $row_new, array $prediction, string $label, string $fieldName, $changeCase = false): void
+function getPredictionValues(array $prediction, $label, $changeCase = false): array
 {
-    if ($row_new['es_' . $fieldName] == '') {
-        $listing_id = $row_new['id'];
+    $values = [];
 
-        $str = getPredictionValue($prediction, $label, $changeCase);
-
-        $sets = [];
-        $db = JFactory::getDBO();
-        $query = 'UPDATE #__customtables_table_passports SET ' . $db->quoteName('es_' . $fieldName) . '=' . $db->quote($str) . ' WHERE id = ' . $listing_id;
-        $db->setQuery($query);
-        $db->execute();
+    foreach ($prediction as $p) {
+        if ($p->label == $label) {
+            if ($changeCase) {
+                $str = mb_strtolower($p->ocr_text, 'UTF-8');
+                $values[] = mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
+            } else
+                $values[] = $p->ocr_text;
+        }
     }
+    return $values;
 }
-
 
 function JSONtoTable(&$row_new): bool
 {
@@ -163,17 +188,73 @@ function JSONtoTable(&$row_new): bool
     }
 
     $prediction = $result->result[0]->prediction;
+    $Code = getPredictionValue($prediction, 'Code');
     $db = JFactory::getDBO();
 
-    $sets = [];
-    if ($row_new['es_namelinelat'] == '') {
-        $Surname = getPredictionValue($prediction, 'Surname', true);
-        $First_Name = getPredictionValue($prediction, 'First_Name', true);
-        $row_new['es_namelinelat'] = $Surname . ',' . $First_Name;
-        $sets[] = $db->quoteName('es_namelinelat') . '=' . $db->quote($Surname . ',' . $First_Name);
+
+    $MRZ = getPredictionValue($prediction, 'MRZ');
+    if ($MRZ !== null)
+        $MRZ = str_replace(' ', '', $MRZ);
+
+    $Surname1 = '';
+    $Surname2 = '';
+    $First_Name1 = '';
+    $First_Name2 = '';
+
+    if ($MRZ !== null) {
+        $MRZList = explode('u003cu003c', $MRZ);
+
+        if (substr($MRZList[0], 0, 3) == $Code) {
+            $n = substr($MRZList[0], 3, strlen($MRZList[0]) - 3);
+            $MRZList2 = explode('u003c', $n);
+            $Surname1 = $MRZList2[0];
+            if (count($MRZList2) > 1)
+                $Surname2 = $MRZList2[1];
+        } else {
+
+            $list = explode('u003c', $MRZList[0]);
+            if (count($list) > 1) {
+                if (substr($list[1], 0, 3) == $Code) {
+                    $Surname1 = substr($list[1], 3, strlen($MRZList[0]) - 3);
+                    if (count($list) > 2)
+                        $Surname2 = $list[2];
+                } else {
+                    echo 'Invalid MRZ<br/>';
+                    echo '1MRZ=' . $MRZ . '<br/>';
+                    die;
+                }
+            } else {
+                if (substr($list[0], 2, 3) == $Code) {
+                    $Surname1 = substr($list[0], 5, strlen($list[0]) - 5);
+                } else {
+                    echo 'Invalid MRZ<br/>';
+                    echo '2MRZ=' . $MRZ . '<br/>';
+                    die;
+                }
+            }
+        }
+
+        $MRZList2 = explode('u003c', $MRZList[1]);
+        $First_Name1 = $MRZList2[0];
+        $First_Name2 = $MRZList2[1] ?? '';
+
+        $row_new['Surname1'] = mb_convert_case(mb_strtolower($Surname1, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        $row_new['Surname2'] = mb_convert_case(mb_strtolower($Surname2, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        $row_new['First_Name1'] = mb_convert_case(mb_strtolower($First_Name1, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        $row_new['First_Name2'] = mb_convert_case(mb_strtolower($First_Name2, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
     }
 
-    $Code = getPredictionValue($prediction, 'Code');
+    $row_new['NativeSurname'] = getPredictionValue($prediction, 'Surname', true);
+    $row_new['NativeFirst_Name'] = getPredictionValue($prediction, 'First_Name', true);
+
+    $sets = [];
+    if($Surname1!='' and $First_Name1!='') {
+        if ($row_new['es_namelinelat'] == '') {
+            $row_new['es_namelinelat'] = $Surname1 . ($Surname2 != '' ? ' ' . $Surname2 : '') . ',' . $First_Name1 . ($First_Name2 != '' ? ' ' . $First_Name2 : '');
+            $sets[] = $db->quoteName('es_namelinelat') . '=' . $db->quote($row_new['es_namelinelat']);
+        }
+    }
+
     $countryID = getCountryID($Code);
     if ($row_new['es_issuecountry'] === null or $row_new['es_issuecountry'] == '') {
         if ($countryID !== null) {
@@ -212,6 +293,7 @@ function JSONtoTable(&$row_new): bool
 
     if ($row_new['es_issuedate'] === null or $row_new['es_issuedate'] == '') {
         $Date_of_Issue = getPredictionValue($prediction, 'Date_of_Issue');
+        echo '$Date_of_Issue=' . $Date_of_Issue . '<br>';
         $newDate = convertPassportDate($Date_of_Issue);
         if ($newDate !== false) {
             $row_new['es_issuedate'] = $newDate;
@@ -280,8 +362,17 @@ function JSONtoTable(&$row_new): bool
         }
     }
 
-    if ($row_new['es_birthplace'] === null or $row_new['es_birthplace'] == '') {
+    if ($row_new['es_issueplace'] === null or $row_new['es_issueplace'] == '') {
 
+        $Authorities = getPredictionValues($prediction, 'Authority');
+
+        if (count($Authorities) > 0) {
+            $row_new['es_issueplace'] = implode(', ', $Authorities);
+            $sets[] = $db->quoteName('es_issueplace') . '=' . $db->quote(implode(', ', $Authorities));
+        }
+    }
+
+    if ($row_new['es_birthplace'] === null or $row_new['es_birthplace'] == '') {
         $Place_of_birth = getPredictionValue($prediction, 'Place_of_birth');
         $Place_of_birthID = getPlaceCityIDOrAddTheRecord($Place_of_birth, $countryID);
         if ($Place_of_birthID !== null) {
@@ -290,20 +381,21 @@ function JSONtoTable(&$row_new): bool
         }
     }
 
-    if ($row_new['es_id'] === null or $row_new['es_id'] == '') {
+    if ($MRZ !== null) {
+        if ($row_new['es_id'] === null or $row_new['es_id'] == '') {
 
-        $MRZ = str_replace(' ', '', getPredictionValue($prediction, 'MRZ'));
-        $Passport_Number_NoSpace = str_replace(' ', '', $Passport_Number);
-        $MRZList1 = explode($Passport_Number_NoSpace, $MRZ);
+            $Passport_Number_NoSpace = str_replace(' ', '', $Passport_Number);
+            $MRZList1 = explode($Passport_Number_NoSpace, $MRZ);
 
-        if (count($MRZList1) == 2) {
-            $MRZList2 = explode($Code, $MRZList1[1]);
-            if (count($MRZList2) == 2) {
-                $MRZList3 = explode(strtoupper($gender), $MRZList2[1]);
-                if (count($MRZList3) == 2) {
-                    $id = substr($MRZList3[0], 0, -1);
-                    $row_new['es_id'] = $id;
-                    $sets[] = $db->quoteName('es_id') . '=' . $id;
+            if (count($MRZList1) == 2) {
+                $MRZList2 = explode($Code, $MRZList1[1]);
+                if (count($MRZList2) == 2) {
+                    $MRZList3 = explode(strtoupper($gender), $MRZList2[1]);
+                    if (count($MRZList3) == 2) {
+                        $id = substr($MRZList3[0], 0, -1);
+                        $row_new['es_id'] = $id;
+                        $sets[] = $db->quoteName('es_id') . '=' . $id;
+                    }
                 }
             }
         }
@@ -386,35 +478,36 @@ function convertPassportDate($originalDate)
     // Split by '/' to get the abbreviation part and year
     $parts = explode('/', $originalDate);
     if (count($parts) !== 2) {
-        return false; // Invalid date format
+        $parts = explode(' ', $originalDate);
+        $dayYearPart = trim($parts[0]);
+        $abbreviationPart = trim($parts[1]);
+        $numericMonth = $monthAbbreviations[$abbreviationPart] ?? '';
+        $year = trim($parts[2]);
+    } else {
+        // Extract day and year
+        $dayYearPart = explode(' ', $parts[0])[0];
+
+        $abbreviationPart = trim($parts[1]);
+        // Convert month abbreviation to English
+        $monthPart = explode(' ', $abbreviationPart);
+        $numericMonth = $monthAbbreviations[$monthPart[0]] ?? '';
+
+        $yearPart = trim($parts[1]);
+        $year = explode(' ', $yearPart)[1];
     }
-
-    $abbreviationPart = trim($parts[1]);
-
-    $yearPart = trim($parts[1]);
-    $year = explode(' ', $yearPart)[1];
-
-    // Convert month abbreviation to English
-    $monthPart = explode(' ', $abbreviationPart);
-    $numericMonth = $monthAbbreviations[$monthPart[0]] ?? '';
 
     if (!$numericMonth) {
         return false; // Invalid month abbreviation
     }
 
-    // Extract day and year
-    $dayYearPart = explode(' ', $parts[0])[0];
-
     // Convert to yyyy-mm-dd format
-    $newDate = sprintf("%04d-%02d-%02d", $year, $numericMonth, $dayYearPart);
-    return $newDate;
+    return sprintf("%04d-%02d-%02d", $year, $numericMonth, $dayYearPart);
 }
 
 function saveJSONString(int $listing_id, $string): void
 {
     $db = JFactory::getDBO();
     $query = 'UPDATE #__customtables_table_passports SET es_ocrjson=' . $db->quote($string) . ' WHERE id = ' . $listing_id;
-    echo $query;
     $db->setQuery($query);
     $db->execute();
 }
