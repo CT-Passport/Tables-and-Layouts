@@ -104,9 +104,11 @@ function mindeeProcess(array &$row_new)
     $result = json_decode($json, true);
 
     // Print the content of the document as raw json
-    $result_str = json_encode($result, JSON_PRETTY_PRINT);
-    saveJSONString($row_new['id'], $result_str, 'es_ocrjsonmindee');
-    $row_new['es_ocrjsonmindee'] = $result_str;
+    if($result!='') {
+        $result_str = json_encode($result, JSON_PRETTY_PRINT);
+        saveJSONString($row_new['id'], $result_str, 'es_ocrjsonmindee');
+        $row_new['es_ocrjsonmindee'] = $result_str;
+    }
 }
 
 function nanonetsProcess(array &$row_new, string $filePath)
@@ -115,7 +117,6 @@ function nanonetsProcess(array &$row_new, string $filePath)
     $url = 'https://app.nanonets.com/api/v2/OCR/Model/' . $modelId . '/LabelUrls/?async=false';
     $payload = 'urls=' . $filePath;
     $result_str = makePostRequest($url, $payload);
-
     $app = Factory::getApplication();
 
     if ($result_str == '') {
@@ -347,7 +348,6 @@ function getPredictionValues(array $prediction, $label, $changeCase = false): ar
     }
     return $values;
 }
-
 
 function nanonetsJSONtoTableProcessPrediction(&$row_new,$prediction): bool
 {
