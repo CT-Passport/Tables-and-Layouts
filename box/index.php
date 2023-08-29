@@ -1,23 +1,37 @@
 <?php
 
 require_once 'vendor/autoload.php';
-
+require_once 'db.php';
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
-
 connectDB();
-
 
 //01_SK_NORTH BAY_20122020
 //checkPassports('1.xlsx');
-checkTranslationsNames('1.xlsx');
-checkTranslationsLastNames('1.xlsx');
+//checkTranslationsNames('1.xlsx');
+//checkTranslationsLastNames('1.xlsx');
+checkTranslationsPlaces('1.xlsx');
 
-function connectDB()
+function checkTranslationsPlaces($filePath)
 {
-    define('servername', "localhost");
-    define('username', "jadmin");
-    define('password', "jadmin774");
-    define('database', "joomla_db1");
+    $table = 'h82im_customtables_table_translationsplaces';
+    $rows = getRowValues($filePath, 'Chinese_places', '0');
+    $conn = new mysqli(servername, username, password, database);
+
+    foreach ($rows as $row) {
+        if(isset($row[0]) and isset($row[1]))
+            insertIfNotFound($conn, $table, 'es_namelat', 'es_namerus', $row[0], $row[1]);
+    }
+
+    echo 'Table "' . $table . '" records added<br/>';
+
+    $sql = 'UPDATE h82im_customtables_table_placescities'
+        . ' SET es_namerussubj='
+        . ' (SELECT h82im_customtables_table_translationsplaces.es_namerus'
+        . ' FROM h82im_customtables_table_translationsplaces WHERE LOWER(h82im_customtables_table_translationsplaces.es_namelat)=LOWER(h82im_customtables_table_placescities.es_namelat) LIMIT 1)'
+        . ' WHERE h82im_customtables_table_placescities.es_namerussubj IS NULL OR h82im_customtables_table_placescities.es_namerussubj=""';
+    $result = $conn->query($sql);
+
+    $conn->close();
 }
 
 function checkTranslationsLastNames($filePath)
@@ -37,6 +51,8 @@ function checkTranslationsLastNames($filePath)
         . ' (SELECT h82im_customtables_table_translationslastnames.es_namerus'
         . ' FROM h82im_customtables_table_translationslastnames WHERE LOWER(h82im_customtables_table_translationslastnames.es_namelat)=LOWER(h82im_customtables_table_people.es_lastnamelat) LIMIT 1)'
         . ' WHERE es_lastnamerussubj IS NULL OR es_lastnamerussubj=""';
+
+    $result = $conn->query($sql);
     $conn->close();
 }
 
@@ -126,15 +142,13 @@ function checkIfExists($conn, $table, $column1, $value1)
     return true;
 }
 
-
 function checkPassports($filePath)
 {
     $rows = getRowValues($filePath, 'Pass_data_check', '0');
     print_r($rows);
 }
 
-
-function getRowValues($filePath, $sheetName, $stopCol1Value = ''): array
+function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
 {
     $reader = ReaderEntityFactory::createReaderFromFile($filePath);
     $reader->open($filePath);
