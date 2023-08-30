@@ -1,5 +1,5 @@
 {{ html.goback }}
-<legend>Информация о человеке</legend>
+<legend>Информация о человеке <a href="/ludi?view=edititem&amp;listing_id={{ record.id }}&amp;returnto={{ ("/ludi?view=details&listing_id=" ~ record.id) | base64encode }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="Редактировать" title="Редактировать"></a></legend>
 <h4>{{ id.title }}: {{ id }}</h4>
 	
 {tab:Персональная информация}

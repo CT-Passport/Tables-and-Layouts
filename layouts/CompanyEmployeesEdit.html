@@ -35,6 +35,11 @@
 {% set companyId = url.getint("company") %}
 {% set companyName = tables.getrecord("companyName",companyId) %}
 <input type="hidden" name="comes_company" value="{{ companyId }}" />
+  
+  
+company.value={{ companyId }}<br/>
+{% set companyObject = tables.getrecord("CompanyJSON",companyId) | json_decode %}
+CC: {{ companyObject.countryCode }}
 {% else %}
 {% set companyId = company.value %}
 {% set companyName = company %}
@@ -49,9 +54,28 @@
 		<div class="control-label">{{ company.title }}: <b>{{ companyName }}</b></div>
 	</div>
 
+  
 	<div class="control-group">
 		<div class="control-label">{{ person.title }}</div><div class="controls">
-      {{ person.edit("","",["people","layout:PersonName","","ismigrant=="~URLisMigrant,"firstnamerussubj"],"PersonName","add-person?ismigrant=" ~ URLisMigrant,"improved") }}</div>
+      
+      {% if companyObject.countryCode == 'RU' %}
+      {% set peoplefilter = "ismigrant=="~URLisMigrant %}
+      {% set addPersonLink = "add-person?ismigrant=" ~ URLisMigrant %}
+            {{ person.edit("","",["people","layout:PersonName","",peoplefilter,"firstnamerussubj"],"PersonName",addPersonLink,"improved") }}</div>
+      {% else %}
+      
+      {% if URLisMigrant == 1 %}
+      {% set URLisMigrantREV = 0 %}
+      {% else %}
+      {% set URLisMigrantREV = 1 %}
+      {% endif %}
+      
+      {% set peoplefilter = "ismigrant="~URLisMigrantREV %}
+      {% set addPersonLink = "add-person?ismigrant="~URLisMigrantREV %}
+            {{ person.edit("","",["people","fullnamelat","",peoplefilter,"fullnamelat"],"PersonName",addPersonLink,"improved") }}</div>
+      
+      {% endif %}
+
 	</div>
 
 <div class="control-group">

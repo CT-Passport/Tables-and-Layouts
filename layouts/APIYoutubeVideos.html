@@ -1,0 +1,30 @@
+<style>
+.datagrid th{text-align:center;}
+.datagrid td{text-align:center;}
+</style>
+<div style="float:right;">{recordcount}</div>
+
+<div class="datagrid">
+<div>{batchtoolbar:edit,publish,unpublish,refresh,delete}</div>
+
+{catalogtable:
+"#<br/>{checkbox}":"{id}<br/>{toolbar:checkbox}",
+"*videosource*<br/>{search:videosource}":"[videosource]",
+  "*videoid*<br/>{search:videoid}":"[videoid][_if:trackid]<br/><b>[trackid]</b>[_endif:trackid]",
+  "*videoids*<br/>{search:videoids}":"[videoids]",
+"*imageurl*":"[imageurl:,200,true,true]",
+"*title*<br/>{search:title}":"[title]",
+"*lastupdate*":"[lastupdate]",
+"*isvideo*":"[isvideo]",
+"*link*<br/>{search:link}":"[link]",
+"*latitude*":"[latitude]",
+"*duration*":"[duration]",
+"*datalink*<br/>{search:datalink}":"[datalink]",
+"*status*<br/>{search:status}":"[status]",
+"*error*<br/>{search:error}":"[error]",
+
+"Action<br/>{searchbutton}":"{toolbar:edit,publish,refresh,delete}";
+css_class_name
+}
+</div>
+<br/><div style='text-align:center;'>{pagination}</div>

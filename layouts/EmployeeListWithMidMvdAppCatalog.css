@@ -1,0 +1,11 @@
+.datagrid th{text-align:left;}
+.datagrid td{text-align:left;}
+
+.dateInputBox input{
+width:120px !important;
+display:inline-block;
+}
+
+.dateInputBox{
+width:220px;
+}

@@ -12,13 +12,15 @@
 </div>  
   
 <table>
-<thead><tr><th>{{ html.batch("checkbox") }}</th>
+<thead><tr>
+<th>{{ html.batch("checkbox") }}</th>
+<th>{{ number.title }}</th>
 <th>{{ namelinelat.title }}</th>
 <th>{{ person.title }}</th>
-<th>{{ type.title }}</th>
-<th>{{ issuecountry.title }}</th>  
-<th>{{ passportseries.title }}<br/>{{ number.title }}</th>
-<th>{{ issuedate.title }}<br/>{{ expirationdate.title }}</th>
+<th style="width:40px !important;min-width: 40px">{{ gender.title }}</th>
+<th>{{ birthdate.title }}</th>
+<th>{{ issueauthority.title }}</th>  
+<th>Выдача и окончание паспорта</th>
 <th>Скан</th>  
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
 </tr></thead>
@@ -26,34 +28,70 @@
 
 <tbody>
 {% block record %}
+  
+  {% set countryID =issueauthority.getvalue("country") %}
+  {% if countryID != '' %}
+  {% set issueAuth = tables.getrecord("countryDetailsJson",countryID) | json_decode %}
+  {% endif %}
+  
+  {% set missingFlds = record.MissingFields(", ") %}
+  
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td><a href='{{ record.link(true) }}'>{{ namelinelat }}</a></td>
-<td>{{ person }}</td>
-<td>{{ type }}</td>
-<td>{{ issuecountry }}</td>  
+  
+  
 <td>{{ passportseries }} {{ number }}</td>  
-<td>{{ issuedate("d.m.Y") }}<br/>{{ expirationdate("d.m.Y") }}</td>  
+  
+  
+<td><a href="{{ record.link(true) }}">{{ namelinelat }}</a></td>
+<td><a href="/index.php/ru/ludi?view=details&listing_id={{ person.value }}" target="_blank">{{ person }}</a></td>
+<td style="width:40px;">{{ gender.get("snamelat") }}</td>
+<td>{{ birthdate("d.m.Y") }}<br/>{{ birthplace }}</td>
+<td>
+  {% if countryID != '' %}
+  <img src="/images/flags/{{ issueAuth.code|lower  }}.png" style="margin-right:10px;" alt="{{ issueAuth.namerussubj }}" title="{{ issueAuth.namerussubj }}" /><br/>
+  {% endif %}
+  <b>{{ issueplace }}</b><br/>
+  
+  {{ issueauthority.get("namerussubj") }}</td>  
+<td>
+  {% set color="black" %}
+  {% if issuedate("d.m") != expirationdate("d.m") %}
+  {% set color="red" %}
+  {% endif %}
+  
+  <span style="color:{{ color }}">{{ issuedate("d.m.Y") }}<br/>{{ expirationdate("d.m.Y") }}</span></td> 
+  
+  
 <td>{{ passportphotocopy("","icon-link",32,"_blank") }}
   
-  {% if ocrjson.value != "" %}
-  Распознан
+  {% if ocrjson.value != "" or ocrjsonmindee.value !="" %}
+  Распознан с {% if ocrjson.value != "" %}Nanonets{% endif %}{% if ocrjsonmindee.value != "" %}{% if ocrjson.value != "" %} и {% endif %}Mindee{% endif %}
   {% endif %}
+  
+  
+  
+  
+{% if missingFlds != '' %}
+	<div style="color:red;">{{ missingFlds }}</div>
+{% endif %}
   
   </td>  
 <td>{{ html.toolbar("edit","delete","publish") }}</td>
 </tr>
+
 {% endblock %}
 </tbody>
   
   
 <tfoot><tr><th>{{ html.batch('edit','delete') }}</th>
+<th>{{ number.title }}</th>
 <th>{{ namelinelat.title }}</th>
 <th>{{ person.title }}</th>
-<th>{{ type.title }}</th>
-<th>{{ issuecountry.title }}</th>  
-<th>{{ passportseries.title }}<br/>{{ number.title }}</th>
-<th>{{ issuedate.title }}<br/>{{ expirationdate.title }}</th>
+<th style="width:40px !important;min-width: 40px">{{ gender.title }}</th>
+<th>{{ birthdate.title }}</th>
+<th>{{ issuecountry.title }}<br/>{{ issueplace.title }}</th>
+<th>Выдача и окончание паспорта</th>
 <th>Скан</th>  
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
 </tr></tfoot>

@@ -6,15 +6,17 @@
 <div class="datagrid">
   
 <div class="searchBox">
-  <div>{{ html.search("fullnamerus") }}</div>
+  <div>{{ html.search("shortnamerus") }}</div>
   <div>{{ html.search("phone") }}</div>
   <div>{{ html.search("email") }}</div>
 <div>{{ html.searchbutton() }}</div>
 </div>
   
 <table>
-<thead><tr><th>{{ html.batch("checkbox") }}</th>
-<th>{{ fullnamerus.title }}</th>
+<thead><tr>
+<th>{{ html.batch("checkbox") }}</th>
+<th>{{ country.title }}</th>
+<th>{{ shortnamerus.title }}</th>
 <th>{{ phone.title }}</th>
 <th>{{ email.title }}</th>
 <th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Сотрудники компании{% else %}Company employees{% endif %}</th>
@@ -24,10 +26,20 @@
 
 <tbody>
 {% block record %}
+  
+{% if country.value != '' %}
+{% set issueAuth = tables.getrecord("countryDetailsJson",country.value) | json_decode %}
+{% endif %}
+  
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-
-<td><a href='{{ record.link(true) }}'>{{ fullnamerus }}</a></td>
+<td>{% if country.value != '' %}
+  <img src="/images/flags/{{ issueAuth.code|lower  }}.png" style="margin-right:10px;" alt="{{ issueAuth.namerussubj }}" title="{{ issueAuth.namerussubj }}" /><br/>
+  {% endif %}</td>
+  
+<td><a href='{{ record.link(true) }}'>{{ fullnamerus }}</a>
+  <div style="color:red;">{{ record.missingfields(", ") }}</div>
+</td>
 <td>{{ phone }}</td>
 <td>{{ email }}</td>
 

@@ -49,6 +49,11 @@
   {% endif %}
   {% endif %}
 </td>
-<td style="text-align:center;">{{ tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) }}</td>
+<td style="text-align:center;">{{ tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) }}
+
+
+  <div style="color:red;">{{ record.missingfields(", ") }}</div>
+  
+</td>
 <td>{{ html.toolbar("edit","delete","filebox") }}</td>
 </tr>

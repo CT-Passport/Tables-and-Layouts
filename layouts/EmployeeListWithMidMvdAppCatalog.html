@@ -1,0 +1,72 @@
+<h4>Заявление № {{ tables.getvalue("migmvdapplications","regnum") }}</h4>
+<div class="datagrid" style="width:100%;overflow:auto;display:block;">
+
+<table>
+<thead>
+<tr>
+
+<th>{{ rescountry.title }}</th>  
+<th><div style="width:150px !important;max-width:none;">{{ employee.title }}</div></th>
+<th>{{ resplace.edit }}</th>
+<th>{{ resplacerus.edit }}</th>
+  <th><div style="z-index:32000;">{{ rusentrydate.edit }}</div></th>
+<th>{{ visaenddate.edit }}</th>
+<th>{{ visitpurpose.edit }}</th>
+<th>{{ visamultiplicity.edit }}</th>
+
+<th>{{ visatype.edit }}</th>
+<th>{{ rusvisitplaces.edit }}</th>
+<th>{{ visaisscountry.edit }}</th>
+<th>{{ visaisscity.edit }}</th>
+<th>{{ position.edit }}</th>
+<th>{{ empworkplace.edit }}</th>
+<th>{{ empworkaddress.edit }}</th>
+<th>{{ stayaddressinrus.edit }}</th>
+<th>{{ stayaddressinrushouse.edit }}</th>
+<th>{{ stayaddressinrusstructure.edit }}</th>
+<th>{{ stayaddressinrussframe.edit }}</th>
+<th>{{ stayaddressinrussapartment.edit }}</th>
+<th>{{ stayaddressinrussphone.edit }}</th>
+</tr>
+</thead>
+
+<tbody>
+{% block record %}
+  
+  {% if rescountry.value != '' %}
+  {% set issueAuth = tables.getrecord("countryDetailsJson",rescountry.value) | json_decode %}
+  {% endif %}
+<tr>
+<td style="width:30px !important;max-width:none;">{% if rescountry.value != '' %}
+  <img src="/images/flags/{{ issueAuth.code|lower  }}.png" style="margin-right:10px;" alt="{{ issueAuth.namerussubj }}" title="{{ issueAuth.namerussubj }}" /><br/>
+  {% endif %}</td>
+<td style="width:300px !important;max-width:none;">{{ employee.layout("employeeName") }}</td>
+
+<td>{{ resplace.edit }}</td>
+<td>{{ resplacerus.edit }}</td>
+  <td><div class="dateInputBox">{{ rusentrydate.edit }}</div></td>
+<td><div class="dateInputBox">{{ visaenddate.edit }}</div></td>
+<td>{{ visitpurpose.edit }}</td>
+<td>{{ visamultiplicity.edit }}</td>
+
+<td>{{ visatype.edit }}</td>
+<td>{{ rusvisitplaces.edit }}</td>
+<td>{{ visaisscountry.edit }}</td>
+<td>{{ visaisscity.edit }}</td>
+<td>{{ position.edit }}</td>
+<td>{{ empworkplace.edit }}</td>
+<td>{{ empworkaddress.edit }}</td>
+<td>{{ stayaddressinrus.edit }}</td>
+<td>{{ stayaddressinrushouse.edit }}</td>
+<td>{{ stayaddressinrusstructure.edit }}</td>
+<td>{{ stayaddressinrussframe.edit }}</td>
+<td>{{ stayaddressinrussapartment.edit }}</td>
+<td>{{ stayaddressinrussphone.edit }}</td>
+</tr>
+{% endblock %}
+</tbody>
+
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

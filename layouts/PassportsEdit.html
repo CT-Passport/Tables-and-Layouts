@@ -28,45 +28,45 @@
 <div class="form-horizontal">
   
 <div class="control-group">
-		<div class="control-label">{{ person.title }}: {% if personName == "" %}{{ person.edit }}
+		<div class="control-label">{{ person.label }}: {% if personName == "" %}{{ person.edit }}
           {% else %}<a href="/ludi?view=details&listing_id={{ personId }}" target="_blank"><b>{{ personName }}</b></a>
           {% endif %}</div>
 	</div>
   
 
 	<div class="control-group">
-		<div class="control-label">{{ type.title }}</div><div class="controls">{{ type.edit }}</div>
+		<div class="control-label">{{ type.label }}</div><div class="controls">{{ type.edit }}</div>
 	</div>
   
 	<div class="control-group">
-		<div class="control-label">{{ validitystatus.title }}</div><div class="controls">{{ validitystatus.edit }}</div>
+		<div class="control-label">{{ validitystatus.label }}</div><div class="controls">{{ validitystatus.edit }}</div>
 	</div>
     
 <div class="control-group">
-		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit }}</div>
+		<div class="control-label">{{ ethnicity.label }}</div><div class="controls">{{ ethnicity.edit }}</div>
 	</div>
   
 <div class="control-group">
-		<div class="control-label">{{ namelinelat.title }}</div><div class="controls">{{ namelinelat.edit }}</div>
+		<div class="control-label">{{ namelinelat.label }}</div><div class="controls">{{ namelinelat.edit }}</div>
 	</div>
   
-<div class="control-group"><div class="control-label">{{ birthdate.title }}</div><div class="controls">{{ birthdate.edit }}</div></div>
-<div class="control-group"><div class="control-label">{{ gender.title }}</div><div class="controls">{{ gender.edit }}</div></div>
+<div class="control-group"><div class="control-label">{{ birthdate.label }}</div><div class="controls">{{ birthdate.edit }}</div></div>
+<div class="control-group"><div class="control-label">{{ gender.label }}</div><div class="controls">{{ gender.edit }}</div></div>
 
 	<div class="control-group">
-		<div class="control-label">{{ passportseries.title }}</div><div class="controls">{{ passportseries.edit }}</div>
+		<div class="control-label">{{ passportseries.label }}</div><div class="controls">{{ passportseries.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ number.title }}</div><div class="controls">{{ number.edit }}</div>
+		<div class="control-label">{{ number.label }}</div><div class="controls">{{ number.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ issuedate.title }}</div><div class="controls">{{ issuedate.edit }}</div>
+		<div class="control-label">{{ issuedate.label }}</div><div class="controls">{{ issuedate.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ expirationdate.title }}</div><div class="controls">{{ expirationdate.edit }}</div>
+		<div class="control-label">{{ expirationdate.label }}</div><div class="controls">{{ expirationdate.edit }}</div>
 	</div>
 </div>
 
@@ -74,40 +74,32 @@
 <div class="form-horizontal">
 
 <div class="control-group">
-		<div class="control-label">{{ birthplace.title }}</div><div class="controls">{{ birthplace.edit }}</div>
-	</div>
-  
-	<div class="control-group">
-		<div class="control-label">{{ issuecountry.title }}</div><div class="controls">{{ issuecountry.edit }}</div>
-	</div>
-
-	<div class="control-group">
-		<div class="control-label">{{ issueplace.title }}</div><div class="controls">{{ issueplace.edit }}</div>
+		<div class="control-label">{{ birthplace.label }}</div><div class="controls">{{ birthplace.edit("","",[],"","places-cities-edit") }}</div>
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ issueauthority.title }}</div>
+		<div class="control-label">{{ issueplace.label }}</div><div class="controls">{{ issueplace.edit("","",[],"","places-cities-edit") }}</div>
+	</div>
+  
+  
+<div class="control-group">
+		<div class="control-label">{{ issueauthority.label }}</div>
 
-  <div class="controls">
-{% if issuecountry.value == '' %}
-<span style="color:red;">{% if document.languagepostfix=='_ru' %}Пожалуйста выберите страну{% else %}Please select the country{% endif %}</span>
-
-{% else %}
-   {{ issueauthority.edit('','',[['passissueauthorities','layout:passportIssueAuthoritySelect','','country='~issuecountry.value,'namerussubj']]) }}
-{% endif %}
+<div class="controls">
+   {{ issueauthority.edit('','',[['countries','namerussubj','','','namerussubj'],['passissueauthorities','layout:passportIssueAuthoritySelect']],"","passport-issue-authority-edit-form") }}
 </div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ subdivisioncode.title }}</div><div class="controls">{{ subdivisioncode.edit }}</div>
+		<div class="control-label">{{ subdivisioncode.label }}</div><div class="controls">{{ subdivisioncode.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ id.title }}</div><div class="controls">{{ id.edit }}</div>
+		<div class="control-label">{{ id.label }}</div><div class="controls">{{ id.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ residenceaddress.title }}</div><div class="controls">{{ residenceaddress.edit }}</div>
+		<div class="control-label">{{ residenceaddress.label }}</div><div class="controls">{{ residenceaddress.edit }}</div>
 	</div>
 </div>
 
@@ -115,27 +107,27 @@
 <div class="form-horizontal">
   
 <div class="control-group">
-		<div class="control-label">{{ primstatus.title }}</div><div class="controls">{{ primstatus.edit }}</div>
+		<div class="control-label">{{ primstatus.label }}</div><div class="controls">{{ primstatus.edit }}</div>
 	</div>
   
 	<div class="control-group">
-		<div class="control-label">{{ passtype.title }}</div><div class="controls">{{ passtype.edit }}</div>
+		<div class="control-label">{{ passtype.label }}</div><div class="controls">{{ passtype.edit }}</div>
 	</div>
   
 	<div class="control-group">
-		<div class="control-label">{{ eyescolor.title }}</div><div class="controls">{{ eyescolor.edit }}</div>
+		<div class="control-label">{{ eyescolor.label }}</div><div class="controls">{{ eyescolor.edit }}</div>
 	</div>
   
 <div class="control-group">
-		<div class="control-label">{{ children.title }}</div><div class="controls">{{ children.edit }}</div>
+		<div class="control-label">{{ children.label }}</div><div class="controls">{{ children.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ spouse.title }}</div><div class="controls">{{ spouse.edit }}</div>
+		<div class="control-label">{{ spouse.label }}</div><div class="controls">{{ spouse.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ militaryduty.title }}</div><div class="controls">{{ militaryduty.edit }}</div>
+		<div class="control-label">{{ militaryduty.label }}</div><div class="controls">{{ militaryduty.edit }}</div>
 	</div>
 </div>
 
@@ -143,25 +135,30 @@
 <div class="form-horizontal">
   
 	<div class="control-group">
-		<div class="control-label">{{ personphoto.title }}</div><div class="controls">{{ personphoto.edit }}</div>
+		<div class="control-label">{{ personphoto.label }}</div><div class="controls">{{ personphoto.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ passportphotocopy.title }}</div><div class="controls">{{ passportphotocopy.edit }}</div>
+		<div class="control-label">{{ passportphotocopy.label }}</div><div class="controls">{{ passportphotocopy.edit }}</div>
 	</div>
   
 <hr/>
 
 <div class="control-group">
-		<div class="control-label">{{ externaldocuments.title }}</div><div class="controls">{{ externaldocuments.edit }}</div>
+		<div class="control-label">{{ externaldocuments.label }}</div><div class="controls">{{ externaldocuments.edit }}</div>
 	</div>
   
 </div>
 
 {tab:JSON}
 <div class="control-group">
-		<div class="control-label">{{ ocrjson.title }}</div><div class="controls">{{ ocrjson.edit }}</div>
+		<div class="control-label">{{ ocrjson.label }}</div><div class="controls">{{ ocrjson.edit }}</div>
 	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ ocrjsonmindee.label }}</div><div class="controls">{{ ocrjsonmindee.edit }}</div>
+	</div>
+
 {/tabs}
 <br>
 <div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
