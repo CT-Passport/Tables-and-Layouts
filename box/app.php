@@ -23,16 +23,6 @@ class CronAPP
         $this->loadSpecificCronFile();
     }
 
-    function loadSpecificCronFile()
-    {
-        if (isset($_GET['function']))
-            $this->functionName = preg_replace("/[^A-Za-z0-9 ]/", '', $_GET['function']);//JFactory Application not defined yet
-        elseif (isset($_POST['function']))
-            $this->functionName = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST['function']);//JFactory Application not defined yet
-        else
-            $this->functionName = '';
-    }
-
     public static function print_console(string $string, $logFile = null): void
     {
         $stringLog = str_replace('<br/>', PHP_EOL, $string);
@@ -46,9 +36,19 @@ class CronAPP
         if ($logFile !== null) {
             fwrite($logFile, $stringLog);
 
-            @ob_flush();
-            @flush();
+            //@ob_flush();
+            //@flush();
         }
+    }
+
+    function loadSpecificCronFile()
+    {
+        if (isset($_GET['function']))
+            $this->functionName = preg_replace("/[^A-Za-z0-9 ]/", '', $_GET['function']);//JFactory Application not defined yet
+        elseif (isset($_POST['function']))
+            $this->functionName = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST['function']);//JFactory Application not defined yet
+        else
+            $this->functionName = '';
     }
 
     function getFramework()
@@ -114,6 +114,9 @@ class CronAPP
 
         // Instantiate the application.
         $app = $container->get(SiteApplication::class);
+
+        // Set the application as global app
+        \Joomla\CMS\Factory::$application = $app;
     }
 
     function loadCustomTables()
@@ -122,7 +125,7 @@ class CronAPP
             . DIRECTORY_SEPARATOR . 'libraries' . DIRECTORY_SEPARATOR . 'customtables' . DIRECTORY_SEPARATOR;
 
         require_once($path . 'loader.php');
-        CTLoader();
+        CTLoader(false, false, null, 'com_customtables', true);
     }
 
     function doTheJob($dir, $logFilePrefix)
@@ -138,10 +141,10 @@ class CronAPP
 
         $cronFiles = scandir($path);
         foreach ($cronFiles as $cronFile) {
-            $fileExtensionPart = explode('.',$cronFile);
+            $fileExtensionPart = explode('.', $cronFile);
             $fileExtension = end($fileExtensionPart);
 
-            if ($cronFile != '.' and $cronFile != '..' and $fileExtension=='php' and $cronFile != 'index.php' and $cronFile != 'app.php') {
+            if ($cronFile != '.' and $cronFile != '..' and $fileExtension == 'php' and $cronFile != 'index.php' and $cronFile != 'app.php') {
                 $filename = $path . DIRECTORY_SEPARATOR . $cronFile;
                 if (!str_contains($filename, '.htm') and file_exists($filename)) {
                     $fn = str_replace('.php', '', $cronFile);
@@ -168,7 +171,7 @@ class CronAPP
         self::print_console('CronAPP Log file: ' . $fileNamePath . '<br/>');
 
         $this->logFile = fopen($fileNamePath, "a", 1);
-     }
+    }
 
     function closeLogFile(): void
     {

@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Restricted access');
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Joomla\CMS\Factory;
 
-function cron_xls_file($logFile)
+function cron_1_xls_file($logFile)
 {
     require_once 'vendor/autoload.php';
 
@@ -20,7 +20,9 @@ function cron_xls_file($logFile)
     //checkPassports('1.xlsx');
     CronAPP::print_console(' - Check name translations.<br/>',$logFile);
     checkTranslationsNames('1.xlsx',$logFile);
+	CronAPP::print_console(' - Check last name translations.<br/>',$logFile);
     checkTranslationsLastNames('1.xlsx',$logFile);
+    CronAPP::print_console(' - Check places translations.<br/>',$logFile);
     checkTranslationsPlaces('1.xlsx',$logFile);
 }
 
