@@ -25,12 +25,6 @@ function cron_2_update_people($logFile)
     $ct = new CT();
     $ct->getTable('people');
 
-    if ($ct->RefreshSingleRecord(32, false) == -1) {
-
-    }
-
-    return;
-    
     foreach ($rows as $row) {
         CronAPP::print_console('.', $logFile);
 

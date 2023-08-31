@@ -8,6 +8,7 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Joomla\CMS\Factory;
 
@@ -18,24 +19,24 @@ function cron_1_xls_file($logFile)
     //01_SK_NORTH BAY_20122020
     //CronAPP::print_console(' - Check passports.<br/>',$logFile);
     //checkPassports('1.xlsx');
-    CronAPP::print_console(' - Check name translations.<br/>',$logFile);
-    checkTranslationsNames('1.xlsx',$logFile);
-	CronAPP::print_console(' - Check last name translations.<br/>',$logFile);
-    checkTranslationsLastNames('1.xlsx',$logFile);
-    CronAPP::print_console(' - Check places translations.<br/>',$logFile);
-    checkTranslationsPlaces('1.xlsx',$logFile);
+    CronAPP::print_console(' - Check name translations.<br/>', $logFile);
+    checkTranslationsNames('1.xlsx', $logFile);
+    CronAPP::print_console(' - Check last name translations.<br/>', $logFile);
+    checkTranslationsLastNames('1.xlsx', $logFile);
+    CronAPP::print_console(' - Check places translations.<br/>', $logFile);
+    checkTranslationsPlaces('1.xlsx', $logFile);
 }
 
-function checkTranslationsPlaces($filePath,$logFile)
+function checkTranslationsPlaces($filePath, $logFile)
 {
     $table = 'h82im_customtables_table_translationsplaces';
     $rows = getRowValues($filePath, 'Chinese_places', '0');
 
     foreach ($rows as $row) {
         if (isset($row[0]) and isset($row[1]))
-            insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1],$logFile);
+            insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1], $logFile);
     }
-    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>',$logFile);
+    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>', $logFile);
 
     $sql = 'UPDATE h82im_customtables_table_placescities'
         . ' SET es_namerussubj='
@@ -48,16 +49,16 @@ function checkTranslationsPlaces($filePath,$logFile)
     $db->execute();
 }
 
-function checkTranslationsLastNames($filePath,$logFile)
+function checkTranslationsLastNames($filePath, $logFile)
 {
     $table = 'h82im_customtables_table_translationslastnames';
     $rows = getRowValues($filePath, 'Chinese_last_names', '0');
 
     foreach ($rows as $row) {
-        insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1],$logFile);
+        insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1], $logFile);
     }
 
-    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>',$logFile);
+    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>', $logFile);
 
     $sql = 'UPDATE h82im_customtables_table_people'
         . ' SET es_lastnamerussubj='
@@ -70,7 +71,7 @@ function checkTranslationsLastNames($filePath,$logFile)
     $db->execute();
 }
 
-function checkTranslationsNames($filePath,$logFile)
+function checkTranslationsNames($filePath, $logFile)
 {
     $table = 'h82im_customtables_table_translationsnames';
     $rows = getRowValues($filePath, 'Chinese_names', '0');
@@ -78,11 +79,11 @@ function checkTranslationsNames($filePath,$logFile)
 
     foreach ($rows as $row) {
         if (isset($row[0]) and isset($row[1])) {
-            insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1],$logFile);
+            insertIfNotFound($table, 'es_namelat', 'es_namerus', $row[0], $row[1], $logFile);
         }
     }
 
-    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>',$logFile);
+    CronAPP::print_console(' -- Table "' . $table . '" records added<br/>', $logFile);
 
     $sql = 'SELECT id, es_firstnamelat FROM h82im_customtables_table_people WHERE es_firstnamerussubj IS NULL OR es_firstnamerussubj=""';
     $db->setQuery($sql);
@@ -93,8 +94,8 @@ function checkTranslationsNames($filePath,$logFile)
     }
 
     $rows = $db->loadAssocList();
-    foreach ($rows as $row){
-        CronAPP::print_console(' -- id: ' . $row["id"] . ' - Name: ' . $row["es_firstnamelat"] . '<br>',$logFile);
+    foreach ($rows as $row) {
+        CronAPP::print_console(' -- id: ' . $row["id"] . ' - Name: ' . $row["es_firstnamelat"] . '<br>', $logFile);
 
         $nameLat = $row["es_firstnamelat"];
         $translatedName = findNamePart($nameLat);
@@ -111,19 +112,20 @@ function checkTranslationsNames($filePath,$logFile)
             $translatedName = implode(' ', $name);
         }
 
-        if ($nameLat !== $translatedName) {
-            CronAPP::print_console(' -- New translated name: ' . $translatedName . '<br/>',$logFile);
+        //echo 'Name in the record: '.$nameLat.', Translation: '.$translatedName;
+        //if ($nameLat !== $translatedName) {
+        CronAPP::print_console(' -- New translated name: ' . $translatedName . '<br/>', $logFile);
 
-            $sql = 'UPDATE h82im_customtables_table_people'
-                . ' SET es_firstnamerussubj="' . $translatedName . '"'
-                . ' WHERE id=' . $row["id"];
+        $sql = 'UPDATE h82im_customtables_table_people'
+            . ' SET es_firstnamerussubj="' . $translatedName . '"'
+            . ' WHERE id=' . $row["id"];
 
-            CronAPP::print_console(' -- '.$sql.'<br/>',$logFile);
+        CronAPP::print_console(' -- ' . $sql . '<br/>', $logFile);
 
-            $db = Factory::getDBO();
-            $db->setQuery($sql);
-            $db->execute();
-        }
+        $db = Factory::getDBO();
+        $db->setQuery($sql);
+        $db->execute();
+        //}
     }
 }
 
@@ -134,7 +136,7 @@ function findNamePart($namePart)
     $db->setQuery($sql);
     $db->execute();
 
-    if ($db->getNumRows == 0) {
+    if ($db->getNumRows() == 0) {
         return null;
     }
 
@@ -142,12 +144,12 @@ function findNamePart($namePart)
     return $row['es_namerus'];
 }
 
-function insertIfNotFound($table, $column1, $column2, $value1, $value2,$logFile)
+function insertIfNotFound($table, $column1, $column2, $value1, $value2, $logFile)
 {
     if (trim($value1) != '' and trim($value2) != "") {
         if (!checkIfExists($table, $column1, trim($value1))) {
             $query = 'INSERT INTO ' . $table . ' (' . $column1 . ',' . $column2 . ') VALUES ("' . trim($value1) . '","' . trim($value2) . '");';
-            CronAPP::print_console(' -- '. $query . '<br/>',$logFile);
+            CronAPP::print_console(' -- ' . $query . '<br/>', $logFile);
 
             $db = Factory::getDBO();
             $db->setQuery($query);
