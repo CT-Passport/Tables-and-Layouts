@@ -1,0 +1,28 @@
+{% if "Migrant" in user.usergroups %}
+
+
+<div class="dashboardblock">
+</div>
+{% set PeopleDetailsWorker = tables.getrecord("PeopleDetailsWorker","user="~user.id) %}
+{% if PeopleDetailsWorker == "" %}
+
+<h4 style="text-align:center;">Данных анкеты не найдено.</h4>
+
+{% if record.count("passports","user=" ~ user.id) > 0 %}
+
+{{ tables.getrecords("PassportsCatalogSimpleWorker",'user='~user.id) }}
+
+{% else %}
+<div style="text-align:center;"><a href="/upload-passport?returnto={{ url.base64 }}"><button>Загрузите фото паспорта</button></a></div>
+{% endif %}
+
+
+
+
+{% else %}
+{{ PeopleDetailsWorker }}
+{% endif %}
+
+{% else %}
+<p>This section is for migrant workers only.</p>
+{% endif %}

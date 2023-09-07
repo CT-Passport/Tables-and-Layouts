@@ -55,5 +55,12 @@
   <div style="color:red;">{{ record.missingfields(", ") }}</div>
   
 </td>
-<td>{{ html.toolbar("edit","delete","filebox") }}</td>
+<td>
+  
+  {% if email != "" %}
+  {{ html.toolbar("edit","delete","filebox","resetpassword") }}
+  {% else %}
+  {{ html.toolbar("edit","delete","filebox") }}
+  {% endif %}
+</td>
 </tr>

@@ -1,0 +1,12 @@
+<legend>{{ table.title }}</legend>
+
+<div class="control-group">
+		<div class="control-label">{{ namelat.title }}</div><div class="controls">{{ namelat.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{% if document.languagepostfix=="_ru" %}Наименование национальности по-русски{% else %}Ethnicity in Russian{% endif %}</div>
+<div class="controls">{{ namerussubj.edit }}</div>
+	</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

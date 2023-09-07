@@ -2,8 +2,16 @@
 
 {{ html.goback }}
 
+{% if document.languagepostfix=="_ru" %}<p>Пожалуйста загрузите фото вашего паспорта</p>{% else %}<p>Please upload photo of your passport</p>{% endif %}
+
 		{{ passportphotocopy.title }}<br/>{{ passportphotocopy.edit }}
 
 <div style="text-align:center;">
+  
+{% if document.languagepostfix=="_ru" %}
+{{ html.button("saveandclose","Загрузить паспорт","","btn btn-primary offset-md-") }}
+{% else %}
 {{ html.button("saveandclose","Upload","","btn btn-primary offset-md-") }}
+{% endif %}
+
 </div>

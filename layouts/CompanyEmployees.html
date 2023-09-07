@@ -1,11 +1,15 @@
 {% set companyId = "" %}
 {% set isMigrant = "" %}
+{% set companyDetails = null %}
 
 {% set whereList = url.getstringanddecode("where")|split(" and ") %}
 {% for where in whereList %}
 {% set w = where|split("=") %}
 {% if w[0] == "company" %}
 {% set companyId = w[1] %}
+
+{% set companyDetails = tables.getrecord("CompanyJSON",companyId) | json_decode %}
+
 {% endif %}
 
 {% if w[0] == "ismigrant" %}
@@ -15,22 +19,27 @@
 
 {% endfor %}
 
+<div style="float:right;">{{ html.recordcount }}</div>
 {{ html.goback(nul,"","","/ru/kompanii") }}
 
-{% if isMigrant == 1 %}
-<legend>Мигранты</legend><br>
+{% if isMigrant == "1" %}
+<legend>Мигранты{% if companyId != "" %} <img src="/images/flags/{{ companyDetails.countryCode|lower  }}.png" style="margin-right:10px;" alt="{{ companyDetails.country }}" title="{{ companyDetails.country }}" />{% endif %}</legend>
+{% elseif isMigrant == "0" %}
+<legend>{{ table.title }}</legend>
 {% else %}
-<legend>{{ table.title }}</legend><br>
+<legend>Список сотрудников и мигрантов</legend>
 {% endif %}
 
-<div style="float:right;">{{ html.recordcount }}</div>
 
-{% if companyId != "" %}
-<div style="float:left;"><a
-        href="/sotrudniki-kompanij?view=edititem&company={{ companyId }}&ismigrant={{ isMigrant }}&returnto={{ url.base64 }}"
+
+{% if companyId != "" and isMigrant!="" %}
+<div style="float:left;">
+  {% set link = '/sotrudniki-kompanij?view=edititem&company=' ~ companyId ~ '&ismigrant=' ~ isMigrant %}
+  <a href="{{ link }}&returnto={{ url.base64 }}"
         id="ctToolBarAddNew64" class="toolbarIcons"><img
         src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить сотрудника"
-        title="Добавить сотрудника"></a></div>
+        title="Добавить сотрудника"></a>
+</div>
 {% endif %}
 
 <div class="datagrid">
@@ -63,11 +72,11 @@
         {% block record %}
         <tr>
             <td>{{ html.toolbar("checkbox") }}</td>
-            <td><a href='{{ record.link(true) }}'>{{ company }}</a></td>
+            <td>{{ company }}</td>
             <td><a href='ludi?view=details&listing_id={{ person.value }}'>
               
               {% if ismigrant.value == 0 %}
-              <img src="/images/flags/ru.png" style="margin-right:10px;" /><b>{{ person.layout("PersonName") }}</b>
+              <b>{{ person.layout("PersonName") }}</b>
               {% else %}
               {{ person.layout("PersonName") }}
               {% endif %}

@@ -1,10 +1,8 @@
-<legend>{{ table.title }} - 
+<legend>{% if record.id != "" %}
 
-{% if record.id != "" %}
-
-  {% if ismigrant.value == "1" %}Редактировать мигранта{% else %}Редактировать сотрудника компании{% endif %}
+  {% if ismigrant.value == "1" %}Редактировать анкету{% else %}Эта форма доступна только для иностранных работников.{% endif %}
 {% else %}
-  Добавить мигранта или сотрудника компании
+  Заполнить анкету иностранного работника
 {% endif %}
 </legend><br>
 
@@ -12,14 +10,6 @@
 {tab:Персональная информация}
 
 <div class="form-horizontal">
-
-<div class="control-group">
-		<div class="control-label">{{ ismigrant.title }}</div><div class="controls">{{ ismigrant.edit }}</div>
-	</div>
-
-<hr/>
-{% if ismigrant.value == "1" or ismigrant.value == "" %}
-
 
 <div class="control-group">
 		<div class="control-label">{{ lastnamelat.label }}</div><div class="controls">{{ lastnamelat.edit }}</div>
@@ -46,10 +36,6 @@
 <div class="control-group">
 		<div class="control-label">{{ middlenamerussubj.label }}</div><div class="controls">{{ middlenamerussubj.edit }}</div>
 	</div>
-  
-
-	
-	{% endif %}
   
 <hr/>
   
@@ -78,7 +64,7 @@
 	</div>  
   
 	<div class="control-group">
-		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit("","",[],"","ethnicity-edit","improved") }}</div>
+		<div class="control-label">{{ ethnicity.title }}</div><div class="controls">{{ ethnicity.edit("","",[],"","ethnicity-edit-worker","improved") }}</div>
 	</div>
 
 </div>
@@ -97,10 +83,8 @@
 		<div class="control-label">{{ middlenamenative.label }}</div><div class="controls">{{ middlenamenative.edit }}</div>
 	</div>
 
-{tab:Фото}
-<div class="control-group">
-		<div class="control-label">{{ personphoto.label }}</div><div class="controls">{{ personphoto.edit }}</div>
-	</div>
+
+
 {/tabs}
 
 <br>

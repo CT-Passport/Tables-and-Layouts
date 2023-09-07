@@ -1,0 +1,91 @@
+{{ html.goback }}
+<legend>Добро пожаловать {{ fullnamerus }} <a href="/migrant-ru?view=edititem&amp;listingid={{ record.id }}&amp;returnto={{ ("/migrant-ru") | base64encode }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="Редактировать" title="Редактировать"></a></legend>
+<h4>{{ id.title }}: {{ id }}</h4>
+	
+{tab:Персональная информация}
+
+<div class="personalInfoBox">
+  {% if personphoto.value == "" %}
+<a href="/upload-photo?listing_id={{ record.id }}&amp;returnto={{ ("/ru/migrant-ru") | base64encode }}">
+  <img src="/images/people/empty.png" alt="Загрузить фото" title="Загрузить фото" /></a>
+  {% else  %}
+  {{ personphoto("card") }}
+ <a href="/upload-photo?listing_id={{ record.id }}&amp;returnto={{ ("/ru/migrant-ru") | base64encode }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="Загрузить другое фото" title="Загрузить другое фото"></a>
+
+{% endif  %}
+</div>  
+  
+<div class="personalInfoBox">
+<div class="form-horizontal">
+	
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на латинице{% else %}Name in English{% endif %}</div>:<div class="detailsValue">{{ firstnamelat }} {{ middlenamelat }} {{ lastnamelat }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на русском{% else %}Name in subjective case{% endif %}</div>:<div class="detailsValue">{{ firstnamerussubj }} {{ middlenamerussubj }} {{ lastnamerussubj }}</div>
+	</div>
+
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{% if document.languagepostfix=="_ru" %}Имя на родном языке{% else %}Name in native language{% endif %}</div>:<div class="detailsValue">{{ firstnamenative }} {{ middlenamenative }} {{ lastnamenative }}</div>
+	</div>
+
+	<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ dateofbirth.title }}</div>:<div class="detailsValue">{{ dateofbirth("d.m.Y") }}</div>
+	</div>
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ gender.title }}</div>:<div class="detailsValue">{{ gender }}</div>
+	</div>
+</div>
+
+  
+</div>
+
+{tab:Сведения о гражданстве и паспортах}
+<div class="form-horizontal">  
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ citizenshiptype.title }}</div>:<div class="detailsValue">{{ citizenshiptype }}</div>
+	</div>  
+
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ ethnicity.title }}</div>:<div class="detailsValue">{{ ethnicity }}</div>
+	</div>
+</div>
+
+{{ tables.getrecords("PassportsCatalogSimpleWorker",'person='~record.id) }}
+
+{tab:Визы}
+
+{{ tables.getrecords("VisasCatalogSimple",'person='~record.id) }}
+
+{tab:Должности}
+{{ tables.getrecords("CompanyEmployeeListWorker",'person='~record.id) }}
+
+{tab:Документы}
+
+{% if document.languagepostfix=="_ru" %}{% set addText = "Добавить документ" %}{% else %}{% set addText = "Add Document" %}{% endif %}
+
+<a href="/documents-misc-worker?view=edititem&person={{ record.id }}&returnto={{ url.base64 }}" id="ctToolBarAddNewDocument" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="{{ addText }}" title="{{ addText }}"> {{ addText }}</a>
+
+{% set numberOfDocuments = record.count("migdocumentsmisc","person=" ~ record.id) %}
+{% if numberOfDocuments >0 %}
+
+{% if document.languagepostfix=="_ru" %}{% set changeText = "Изменить / Удалить" %}{% else %}{% set changeText = "Change / Delete" %}{% endif %}
+
+<a href="/documents-misc-worker?person={{ record.id }}&returnto={{ url.base64 }}" id="ctToolBarAddNewDocument" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" alt="{{ changeText }}" title="{{ changeText }}"> {{ changeText }}</a>
+
+{{ tables.getrecords("DocumentsMisc","person=" ~ record.id) }}
+
+{% endif %}
+{/tabs}     
+
+
+{% set missingfields = record.missingfields(", ") %}
+{% if missingfields != "" %}
+<div>{% if document.languagepostfix=="_ru" %}Обязательные поля, которые нужно заполнить:{% else %}Required fields to be filled:{% endif %}</div>
+<div style="color:red;">{{ missingfields }}</div>
+  
+{% endif %}

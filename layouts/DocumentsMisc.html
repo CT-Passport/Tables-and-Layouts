@@ -1,5 +1,4 @@
-<div class="datagrid">
-
+{% if table.records > 0 %}
 <table>
 <thead><tr>
 <th style="max-width:auto;">{{ name.title }}</th>
@@ -24,3 +23,5 @@
 {% endblock %}
 </tbody>
 </table>
+  
+{% endif %}

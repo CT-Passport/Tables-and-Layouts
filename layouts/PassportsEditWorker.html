@@ -1,0 +1,111 @@
+<legend>{% if record.id == "" %}Форма не доступна{% else %}Редактировать паспорт{% endif %}</legend>
+
+{tab:Сведения о паспорте}  
+<div class="form-horizontal">
+
+	<div class="control-group">
+		<div class="control-label">{{ type.label }}</div><div class="controls">{{ type.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ validitystatus.label }}</div><div class="controls">{{ validitystatus.edit }}</div>
+	</div>
+    
+<div class="control-group">
+		<div class="control-label">{{ ethnicity.label }}</div><div class="controls">{{ ethnicity.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ namelinelat.label }}</div><div class="controls">{{ namelinelat.edit }}</div>
+	</div>
+  
+<div class="control-group"><div class="control-label">{{ birthdate.label }}</div><div class="controls">{{ birthdate.edit }}</div></div>
+<div class="control-group"><div class="control-label">{{ gender.label }}</div><div class="controls">{{ gender.edit }}</div></div>
+
+	<div class="control-group">
+		<div class="control-label">{{ passportseries.label }}</div><div class="controls">{{ passportseries.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ number.label }}</div><div class="controls">{{ number.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ issuedate.label }}</div><div class="controls">{{ issuedate.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ expirationdate.label }}</div><div class="controls">{{ expirationdate.edit }}</div>
+	</div>
+</div>
+
+{tab:Место выдачи и прописка}
+<div class="form-horizontal">
+
+<div class="control-group">
+		<div class="control-label">{{ birthplace.label }}</div><div class="controls">{{ birthplace.edit("","",[],"","places-cities-edit") }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ issueplace.label }}</div><div class="controls">{{ issueplace.edit("","",[],"","places-cities-edit") }}</div>
+	</div>
+  
+  
+<div class="control-group">
+		<div class="control-label">{{ issueauthority.label }}</div>
+
+<div class="controls">
+   {{ issueauthority.edit('','',[['countries','namerussubj','','','namerussubj'],['passissueauthorities','layout:passportIssueAuthoritySelect']],"","passport-issue-authority-edit-form") }}
+</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ subdivisioncode.label }}</div><div class="controls">{{ subdivisioncode.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ id.label }}</div><div class="controls">{{ id.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ residenceaddress.label }}</div><div class="controls">{{ residenceaddress.edit }}</div>
+	</div>
+</div>
+
+{tab:Дополнительно}  
+<div class="form-horizontal">
+  
+<div class="control-group">
+		<div class="control-label">{{ primstatus.label }}</div><div class="controls">{{ primstatus.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ passtype.label }}</div><div class="controls">{{ passtype.edit }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ eyescolor.label }}</div><div class="controls">{{ eyescolor.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ children.label }}</div><div class="controls">{{ children.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ spouse.label }}</div><div class="controls">{{ spouse.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ militaryduty.label }}</div><div class="controls">{{ militaryduty.edit }}</div>
+	</div>
+</div>
+{tab:Фото} 
+
+
+	<div class="control-group">
+		<div class="control-label">{{ passportphotocopy.label }}</div><div class="controls">{{ passportphotocopy.edit }}</div>
+	</div>
+
+{/tabs}
+<br>
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

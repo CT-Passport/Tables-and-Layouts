@@ -37,35 +37,58 @@
   <img src="/images/flags/{{ issueAuth.code|lower  }}.png" style="margin-right:10px;" alt="{{ issueAuth.namerussubj }}" title="{{ issueAuth.namerussubj }}" /><br/>
   {% endif %}</td>
   
-<td><a href='{{ record.link(true) }}'>{{ fullnamerus }}</a>
+<td><a href='{{ record.link(true) }}'>{{ shortnamerus }}</a>
   <div style="color:red;">{{ record.missingfields(", ") }}</div>
 </td>
 <td>{{ phone }}</td>
 <td>{{ email }}</td>
 
 <td style="text-align:center;">
+  {% if issueAuth.code == "RU" %}
   {% set companyEmployees = record.joincount("companyemployees","ismigrant=0") %}
+  
   {% if companyEmployees > 0 %}
-  <a href="/sotrudniki-kompanij?where={{ ("company=" ~ record.id ~ " and ismigrant=0") | base64encode }}">
-  <button class="btn btn-primary">{{ companyEmployees }}</button>
-  </a> 
+  <a href="/sotrudniki-kompanij?where={{ ("company=" ~ record.id ~ " and ismigrant=0") | base64encode }}"><button class="btn btn-primary">{{ companyEmployees }}</button></a> 
   {% else %}
-  <a href="/sotrudniki-kompanij?view=edititem&company={{ record.id }}&ismigrant=0">
-  <button class="btn btn-primary" style="background-color:lightgray;">+</button>
-  </a>
+  <a href="/sotrudniki-kompanij?view=edititem&company={{ record.id }}&ismigrant=0&isemployee=1"><button class="btn btn-primary" style="background-color:lightgray;">+</button></a>
   {% endif %}
+  
+  {% else %}
+  
+  
+  {% set companyEmployees = record.joincount("companyemployees","ismigrant=1") %}
+  
+  {% if companyEmployees > 0 %}
+  <a href="/sotrudniki-kompanij?where={{ ("company=" ~ record.id ~ " and ismigrant=1") | base64encode }}"><button class="btn btn-primary">{{ companyEmployees }}</button></a> 
+  {% else %}
+  <a href="/sotrudniki-kompanij?view=edititem&company={{ record.id }}&ismigrant=1&isemployee=1&returnto={{ url.base64 }}"><button class="btn btn-primary" style="background-color:lightgray;">+</button></a>
+  {% endif %}
+  
+  {% endif %}
+  
 </td>
   
 <td style="text-align:center;">
   {% set migrantEmployees = record.joincount("companyemployees","ismigrant=1") %}
   {% if migrantEmployees > 0 %}
-  <a href="/sotrudniki-kompanij?where={{ ("company=" ~ record.id ~ " and ismigrant=1") | base64encode }}">
+  
+  {% if issueAuth.code == "RU" %}
+  <a href="/sotrudniki-kompanij?ismigrant=1&isemployee=0&where={{ ("company=" ~ record.id ~ " and ismigrant=1") | base64encode }}">
   <button class="btn btn-primary">{{ migrantEmployees }}</button>
   </a>
+  {% endif %}
+  
+  
   {% else %}
-  <a href="/sotrudniki-kompanij?view=edititem&company={{ record.id }}&ismigrant=1">
+
+  {% if issueAuth.code == "RU" %}
+  <a href="/sotrudniki-kompanij?view=edititem&company={{ record.id }}&ismigrant=1&isemployee=0&returnto={{ url.base64 }}">
   <button class="btn btn-primary" style="background-color:lightgray;">+</button>
   </a>
+  {% endif %}
+  
+  
+  
   {% endif %}
 </td>
 

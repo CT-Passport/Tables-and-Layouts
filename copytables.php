@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 
 $tables = ['h82im_customtables_categories', 'h82im_customtables_fields', 'h82im_customtables_layouts', 'h82im_customtables_tables', 'h82im_menu',
-    'h82im_customtables_table_workhours'];
+    'h82im_customtables_table_workhours','h82im_usergroups','h82im_viewlevels','h82im_menu_types','h82im_content'];
 
 truncateTables($servername, $username, $password, $tables);
 copyTables($servername, $username, $password, $tables);

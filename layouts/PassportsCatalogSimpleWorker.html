@@ -1,0 +1,67 @@
+<h4>Мои паспорта</h4>
+
+<div>  
+<table>
+<thead><tr>
+<th>{{ passportseries.title }} / {{ number.title }}</th>
+<th>{{ birthplace.title }}</th>
+<th>{{ issueauthority.title }}</th>
+<th>{{ issuedate.title }}</th>
+<th>{{ expirationdate.title }}</th>
+<th></th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+  
+  {% if passportseries != "" %}
+  {% set c2 = passportseries ~ " " ~ number %}
+  {% else %}
+  {% set c2 = number %}
+  {% endif %}
+  
+  {% set c3 = birthplace %}
+  {% set c4 = issueauthority %}
+  {% set c5 = issuedate("d.m.Y") %}
+  {% set c6 = expirationdate("d.m.Y") %}
+
+{% if c2 == "" and c3 == "" and c4 == "" and c5 == "" and c6 == "" %}
+  <tr>
+    
+    <td colspan="6" style="text-align:center;">
+     
+      <a href="/edit-passport?listing_id={{ record.id }}&returnto={{ url.base64 }}"><button>
+        {% if document.languagepostfix=="_ru" %}
+        {% set t1="Редактировать паспорт" %}
+        {% else %}
+        {% set t1="Edit Passport" %}
+        {% endif %}
+      	  {{ t1 }} <img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="{{ t1 }}" title="{{ t1 }}">
+        </button></a></td>
+</tr>
+{% else %}
+  <tr>
+
+<td>{{ c2 }}</td>  
+<td>{{ c3 }}</td>
+<td>{{ c4 }}</td>
+<td>{{ c5 }}</td>  
+<td>{{ c6 }}</td>  
+<td><a href="/edit-passport?listing_id={{ record.id }}&returnto={{ url.base64 }}">
+        {% if document.languagepostfix=="_ru" %}
+        {% set t1="Редактировать паспорт" %}
+        {% else %}
+        {% set t1="Edit Passport" %}
+        {% endif %}
+      	  <img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="{{ t1 }}" title="{{ t1 }}">
+        </a></td>
+</tr>
+{% endif %}
+
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>
