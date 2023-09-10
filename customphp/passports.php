@@ -349,13 +349,17 @@ function connect2Person(array $row_new)
 
     $sets = [];
     $user = Factory::getApplication()->getIdentity();
-    $userid = is_null($user) ? 0 : $user->id;
-    $usergroups = $user->get('groups');
+    if($user !== null)
+        $usergroups = $user->get('groups');
+    else
+        $usergroups=[];
 
     $row_new['es_user'] = null;
-    $row_new['es_type'] = null;
+
+    if(!isset($row_new['es_type']))
+        $row_new['es_type'] = null;
+
     $row_new['es_email'] = null;
-    $row_new['es_ismigrant'] = null;
 
     //echo '$usergroups:';
     //print_r($usergroups);
@@ -365,7 +369,6 @@ function connect2Person(array $row_new)
         $row_new['es_user'] = $user->id;
         $row_new['es_type'] = 3;
         $row_new['es_email'] = $user->email;
-        $row_new['es_ismigrant'] = 1;
     }
 
     if ($row_new['es_person'] === null or $row_new['es_person'] == '') {
@@ -525,6 +528,7 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
     $Date_of_expiry = getPredictionValue($prediction, 'Date_of_expiry');
     $newDate = convertPassportDate($Date_of_expiry);
     if ($newDate !== false) {
+        $Date_of_expiry = $newDate;
         if ($row_new['es_expirationdate'] === null or $row_new['es_expirationdate'] == '') {
             $row_new['es_expirationdate'] = $newDate;
             $sets[] = $db->quoteName('es_expirationdate') . '=' . $db->quote($newDate);
