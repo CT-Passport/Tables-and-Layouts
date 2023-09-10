@@ -1,0 +1,21 @@
+<legend>{{ table.title }}</legend>
+
+{{ html.goback("Go back") }}
+
+<div class="control-group">
+		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>
+
+<div class="control-group">
+		<div class="control-label">{{ address.title }}</div><div class="controls">{{ address.edit("","",[["addrob","layout:FormalNameShortName","","","formalname","parent"]]) }}</div>
+	</div>
+  
+	<div class="control-group">
+		<div class="control-label">{{ addressline2.title }}</div><div class="controls">{{ addressline2.edit }}</div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone.edit }}</div>
+	</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

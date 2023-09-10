@@ -19,7 +19,7 @@
 	{% if personName == "" %}
 {{ html.message("Человек не указан или не найден.","Error") }}Человек не указан или не найден.
 {% else %}
-<input type="text" name="comes_person" value="{{ personId }}" style="visibility:hidden;" />
+<input type="hidden" name="comes_person" value="{{ personId }}" style="visibility:hidden;" />
 {% endif %}
 
 <div class="form-horizontal">
@@ -61,7 +61,7 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ stayplace.title }}</div><div class="controls">{{ stayplace.edit }}</div>
+		<div class="control-label">{{ stayplace.title }}</div><div class="controls">{{ stayplace.edit("","",[],"","stay-place-edit") }}</div>
 	</div>
 
 	<div class="control-group">

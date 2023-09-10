@@ -1,10 +1,21 @@
-<legend>{% if record.id != "" %}
+<h4>{% if record.id != "" %}
 
   {% if ismigrant.value == "1" %}Редактировать анкету{% else %}Эта форма доступна только для иностранных работников.{% endif %}
 {% else %}
   Заполнить анкету иностранного работника
 {% endif %}
-</legend><br>
+</h4><br>
+
+
+{% set placeOfWork = tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) %}
+
+{% if placeOfWork == "" %}
+<div class="form-horizontal">  
+<div class="control-group">
+		<div class="control-label">{{ plannedplaceofwork.title }}</div><div class="controls">{{ plannedplaceofwork.edit }}</div>
+	</div>
+</div>
+{% endif %}
 
 
 {tab:Персональная информация}

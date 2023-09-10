@@ -181,7 +181,7 @@ function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
 {
     $reader = ReaderEntityFactory::createReaderFromFile($filePath);
     $reader->open($filePath);
-    $sheet = findSheet($reader, $sheetName);
+    $sheet = CronAPP::findSheet($reader, $sheetName);
     if ($sheet === null) {
         $reader->close();
         return null;
@@ -216,17 +216,5 @@ function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
     $reader->close();
     return $rows;
 }
-
-function findSheet($reader, $sheetName)
-{
-    foreach ($reader->getSheetIterator() as $sheet) {
-
-        if ($sheet->getName() == $sheetName) {
-            return $sheet;
-        }
-    }
-    return null;
-}
-
 
 

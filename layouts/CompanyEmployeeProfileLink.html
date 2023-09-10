@@ -1,5 +1,7 @@
+{% if table.records > 0 %}
 <ul style="list-style-type:none;margin-left:0;">
 {% block record %}
 <li style='margin-left:0;'><a href="/ru/kompanii?view=details&listing_id={{ company.value }}&returnto={{ url.base64 }}" target="_blank">{{ company }}</a></li>
 {% endblock %}
 </ul>
+{% endif %}

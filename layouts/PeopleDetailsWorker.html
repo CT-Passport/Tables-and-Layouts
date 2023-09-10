@@ -2,6 +2,26 @@
 <legend>Добро пожаловать {{ fullnamerus }} <a href="/migrant-ru?view=edititem&amp;listingid={{ record.id }}&amp;returnto={{ ("/migrant-ru") | base64encode }}"><img src="/components/com_customtables/libraries/customtables/media/images/icons/edit.png" border="0" alt="Редактировать" title="Редактировать"></a></legend>
 <h4>{{ id.title }}: {{ id }}</h4>
 	
+
+{% set placeOfWork = tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) %}
+
+{% if placeOfWork == "" %}
+
+{% if plannedplaceofwork != "" %}
+<div class="form-horizontal">  
+  
+<div class="control-group detailsLine">
+		<div class="detailsLabel">{{ plannedplaceofwork.title }}</div>:<div class="detailsValue">{{ plannedplaceofwork }}</div>
+	</div>
+  
+</div>
+{% endif %}
+
+{% else %}
+{{ placeOfWork }}
+{% endif %}
+
+
 {tab:Персональная информация}
 
 <div class="personalInfoBox">

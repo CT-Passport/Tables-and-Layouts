@@ -177,4 +177,15 @@ class CronAPP
     {
         fclose($this->logFile);
     }
+
+    static public function findSheet($reader, $sheetName)
+    {
+        foreach ($reader->getSheetIterator() as $sheet) {
+
+            if ($sheet->getName() == $sheetName) {
+                return $sheet;
+            }
+        }
+        return null;
+    }
 }

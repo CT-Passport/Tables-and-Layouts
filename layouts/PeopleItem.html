@@ -49,8 +49,14 @@
   {% endif %}
   {% endif %}
 </td>
-<td style="text-align:center;">{{ tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) }}
+<td style="text-align:center;">
+  
+  {% set work = tables.getrecords("CompanyEmployeeProfileLink","person=" ~ record.id) %}
 
+  
+{% if work == "" and plannedplaceofwork != "" %}
+  <span style="color:red;">{{ plannedplaceofwork.title }}:<br/><b>{{ plannedplaceofwork }}</b></span>
+	{% endif %}
 
   <div style="color:red;">{{ record.missingfields(", ") }}</div>
   

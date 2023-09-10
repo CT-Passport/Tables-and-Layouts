@@ -1,0 +1,11 @@
+.datagrid th{text-align:left;}
+.datagrid td{text-align:left;}
+
+.searchBox div{
+display:inline-block;
+}
+
+.ctSearchBox.btn{
+margin-top:-5px;margin-bottom:0;
+margin-left:20px;
+}

@@ -21,7 +21,7 @@ function cron_3_update_visas($logFile)
 
     $table = 'h82im_customtables_table_translationsplaces';
     $filePath = '1.xlsx';
-    $rows = getRowValues($filePath, '01_SK_NORTH BAY_20122020', '0');
+    $rows = getRowValuesNoStop($filePath, '01_SK_NORTH BAY_20122020', '0');
 
     $passportsStarted = false;
 
@@ -45,17 +45,126 @@ function cron_3_update_visas($logFile)
                     $visaRow = findVisaByPersonId($passportRow['es_person']);
                     if ($visaRow === null) {
                         addVisa($passportRow['es_person'], $passportRow, $row);
-                        die;
+                        echo 'Visa added: ' . $passportNumber . '<br/>';
+                    } else {
+                        echo 'Update Visa: ' . $passportNumber . '<br/>';
+                        if (updateVisa($visaRow, $row))
+                            echo 'Visa Updated: ' . $passportNumber . '<br/>';
                     }
                 } else {
                     echo 'Passport Number NOT found: ' . $passportNumber . '<br/>';
-                    //$passportID = addPassport($row);
-                    //echo '$passportID: ' . $passportID . '<br/>';
-                    die;
+                    $passportID = addPassport($row);
+                    echo '$passportID: ' . $passportID . ' added<br/>';
                 }
             }
         }
     }
+}
+
+function findCompanyByName(string $name): ?int
+{
+    $db = Factory::getDBO();
+    $sql = 'SELECT id FROM #__customtables_table_companies WHERE es_fullnamerus=' . $db->quote($name) . ' OR es_shortnamerus=' . $db->quote($name);
+    $db->setQuery($sql);
+    $rows = $db->loadAssocList();
+    if (count($rows) == 0)
+        return null;
+
+    $row = $rows[0];
+    return $row['id'];
+}
+
+function findPlaceOfStayByName(string $name): ?int
+{
+    $db = Factory::getDBO();
+    $sql = 'SELECT id FROM #__customtables_table_stayplaces WHERE es_comment=' . $db->quote($name);
+    $db->setQuery($sql);
+    $rows = $db->loadAssocList();
+    if (count($rows) == 0)
+        return null;
+
+    $row = $rows[0];
+    return $row['id'];
+}
+
+
+function updateVisa(array $visaRow, array $xlsRow): bool
+{
+    $db = Factory::getDBO();
+
+    $sets = [];
+
+    $visaIssueCountry = getCellByName($xlsRow, 'BX');
+    $countryID = findCountryByName($visaIssueCountry);
+    if ($countryID === null) {
+        die('Country not found.');
+    }
+
+    $visaIssuePlace = getCellByName($xlsRow, 'BY');
+    $placeID = findPlaceByName($visaIssuePlace);
+    if ($placeID === null) {
+        die('Place not found.');
+    }
+
+    $visaMultiplicity = getCellByName($xlsRow, 'EY');
+
+    $visaMultiplicityId = null;
+    if ($visaMultiplicity == 'Многократная (до 12 месяцев)') {
+        $visaMultiplicityId = 3;
+    } else {
+        die('Unknown Multiplicity.');
+    }
+
+    if ($visaRow['es_multiplicity'] === null) {
+        echo '$visaMultiplicity=' . $visaMultiplicity . '<br/>';
+        $sets[] = 'es_multiplicity=' . $visaMultiplicityId;
+    }
+
+    $visaPeriod = getCellByName($xlsRow, 'EE');
+
+    $dateOfEntry = getCellByName($xlsRow, 'BB');
+    if ($visaRow['es_issuedate'] === null) {
+        echo 'issuedate: ' . $dateOfEntry . '<br/>';
+        $sets[] = 'es_issuedate=' . $db->quote($dateOfEntry);
+    }
+
+    $dateOfExit = getCellByName($xlsRow, 'BM');
+
+    if ($visaRow['es_visaenddate'] === null) {
+        echo 'visaenddate: ' . $dateOfExit . '<br/>';
+        $sets[] = 'es_visaenddate=' . $db->quote($dateOfExit);
+    }
+
+    $invitingCompany = getCellByName($xlsRow, 'EN');
+    if ($visaRow['es_invcompanyname'] === null) {
+
+        echo 'invitingCompany: ' . $invitingCompany . '<br/>';
+        $invitingCompanyID = findCompanyByName($invitingCompany);
+        if ($invitingCompanyID !== null) {
+            echo '$invitingCompanyID: ' . $invitingCompanyID . '<br/>';
+            $sets[] = 'es_invcompanyname=' . $invitingCompanyID;
+        }
+    }
+
+    $placeOfStayDetails = getCellByName($xlsRow, 'FR');
+    if ($visaRow['es_stayplace'] === null and $placeOfStayDetails !== null) {
+
+        echo '$placeOfStayDetails: ' . $placeOfStayDetails . '<br/>';
+        $placeOfStayDetailsID = findPlaceOfStayByName($placeOfStayDetails);
+        if ($placeOfStayDetailsID !== null) {
+            $sets[] = 'es_stayplace=' . $placeOfStayDetailsID;
+        }
+    }
+
+    if (count($sets) > 0) {
+        $sets[] = 'es_changedate=NOW()';
+        $query = 'UPDATE h82im_customtables_table_peoplesrussianvisas SET ' . implode(', ', $sets) . ' WHERE id=' . $visaRow['id'];
+        $db->setQuery($query);
+        $db->execute();
+        return true;
+    }
+
+    return false;
 }
 
 function addPassport(array $xlsRow): int
@@ -76,7 +185,7 @@ function addPassport(array $xlsRow): int
 
     $row_new['NativeSurname'] = $lastName;
     $row_new['NativeFirst_Name'] = $firstName;
-    $row_new['es_ethnicity']= null;
+    $row_new['es_ethnicity'] = null;
 
     $sets = [];
 
@@ -248,7 +357,8 @@ function addVisa(int $personId, array $passportRow, array $xlsRow): bool
     $query = 'INSERT h82im_customtables_table_peoplesrussianvisas SET ' . implode(', ', $sets);
     $db->setQuery($query);
     $db->execute();
-    die;
+
+    return true;
 }
 
 function getColumnIndex($columnName): int
@@ -278,7 +388,6 @@ function findPlaceByName(string $name): ?int
 {
     $db = Factory::getDBO();
     $sql = 'SELECT id FROM #__customtables_table_placescities WHERE es_namelat=' . $db->quote($name);
-    echo '<br/>' . $sql . '<br/>';
     $db->setQuery($sql);
     $rows = $db->loadAssocList();
     if (count($rows) == 0)
@@ -324,12 +433,11 @@ function findPassportByNumber($passportNumber)
     return $rows[0];
 }
 
-
-function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
+function getRowValuesNoStop($filePath, $sheetName, $stopCol1Value = ''): ?array
 {
     $reader = ReaderEntityFactory::createReaderFromFile($filePath);
     $reader->open($filePath);
-    $sheet = findSheet($reader, $sheetName);
+    $sheet = CronAPP::findSheet($reader, $sheetName);
     if ($sheet === null) {
         $reader->close();
         return null;
@@ -363,15 +471,4 @@ function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
 
     $reader->close();
     return $rows;
-}
-
-function findSheet($reader, $sheetName)
-{
-    foreach ($reader->getSheetIterator() as $sheet) {
-
-        if ($sheet->getName() == $sheetName) {
-            return $sheet;
-        }
-    }
-    return null;
 }
