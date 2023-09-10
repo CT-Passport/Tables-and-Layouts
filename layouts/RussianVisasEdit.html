@@ -4,7 +4,13 @@
   
 {% if record.id == "" %}
 {% set personId = url.getint("person") %}
+
+{% if personId==0 %}
+{% set personName = "" %}
+{% else %}
 {% set personName = tables.getrecord("PersonName",personId) %}
+{% endif %}
+
 {% else %}
 {% set personId = person.value %}
 {% set personName = person %}
