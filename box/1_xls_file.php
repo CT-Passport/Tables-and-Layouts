@@ -217,7 +217,6 @@ function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
     return $rows;
 }
 
-
 function findSheet($reader, $sheetName)
 {
     foreach ($reader->getSheetIterator() as $sheet) {
