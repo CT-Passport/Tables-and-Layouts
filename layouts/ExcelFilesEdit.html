@@ -1,0 +1,35 @@
+<legend>{{ table.title }}</legend>
+
+{{ html.goback }}
+
+<div class="form-horizontal">	<div class="control-group">
+		<div class="control-label">{{ file.title }}</div><div class="controls">{{ file.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ version.title }}</div><div class="controls">{{ version.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofpassports.title }}</div><div class="controls">{{ numberofpassports.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofpassportsadded.title }}</div><div class="controls">{{ numberofpassportsadded.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofpeopleadded.title }}</div><div class="controls">{{ numberofpeopleadded.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofvisasadded.title }}</div><div class="controls">{{ numberofvisasadded.edit }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ lasterrormessage.title }}</div><div class="controls">{{ lasterrormessage.edit }}</div>
+	</div>
+
+</div>
+
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>

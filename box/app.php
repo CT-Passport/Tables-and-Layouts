@@ -41,6 +41,105 @@ class CronAPP
         }
     }
 
+    static public function findSheet($reader, $sheetName)
+    {
+        foreach ($reader->getSheetIterator() as $sheet) {
+
+            if ($sheet->getName() == $sheetName) {
+                return $sheet;
+            }
+        }
+        return null;
+    }
+
+    static public function firstSheet($reader)
+    {
+        foreach ($reader->getSheetIterator() as $sheet)
+            return $sheet;
+
+        return null;
+    }
+
+    static public function getColumnIndex(string $columnName): int
+    {
+        $index = 0;
+        $length = strlen($columnName);
+
+        for ($i = 0; $i < $length; $i++) {
+            $char = strtoupper($columnName[$i]);
+            $index = $index * 26 + (ord($char) - 64);
+        }
+        return $index - 1;
+    }
+
+    static public function columnIndexToName(int $index): string
+    {
+        $columnName = '';
+
+        while ($index > 0) {
+            $modulo = ($index - 1) % 26;
+            $columnName = chr(65 + $modulo) . $columnName;
+            $index = intdiv($index - $modulo - 1, 26);
+        }
+
+        return $columnName;
+    }
+
+    static public function findColumnLabelIndexes($reader): array
+    {
+        $indexes = [];
+        $sheet = CronAPP::firstSheet($reader);
+        foreach ($sheet->getRowIterator() as $row) {
+            $cells = $row->getCells();
+            $statusColFound = false;
+            $index = 0;
+            foreach ($cells as $cell) {
+                $value = $cell->getValue();
+                if (!$statusColFound) {
+                    if ($value == "STATUS") {
+                        $statusColFound = true;
+                        $indexes[$value] = $index;
+                    }
+                } else {
+                    if($value!=='') {
+                        if (isset($indexes[$value])) {
+                            //echo 'Column "' . $value . '" already exists.';
+                        } else {
+                            $indexes[$value] = $index;
+                        }
+                    }
+                }
+                $index += 1;
+            }
+
+            if ($statusColFound)
+                break;
+        }
+        return $indexes;
+    }
+
+    static public function findVersion($reader)
+    {
+        $sheet = CronAPP::firstSheet($reader);
+        foreach ($sheet->getRowIterator() as $row) {
+            $cells = $row->getCells();
+            $statusColFound = false;
+            $index=0;
+            foreach ($cells as $cell) {
+                $value = $cell->getValue();
+                if (!$statusColFound) {
+                    if ($value == "STATUS")
+                        $statusColFound = true;
+                } else {
+                    if ($value == "PL OF STAY DETAILS")
+                        return CronAPP::columnIndexToName($index+1);
+                }
+                $index+=1;
+            }
+        }
+        return null;
+    }
+
     function loadSpecificCronFile()
     {
         if (isset($_GET['function']))
@@ -128,7 +227,7 @@ class CronAPP
         CTLoader(false, false, null, 'com_customtables', true);
     }
 
-    function doTheJob($dir, $logFilePrefix)
+    function doTheJob($dir, $logFilePrefix,$file = null)
     {
         /**
          * Cron job
@@ -153,7 +252,7 @@ class CronAPP
                         require_once($filename);
                         $functionName = 'cron_' . $fn;
                         self::print_console('<br/>Running task: "' . $functionName . '"<br/>', $this->logFile);
-                        $result = call_user_func($functionName, $this->logFile);
+                        $result = call_user_func($functionName, $this->logFile,$file);
                         //TODO: do something with the Result
                     }
                 }
@@ -176,16 +275,5 @@ class CronAPP
     function closeLogFile(): void
     {
         fclose($this->logFile);
-    }
-
-    static public function findSheet($reader, $sheetName)
-    {
-        foreach ($reader->getSheetIterator() as $sheet) {
-
-            if ($sheet->getName() == $sheetName) {
-                return $sheet;
-            }
-        }
-        return null;
     }
 }

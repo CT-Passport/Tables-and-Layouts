@@ -9,4 +9,12 @@
 $path = '';//'../includes' . DIRECTORY_SEPARATOR;
 require_once($path . 'app.php');
 $cron = new CronAPP();
-$cron->doTheJob('box','box_');
+$jinput = JFactory::getApplication()->input;
+
+$file = $jinput->getString("file");
+$cron->doTheJob('box', 'box_', $file);
+
+$returnto = $jinput->get("returnto", null, 'BASE64');
+if ($returnto !== null) {
+    header("Location: ".base64_decode($returnto));
+}

@@ -12,19 +12,20 @@ defined('_JEXEC') or die('Restricted access');
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Joomla\CMS\Factory;
 
-function cron_1_xls_file($logFile)
+function cron_1_xls_file($logFile, ?string $file)
 {
+    if($file=== null)
+        return;
+    
     require_once 'vendor/autoload.php';
 
-    //01_SK_NORTH BAY_20122020
-    //CronAPP::print_console(' - Check passports.<br/>',$logFile);
-    //checkPassports('1.xlsx');
+    $filePath = JPATH_SITE . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'xls' . DIRECTORY_SEPARATOR . $file;
     CronAPP::print_console(' - Check name translations.<br/>', $logFile);
-    checkTranslationsNames('1.xlsx', $logFile);
+    checkTranslationsNames($filePath, $logFile);
     CronAPP::print_console(' - Check last name translations.<br/>', $logFile);
-    checkTranslationsLastNames('1.xlsx', $logFile);
+    checkTranslationsLastNames($filePath, $logFile);
     CronAPP::print_console(' - Check places translations.<br/>', $logFile);
-    checkTranslationsPlaces('1.xlsx', $logFile);
+    checkTranslationsPlaces($filePath, $logFile);
 }
 
 function checkTranslationsPlaces($filePath, $logFile)
@@ -169,12 +170,6 @@ function checkIfExists($table, $column1, $value1)
         return false;
     }
     return true;
-}
-
-function checkPassports($filePath)
-{
-    $rows = getRowValues($filePath, 'Pass_data_check', '0');
-    print_r($rows);
 }
 
 function getRowValues($filePath, $sheetName, $stopCol1Value = ''): ?array
