@@ -14,7 +14,7 @@ use CustomTables\CT;
 
 function cron_2_update_people($logFile, ?string $file)
 {
-    if($file!== null) {
+    if ($file !== null) {
         CronAPP::print_console(' - Update people virtual fields.<br/>', $logFile);
 
         $db = Factory::getDBO();
@@ -23,7 +23,7 @@ function cron_2_update_people($logFile, ?string $file)
         $rows = $db->loadAssocList();
         CronAPP::print_console(' -- Updating', $logFile);
 
-        $ct = new CT();
+        $ct = new CT(null, true, null, false);
         $ct->getTable('people');
 
         foreach ($rows as $row) {

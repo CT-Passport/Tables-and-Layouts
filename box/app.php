@@ -17,6 +17,7 @@ class CronAPP
 
     function __construct()
     {
+        $this->logFile = null;
         $this->getFramework();
         $this->pathLogs = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'logs';
         $this->loadCustomTables();
@@ -28,10 +29,12 @@ class CronAPP
         $stringLog = str_replace('<br/>', PHP_EOL, $string);
         $stringLog = strip_tags($stringLog);
 
-        if (defined('STDIN'))
-            echo $stringLog;
-        else
-            echo $string;
+        if ($logFile === null) {
+            if (defined('STDIN'))
+                echo $stringLog;
+            else
+                echo $string;
+        }
 
         if ($logFile !== null) {
             fwrite($logFile, $stringLog);
@@ -101,7 +104,7 @@ class CronAPP
                         $indexes[$value] = $index;
                     }
                 } else {
-                    if($value!=='') {
+                    if ($value !== '') {
                         if (isset($indexes[$value])) {
                             //echo 'Column "' . $value . '" already exists.';
                         } else {
@@ -124,7 +127,7 @@ class CronAPP
         foreach ($sheet->getRowIterator() as $row) {
             $cells = $row->getCells();
             $statusColFound = false;
-            $index=0;
+            $index = 0;
             foreach ($cells as $cell) {
                 $value = $cell->getValue();
                 if (!$statusColFound) {
@@ -132,9 +135,13 @@ class CronAPP
                         $statusColFound = true;
                 } else {
                     if ($value == "PL OF STAY DETAILS")
-                        return CronAPP::columnIndexToName($index+1);
+                        return CronAPP::columnIndexToName($index + 1);
                 }
-                $index+=1;
+                $index += 1;
+            }
+
+            if ($statusColFound) {
+                return CronAPP::columnIndexToName($index);
             }
         }
         return null;
@@ -148,6 +155,67 @@ class CronAPP
             $this->functionName = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST['function']);//JFactory Application not defined yet
         else
             $this->functionName = '';
+    }
+
+    public static function convertDate(?string $originalDate)
+    {
+        if($originalDate === null)
+            return null;
+
+        if (strlen($originalDate) == 10) {
+            $parts = explode('.', $originalDate);
+
+            if (count($parts) == 3) {
+                //Russian format
+                $year = (int)$parts[2];
+                $month = (int)$parts[1];
+                $day = (int)$parts[0];
+                return sprintf("%04d-%02d-%02d", $year, $month, $day);
+            }
+        }
+
+        // Define month abbreviations mapping from Polish to English
+        $monthAbbreviations = array(
+            'JAN' => '01', 'FEB' => '02', 'MAR' => '03', 'APR' => '04',
+            'MAY' => '05', 'JUN' => '06', 'JUL' => '07', 'AUG' => '08',
+            'SEP' => '09', 'OCT' => '10', 'NOV' => '11', 'DEC' => '12'
+        );
+
+        // Split by '/' to get the abbreviation part and year
+        $parts = explode('/', $originalDate);
+        if (count($parts) !== 2) {
+            $parts = explode(' ', $originalDate);
+            $dayYearPart = trim($parts[0]);
+
+            if (!isset($parts[1]))
+                return false;
+
+            $abbreviationPart = trim($parts[1]);
+            $numericMonth = $monthAbbreviations[$abbreviationPart] ?? '';
+
+            if (!isset($parts[2]))
+                return false;
+
+            $year = trim($parts[2]);
+        } else {
+            // Extract day and year
+            $dayYearPart = explode(' ', $parts[0])[0];
+
+            $abbreviationPart = trim($parts[1]);
+            // Convert month abbreviation to English
+            $monthPart = explode(' ', $abbreviationPart);
+            $numericMonth = $monthAbbreviations[$monthPart[0]] ?? '';
+
+            $yearPart = trim($parts[1]);
+            $year = explode(' ', $yearPart)[1];
+        }
+
+        if (!$numericMonth) {
+            return false; // Invalid month abbreviation
+        }
+
+        // Convert to yyyy-mm-dd format
+        return sprintf("%04d-%02d-%02d", $year, $numericMonth, $dayYearPart);
     }
 
     function getFramework()
@@ -227,13 +295,16 @@ class CronAPP
         CTLoader(false, false, null, 'com_customtables', true);
     }
 
-    function doTheJob($dir, $logFilePrefix,$file = null)
+    function doTheJob($dir, $logFilePrefix, $file = null)
     {
         /**
          * Cron job
          *
          */
-        $this->openLogFile($logFilePrefix);
+
+        if ($file !== null)
+            $this->openLogFile($logFilePrefix);
+
         self::print_console("CRON TASK START<br/>", $this->logFile);
 
         $path = JPATH_SITE . DIRECTORY_SEPARATOR . $dir;
@@ -252,7 +323,7 @@ class CronAPP
                         require_once($filename);
                         $functionName = 'cron_' . $fn;
                         self::print_console('<br/>Running task: "' . $functionName . '"<br/>', $this->logFile);
-                        $result = call_user_func($functionName, $this->logFile,$file);
+                        $result = call_user_func($functionName, $this->logFile, $file);
                         //TODO: do something with the Result
                     }
                 }
@@ -260,7 +331,8 @@ class CronAPP
         }
 
         self::print_console("CRON TASK END<br/>", $this->logFile);
-        $this->closeLogFile();
+        if ($file !== null)
+            $this->closeLogFile();
     }
 
     function openLogFile($logFilePrefix)

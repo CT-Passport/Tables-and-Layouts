@@ -249,9 +249,7 @@ function findPassportIDByFile(&$row_new)
                 $db->setQuery($query);
                 $db->execute();
             }
-        }
-        else
-        {
+        } else {
             return $recs[0]['id'];
         }
     }
@@ -292,8 +290,9 @@ function compareFileByCRC($filePath)
     return $matchingFiles;
 }
 
-function getPersonIDOrAddTheRecord($row_new)
+function getPersonIDOrAddTheRecord($row_new, ?bool &$added)
 {
+    $added = false;
     if ((int)($row_new['es_type']) == 3)
         $isMigrant = 1;
     else
@@ -307,9 +306,16 @@ function getPersonIDOrAddTheRecord($row_new)
     $firstName = $row_new['First_Name1'] . ($row_new['First_Name2'] != '' ? ' ' . $row_new['First_Name2'] : '');
 
     $db = Factory::getDBO();
-    $query = 'SELECT * FROM #__customtables_table_people WHERE es_lastnamelat=' . $db->quote($row_new['Surname1']) . ' AND es_firstnamelat=' . $db->quote($firstName)
-        . ' AND es_dateofbirth=' . $db->quote($row_new['es_birthdate']) .
-        ' AND es_gender=' . $db->quote($row_new['es_gender']) . ' LIMIT 1';
+
+    $sets = [];
+    $sets[] = 'es_lastnamelat=' . $db->quote($row_new['Surname1']);
+    $sets[] = 'es_firstnamelat=' . $db->quote($firstName);
+
+    if ($row_new['es_birthdate'] !== null and $row_new['es_birthdate'] != "")
+        $sets[] = 'es_dateofbirth=' . $db->quote($row_new['es_birthdate']);
+
+    $sets[] = 'es_gender=' . $db->quote($row_new['es_gender']);
+    $query = 'SELECT * FROM #__customtables_table_people WHERE  ' . implode(' AND ', $sets) . ' LIMIT 1';
 
     $db->setQuery($query);
     $recs = $db->loadAssocList();
@@ -331,38 +337,37 @@ function getPersonIDOrAddTheRecord($row_new)
             . ' VALUES ('
             . $db->quote($row_new['Surname1']) . ',' . $db->quote($row_new['Surname2']) . ',' . $db->quote($firstName) . ','
             . $db->quote($row_new['NativeSurname']) . ',' . $db->quote($row_new['NativeFirst_Name']) . ','
-            . $db->quote($row_new['es_birthdate']) . ',' . $db->quote($row_new['es_gender']) . ','
+            . ($row_new['es_birthdate'] === null ? 'NULL' : $db->quote($row_new['es_birthdate'])) . ',' . $db->quote($row_new['es_gender']) . ','
             . $db->quote($isMigrant) . ',' . $db->quote($citizenshipType) . ',' . ($row_new['es_ethnicity'] == '' ? 'NULL' : $db->quote($row_new['es_ethnicity'])) . ','
             . ($row_new['es_user'] === null ? 'NULL' : $row_new['es_user']) . ',' . ($row_new['es_email'] === null ? 'NULL' : $db->quote($row_new['es_email'])) . ')';
 
         $db->setQuery($query);
         $db->execute();
+        $added = true;
         return $db->insertid();
     }
 
     return $recs[0]['id'];
 }
 
-function connect2Person(array $row_new)
+function connect2Person(array $row_new): bool
 {
+    $personAdded = false;
     $db = Factory::getDBO();
 
     $sets = [];
     $user = Factory::getApplication()->getIdentity();
-    if($user !== null)
+    if ($user !== null)
         $usergroups = $user->get('groups');
     else
-        $usergroups=[];
+        $usergroups = [];
 
     $row_new['es_user'] = null;
 
-    if(!isset($row_new['es_type']))
+    if (!isset($row_new['es_type']))
         $row_new['es_type'] = null;
 
     $row_new['es_email'] = null;
-
-    //echo '$usergroups:';
-    //print_r($usergroups);
 
     if (in_array(10, $usergroups)) {
 
@@ -379,7 +384,7 @@ function connect2Person(array $row_new)
         }
 
         $listing_id = $row_new['id'];
-        $personId = getPersonIDOrAddTheRecord($row_new);
+        $personId = getPersonIDOrAddTheRecord($row_new, $personAdded);
 
         $sets[] = $db->quoteName('es_person') . '=' . $db->quote($personId);
         $query = 'UPDATE #__customtables_table_passports SET ' . implode(',', $sets) . ' WHERE id = ' . $listing_id;
@@ -395,7 +400,7 @@ function connect2Person(array $row_new)
         if (count($recs) == 0) {
             $row_new['es_person'] = null;
             connect2Person($row_new);
-            return;
+            return false;
         }
 
         if (in_array(10, $usergroups)) {
@@ -412,6 +417,7 @@ function connect2Person(array $row_new)
             $db->execute();
         }
     }
+    return $personAdded;
 }
 
 function getPredictionValue(array $prediction, $label, $changeCase = false): ?string
@@ -869,6 +875,8 @@ function mindeeJSONtoTable(&$row_new): bool
 
 function getPlaceCityIDOrAddTheRecord($PlaceName)
 {
+    die("ADD COUNTRY ID");
+
     $db = Factory::getDBO();
     $query = 'SELECT id FROM #__customtables_table_placescities WHERE es_namelat=LOWER(' . $db->quote(strtolower($PlaceName)) . ') LIMIT 1';
     $db->setQuery($query);

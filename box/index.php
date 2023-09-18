@@ -16,5 +16,7 @@ $cron->doTheJob('box', 'box_', $file);
 
 $returnto = $jinput->get("returnto", null, 'BASE64');
 if ($returnto !== null) {
-    header("Location: ".base64_decode($returnto));
+    if (!headers_sent()) {
+        header("Location: " . base64_decode($returnto));
+    }
 }
