@@ -1,10 +1,18 @@
-<div class="dashboardblock">
+{% if user.id == 0%}
+<h2>Добро пожаловать в Онлайн сервис для подготовки миграционных документов иностранных работников.</h2>
+				{{ tables.getrecords("DashboardMenuItems","menutype=intro-menu and level=1 and parent_id=1 and language=ru-RU","lft") }}
+{% else %}
 
-{% block record %}
+{% if "Migrant" in user.usergroups %}
+<!--<h4>Welcome, Migrant.</h4>-->
+{{ document.layout("DashboardWorker") }}
 
-  <a href="{{ alias }}" title="{{ title }}">
-    <button class="btn button btn-primary">{{ title }}</button>
-  </a>
+{% elseif ("Service Manager" in user.usergroups) or ("Service Supervisor" in user.usergroups) or ("Super Users" in user.usergroups) %}
+<!--<h4>Welcome, Service Manager.</h4>-->
+{{ tables.getrecords("DashboardMenuItems","menutype=service-menu and level=1 and language=ru-RU","lft") }}
+{% else %}
+Login first.
+Your user group is {{ user.usergroups|join(',') }}
+{% endif %}
 
-{% endblock %}
-</div>
+{% endif %}

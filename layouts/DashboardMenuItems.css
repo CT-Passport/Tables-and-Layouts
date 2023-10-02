@@ -1,0 +1,11 @@
+.dashboardblock{
+    text-align:center;
+  }
+  .dashboardblock button{
+    width:170px;
+    height:130px;
+    margin: 20px;
+    
+    overflow-wrap: break-word;
+    white-space: normal;
+  }

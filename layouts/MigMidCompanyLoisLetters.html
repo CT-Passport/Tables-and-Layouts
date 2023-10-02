@@ -32,8 +32,19 @@
 <td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо #{% else %}Letter #{% endif %} {{ record.id }}</a></td>
 <td>{{ date("Y-m-d") }}</td>
 <td>{{ submdate("Y-m-d") }}</td>
-<td><b>{{ tables.getrecord("projectName",project.value) }}</b> ({{project.value}})<br>
-{{ tables.getrecord("projectsiteName",projectsite.value) }}</td>
+<td>
+  
+  project.value: {{ project.value }},
+  
+  {% if project.value != "" %}
+  <b>{{ tables.getrecord("projectName",project.value) }}</b> ({{project.value}})<br>
+{{ tables.getrecord("projectsiteName",projsite.value) }}
+  {% else %}
+  Проект не выбран
+  {% endif %}
+  
+</td>
+  
 <td>{{ projectbatch }}</td>
 <td>{{ status }}</td>
 <td>

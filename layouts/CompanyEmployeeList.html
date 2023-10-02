@@ -7,15 +7,27 @@
   <th>{{ position.title }}</th>
   <th>{{ phone.title }}</th>
   <th>{{ email.title }}</th>
+  <th>{{ ismigrant.title }}</th>
   <th>{{ comment.title }}</th>
 </tr></thead>
 <tbody>
 {% block record %}
+  
+{% set companyCountry = company.getvalue("country") %}
+{% if companyCountry != '' %}
+{% set countryDetails = tables.getrecord("countryDetailsJson",companyCountry)| json_decode  %}
+{% endif %}
+  
 <tr>
-<td style="width:auto;min-width:auto;max-width:auto;"><a href='/ru/kompanii?view=details&listing_id={{ company.value }}' target="_blank">{{ company }}</a></td>
-<td>{{ position }}</td>
+  
+<td style="width:auto;min-width:auto;max-width:auto;">
+  
+  <img src="/images/flags/{{ countryDetails.code|lower  }}.png" style="margin-right:10px;" alt="{{ countryDetails.namerussubj }}" title="{{ countryDetails.namerussubj }}" /> 
+  <a href='/ru/kompanii?view=details&listing_id={{ company.value }}' target="_blank">{{ company }}</a></td>
+<td>{{ position("namerussubj") }}</td>
 <td>{{ phone }}{% if phone1!="" %}<br/>{{ phone1 }}{% endif %}</td>
 <td>{{ email }}{% if email1!="" %}<br/>{{ email1 }}{% endif %}</td>
+<td>{{ ismigrant }}</td>
 <td>{{ comment }}</td>
 </tr>
 {% endblock %}

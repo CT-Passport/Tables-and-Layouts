@@ -1,0 +1,49 @@
+<div class="dashboardblock">
+
+{% block record %}
+
+  {% if parent_id.value != 1 %}
+  {% set menuItemlink = tables.getvalue("menu","alias","_id=" ~ parent_id.value) ~ "/" ~ alias %}
+  {% else %}
+  {% set menuItemlink = alias %}
+  {% endif %}
+  
+  <a href="{{ menuItemlink }}" title="{{ title }}">
+    
+    <button class="btn button btn-primary">{{ title }}
+    
+    
+      {% if alias == "ludi" %}
+      <br/><br/>({{ record.count("people") }})
+      {% elseif alias == "passports-ru" %}
+      <br/><br/>({{ record.count("passports") }})
+      {% elseif alias == "kompanii" %}
+      <br/><br/>({{ record.count("companies") }})
+      {% elseif alias == "5-1-proekty" %}
+      <br/><br/>({{ record.count("migprojects") }})
+      {% elseif alias == "kontrakty" %}
+      <br/><br/>({{ record.count("contracts") }})
+      {% elseif alias == "4-rekomendatelnoe-pismo-po-proektu" %}
+      <br/><br/>({{ record.count("migprojectcoverletters") }})
+      {% elseif alias == "mvd-speed-up-letters" %}
+      <br/><br/>({{ record.count("migmvdspeedupletters") }})
+      {% elseif alias == "pismo-v-profilnoe-ministerstvo" %}
+      <br/><br/>({{ record.count("migrelministryenqletters") }})
+      
+      {% elseif alias == "pisma-priglasheniya-v-konsulstvo-rf" %}
+      <br/><br/>({{ record.count("migmidcompanyloiletters") }})
+
+      {% elseif alias == "pisma-o-korrektirovke-zayavleniya-na-priglashenie" %}
+      <br/><br/>({{ record.count("migmvdcorrletters") }})
+      
+      {% elseif alias == "garantijnye-pisma" %}
+      <br/><br/>({{ record.count("migmvdguaranteeletters") }})
+      
+      
+      
+      {% endif %}
+    
+    </button>
+  </a>
+{% endblock %}
+</div>

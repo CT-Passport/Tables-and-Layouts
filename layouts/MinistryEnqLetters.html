@@ -1,0 +1,59 @@
+<legend>{{ table.title }}</legend>
+
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<div class="datagrid">
+  
+<div class="searchBox">  
+  <div>{{ html.search("ornum") }}</div>
+	  <div>{{ html.search("text") }}</div>
+  <div>{{ html.search("projectbatch","","reload") }}</div>
+  <div>{{ html.search("project","","reload") }}</div>
+  <div>{{ html.search("projsite","","reload") }}</div>
+  <div>{{ html.searchbutton }}</div>
+  
+<table>
+<thead><tr>
+<th class="short">{{ html.batch("checkbox") }}</th>
+<th>{{ ornum.label(true) }}</th>
+<th>{{ regnum.title }}</th>
+<th>{{ date.label(true) }}</th>
+<th>{{ text.label(true) }}</th>
+<th>{{ project.label(true) }}<br>
+{{ projsite.label(true) }}</th>
+<th>{{ projbatch.label(true) }}</th>
+  <th>{{ employee.label }}</th>
+{% if user.id != 0 %}<th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}</th>{% endif %}
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td style="text-align:center;">{{ html.toolbar("checkbox") }}</td>
+<td><a href='{{ record.link(true) }}'>{% if document.languagepostfix=="_ru" %}Письмо #{% else %}Letter #{% endif %} {{ ornum }}</a></td>
+<td>{{ regnum }}</td>
+<td>{{ date("Y-m-d") }}</td>
+<td>{{ text }}</td>
+<td>{{ tables.getrecord("projectName","id="~project.value) }}<br>
+{{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</td>
+<td>{{ projbatch }}</td>
+<td><a href="/index.php/pismo-v-profilnoe-ministerstvo-vybor-rabotnika?batch={{ projectbatch.value }}&listing_id={{ record.id }}">
+    <button class="btn btn-primary">Add / Edit Employee
+
+  {% if employee.value != 0 %}
+      <br/><b>{{ employee }}</b>
+  {% endif %}
+  
+  </button></a></td>
+
+  
+{% if user.id != 0 %}<td>{{ html.toolbar("edit","filebox","delete") }}</td>{% endif %}
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+</div>
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

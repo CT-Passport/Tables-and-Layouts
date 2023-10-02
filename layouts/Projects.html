@@ -29,7 +29,10 @@
 {% block record %}
 <tr>
 <td>{{ html.toolbar("checkbox") }}</td>
-<td><a href='{{ record.link(true) }}'>{{ name }}</a></td>
+<td><a href='{{ record.link(true) }}'>{{ name }}</a>
+  
+  <br/><i>{{ vessel }}</i>
+  </td>
 <td>{% if status.value == 1 %}Активен{% else %}Не активен{% endif %}</td>
 <td>{{ startdate("Y-m-d") }}</td>
 <td>{{ enddate("Y-m-d") }}</td>

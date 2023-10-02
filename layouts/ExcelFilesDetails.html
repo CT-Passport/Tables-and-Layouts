@@ -1,0 +1,49 @@
+<legend>{{ table.title }}</legend>
+
+{{ html.goback() }}
+
+<p>{{ file("","icon-filename-link",32) }}</p>
+
+{tab:Файлы в тойже папке}
+
+{simplefilebrowser=.{{ (folder.value)|replace({'F:\\wamp64\\www': "",'/var/www/html/joomla': "",'\\': "/"}) }}}
+
+{tab:Подробнее про файл}
+
+	<div class="control-group">
+		<div class="control-label">{{ uploaddate.title }}</div><div class="controls">{{ uploaddate }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ version.title }}</div><div class="controls">{{ version }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofpassports.title }}</div><div class="controls">{{ numberofpassports }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ workcompanies.title }}</div><div class="controls">{{ workcompanies }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofvisas.title }}</div><div class="controls">{{ numberofvisas }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ lasterrormessage.title }}</div><div class="controls">{{ lasterrormessage }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofcompanies.title }}</div><div class="controls">{{ numberofcompanies }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ numberofproject.title }}</div><div class="controls">{{ numberofproject }}</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">{{ project.title }}</div><div class="controls">{{ project }}</div>
+	</div>
+
+{/tabs}

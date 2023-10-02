@@ -58,7 +58,13 @@
 <hr/>
 <b>Сотрудники компании</b>
   
-{{ tables.getrecords("CompanyEmployeesList",'company='~record.id) }}
+{{ tables.getrecords("CompanyEmployeesList",'company='~record.id ~ ' and ismigrant=0') }}
+
+  
+<hr/>
+<b>Мигранты</b>
+  
+{{ tables.getrecords("CompanyEmployeesList",'company='~record.id ~ ' and ismigrant=1') }}
 
 </div>
   

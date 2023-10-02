@@ -4,8 +4,16 @@
 {% set projectId = "" %}
   
 {% if record.id == "" %}
-{% set projectId = url.getint("project") %}
+{% set projectId = url.getint("project") %} 
+
+{% if projectId == 0 %}
+{% set projectName = "" %}
+{% else %}
 {% set projectName = tables.getrecord("ProjectName",projectId) %}
+{% endif %}
+
+
+
 {% else %}
 {% set projectId = project.value %}
 {% set projectName = project %}

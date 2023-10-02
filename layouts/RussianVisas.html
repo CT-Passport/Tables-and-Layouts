@@ -44,7 +44,13 @@
 <td>{{ visatype }}</td>
 <td>{{ visitpurpose }}</td>
 <td>{{ invcompanyname("shortnamerus") }}</td>
-<td>{{ stayplace }}</td>
+<td>{{ stayplace }}
+  
+  {% set MissingFields = record.missingfields(", ") %}
+  {% if MissingFields != "" %}
+  <p style="color:red;">{{ MissingFields }}</p>
+  {% endif %}
+  </td>
 <td>{{ html.toolbar("edit","delete") }}</td>
 </tr>
 {% endblock %}

@@ -14,10 +14,13 @@
 <th>{{ uploaddate.title }}</th>
 <th>{{ version.title }}</th>
 <th>{{ numberofpassports.title }}</th>
-<th>{{ numberofpassportsadded.title }}</th>
-<th>{{ numberofpeopleadded.title }}</th>
-<th>{{ numberofvisasadded.title }}</th>
+<th>{{ workcompanies.title }}</th>
+<th>{{ numberofcompanies.title }}</th>
+<!--<th>{{ numberofvisas.title }}</th>-->
+<th>{{ numberofproject.title }}</th>
 <th>{{ lasterrormessage.title }}</th>
+<th>{{ folder.title }}</th>
+<th>{{ project.title }}</th>
 <th>Испорт</th>
 <th>Действие</th>
 </tr></thead>
@@ -27,15 +30,23 @@
 {% block record %}
 <tr>
 <td style="text-align:center;">{{ record.id }}</td>
-<td>{{ file("","icon-filename-link",32) }}</td>
+<td>{{ file("","icon-filename-link",32) }}
+  
+  {% if comment != "" %}
+  <p style="color:#ff00ff;">{{ comment }}</p>
+{% endif %}
+  </td>
 <td>{{ uploaddate("d.m.Y") }}</td>
 <td>{{ version }}</td>
 <td>{{ numberofpassports }}</td>
-<td>{{ numberofpassportsadded }}</td>
-<td>{{ numberofpeopleadded }}</td>
-<td>{{ numberofvisasadded }}</td>
+<td>{{ workcompanies }}</td>
+<td>{{ numberofcompanies }}</td>
+<!--<td>{{ numberofvisas }}</td>-->
+<td>{{ numberofproject }}</td>
 <td>{{ lasterrormessage }}</td>
-<td><a href="/box/index.php?file={{ file.value }}&returnto={{ url.base64 }}"><button>Импорт</button></a></td>
+<td><a href="{{ record.link(true) }}">{{ folder }}</a></td>
+<td>{{ project }}</td>
+<td>{% if version != "97" %}<a href="/box/index.php?file={{ file.value }}&returnto={{ url.base64 }}"><button>Импорт</button></a>{% endif %}</td>
 <td>{{ html.toolbar("edit","refresh","delete") }}</td>
 </tr>
 {% endblock %}

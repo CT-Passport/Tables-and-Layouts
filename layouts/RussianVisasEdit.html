@@ -25,47 +25,47 @@
 <div class="form-horizontal">
 
 <div class="control-group">
-<div class="control-label">{{ person.title }}: {% if personName == "" %}{{ person.edit }}{% else %}<b>{{ personName }}</b>{% endif %}</div>
+<div class="control-label">{{ person.label }}: {% if personName == "" %}{{ person.edit }}{% else %}<b>{{ personName }}</b>{% endif %}</div>
 			</div>
   
 <div class="control-group">
-		<div class="control-label">{{ passport.title }}</div><div class="controls">{{ passport.edit("","",["passports","layout:passportSelectLayout",false,"person=" ~ personId]) }}</div>
+		<div class="control-label">{{ passport.label }}</div><div class="controls">{{ passport.edit("","",["passports","layout:passportSelectLayout",false,"person=" ~ personId]) }}</div>
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ num.title }}</div><div class="controls">{{ num.edit }}</div>
+		<div class="control-label">{{ num.label }}</div><div class="controls">{{ num.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ issuedate.title }}</div><div class="controls">{{ issuedate.edit }}</div>
+		<div class="control-label">{{ issuedate.label }}</div><div class="controls">{{ issuedate.edit }}</div>
 	</div>
 
 <div class="control-group">
-		<div class="control-label">{{ visaenddate.title }}</div><div class="controls">{{ visaenddate.edit }}</div>
+		<div class="control-label">{{ visaenddate.label }}</div><div class="controls">{{ visaenddate.edit }}</div>
 	</div>
 	
 	<div class="control-group">
-		<div class="control-label">{{ multiplicity.title }}</div><div class="controls">{{ multiplicity.edit }}</div>
+		<div class="control-label">{{ multiplicity.label }}</div><div class="controls">{{ multiplicity.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ visatype.title }}</div><div class="controls">{{ visatype.edit }}</div>
+		<div class="control-label">{{ visatype.label }}</div><div class="controls">{{ visatype.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ visitpurpose.title }}</div><div class="controls">{{ visitpurpose.edit }}</div>
+		<div class="control-label">{{ visitpurpose.label }}</div><div class="controls">{{ visitpurpose.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ invcompanyname.title }}</div><div class="controls">{{ invcompanyname.edit }}</div>
+		<div class="control-label">{{ invcompanyname.label }}</div><div class="controls">{{ invcompanyname.edit }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ stayplace.title }}</div><div class="controls">{{ stayplace.edit("","",[],"","stay-place-edit") }}</div>
+		<div class="control-label">{{ stayplace.label }}</div><div class="controls">{{ stayplace.edit("","",[],"","stay-place-edit") }}</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">{{ loinum.title }}</div><div class="controls">{{ loinum.edit }}</div>
+		<div class="control-label">{{ loinum.label }}</div><div class="controls">{{ loinum.edit }}</div>
 	</div>
 
 </div>

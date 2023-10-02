@@ -1,0 +1,21 @@
+<div style="float:right;">{{ html.recordcount }}</div>
+<div style="float:left;">{{ html.add }}</div>
+
+<table>
+<thead><tr>
+<th>{{ name.label(true) }}</th>
+<th>Action</th>
+</tr></thead>
+
+
+<tbody>
+{% block record %}
+<tr>
+<td>{{ name }}</td>
+<td>{{ html.toolbar("edit","delete") }}</td>
+</tr>
+{% endblock %}
+</tbody>
+</table>
+
+<br/><div style='text-align:center;'>{{ html.pagination }}</div>

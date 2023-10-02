@@ -1,0 +1,45 @@
+<tr>
+<td style="text-align:center;">{{ html.toolbar("checkbox") }}</td>
+<td style="text-align:center;"><a href="{{ record.link(true) }}">{{ record.id }}</a></td>
+<td>{{ person }}</td>
+<td>{{ type }}</td>
+<td>{{ primstatus }}</td>
+<td>{{ validitystatus }}</td>
+<td>{{ gender }}</td>
+<td>{{ ethnicity }}</td>
+<td>{{ namelinelat }}</td>
+<td>{{ passtype }}</td>
+<td>{{ passportseries }}</td>
+<td>{{ number }}</td>
+<td>{{ issuedate }}</td>
+<td>{{ expirationdate }}</td>
+<td>{{ issuecountry }}</td>
+<td>{{ issueauthority }}</td>
+<td>{{ eyescolor }}</td>
+<td>{{ subdivisioncode }}</td>
+<td>{{ id }}</td>
+<td>{{ residenceaddress }}</td>
+<td>{{ children }}</td>
+<td>{{ spouse }}</td>
+<td>{{ militaryduty }}</td>
+<td>{{ passportphotocopy }}</td>
+<td>{{ dbentrydate }}</td>
+<td>{{ passportseriesnumber }}</td>
+<td>{{ birthdate }}</td>
+<td>{{ birthplace }}</td>
+<td><a href="{{ externaldocuments }}" target="_blank">{{ externaldocuments }}</a></td>
+<td>{{ ocrjson }}</td>
+<td>{{ ocrjsonmindee }}</td>
+<td>{{ issueplace }}</td>
+<td>{{ user }}</td>
+<td>{{ residenceplace }}</td>
+<td>{{ changedate }}</td>
+<td>
+	<!-- The "if" statement is to show the toolbar for the record's author only. -->
+	{% if user.value == {{ user.id }} %} <!-- Where "user" is the user type field name. -->
+		<!-- toolbar -->
+		{{ html.toolbar("edit","publish","refresh","delete") }}
+		<!-- end of toolbar -->
+	{% endif %}
+</td>
+</tr>

@@ -131,7 +131,7 @@ class CronAPP
             foreach ($cells as $cell) {
                 $value = $cell->getValue();
                 if (!$statusColFound) {
-                    if ($value == "STATUS")
+                    if ($value == "STATUS" and $index==0)
                         $statusColFound = true;
                 } else {
                     if ($value == "PL OF STAY DETAILS")
@@ -144,7 +144,8 @@ class CronAPP
                 return CronAPP::columnIndexToName($index);
             }
         }
-        return null;
+
+        return "-1";
     }
 
     function loadSpecificCronFile()
