@@ -1,0 +1,8 @@
+.searchBox div{
+display:inline-block;
+}
+
+.ctSearchBox.btn{
+margin-top:-5px;margin-bottom:0;
+margin-left:20px;
+}
