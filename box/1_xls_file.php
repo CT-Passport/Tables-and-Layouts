@@ -11,9 +11,13 @@ defined('_JEXEC') or die('Restricted access');
 
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Joomla\CMS\Factory;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 function cron_1_xls_file($logFile, ?string $file)
 {
+    unpublishUnreadableFiles();
+    findXlSFiles();
+
     if($file=== null)
         return;
     
@@ -26,6 +30,55 @@ function cron_1_xls_file($logFile, ?string $file)
     checkTranslationsLastNames($filePath, $logFile);
     CronAPP::print_console(' - Check places translations.<br/>', $logFile);
     checkTranslationsPlaces($filePath, $logFile);
+}
+
+function findXlSFiles()
+{
+    $files =boxFindFilesByExtension(JPATH_SITE . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'documents', 'xls');
+    require_once 'PhpOffice/vendor/autoload.php';
+
+    foreach ($files as $file)
+    {
+        $fileNameParts = explode('.',$file);
+        $fileNameParts[count($fileNameParts)-1]='xlsx';
+        $XLSXFileName = implode('.',$fileNameParts);
+
+        if(!file_exists($XLSXFileName))
+        {
+            $objPHPExcel = IOFactory::load($file);
+            $objWriter = IOFactory::createWriter($objPHPExcel,'Xlsx');
+            $objWriter->save($XLSXFileName);
+            echo 'New file: '.$XLSXFileName.'<br/>';
+        }
+    }
+}
+
+function boxFindFilesByExtension($directory, $extension)
+{
+    $files = [];
+    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+
+    foreach ($iterator as $item) {
+        $filename = $item->getFilename();
+
+        if ($item->isFile()) {
+            $nameParts = explode('.', $filename);
+            if (end($nameParts) == $extension and !in_array($item->getPath() . DIRECTORY_SEPARATOR . $filename, $files)) {
+
+                if ($filename[0] != '~')
+                    $files[] = $item->getPath() . DIRECTORY_SEPARATOR . $filename;
+            }
+        }
+    }
+
+    return $files;
+}
+
+function unpublishUnreadableFiles()
+{
+    $db = Factory::getDBO();
+    $db->setQuery('update `#__customtables_table_excelfiles` set published = 0 where es_version = "-1" or es_version = "97";');
+    $db->execute();
 }
 
 function checkTranslationsPlaces($filePath, $logFile)

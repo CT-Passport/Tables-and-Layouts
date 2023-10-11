@@ -88,7 +88,7 @@ class CronAPP
         return $columnName;
     }
 
-    static public function findColumnLabelIndexes($reader): array
+    static public function findColumnLabelIndexes($reader,string $version): array
     {
         $indexes = [];
         $sheet = CronAPP::firstSheet($reader);
@@ -118,6 +118,17 @@ class CronAPP
             if ($statusColFound)
                 break;
         }
+
+        if($version == "DB") {
+            $indexes['PL. OF VISA CITY'] = 66;
+            $indexes['VISA PERIOD'] = 100;
+            $indexes['SEX (Eng.)'] = 97;
+            $indexes['PL. OF VISA COUNTRY'] = null;
+            $indexes['VISA MULTIPLICITY'] = null;
+            $indexes['COMPANY'] = null;
+            $indexes['INVITING COMPANY'] = null;
+        }
+
         return $indexes;
     }
 

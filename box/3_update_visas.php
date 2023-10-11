@@ -66,7 +66,7 @@ class updatePassportAndVisas
 
         $this->version = CronAPP::findVersion($this->reader); //column "PL OF STAY DETAILS" name
         CronAPP::print_console(' - Excel Sheet version "' . $this->version . '".<br/>', $this->logFile);
-        $this->labelIndexes = CronAPP::findColumnLabelIndexes($this->reader);
+        $this->labelIndexes = CronAPP::findColumnLabelIndexes($this->reader, $this->version);
 
         if (!$this->colNameChecks($this->version)) {
             $sets = ['es_lasterrormessage=' . $db->quote($this->error)];
@@ -82,54 +82,54 @@ class updatePassportAndVisas
     function colNameChecks(string $version): bool
     {
         $columns = [
-            'LAST NAME (Eng)' => 'I',
-            'Name (Eng)' => 'J',
-            'LAST NAME (Rus)' => 'K',
-            'NAME (Rus)' => 'L',
-            'PASSPORT №' => 'M',
-            'DATE OF EXIT' => ['FR' => 'BM', 'FW' => 'BM', 'EU' => 'BK', 'EY' => 'BK'],
-            'DATE OF ENTRY' => ['FR' => 'BB', 'FW' => 'BB', 'EU' => 'AZ', 'EY' => 'AZ'],
-            'VISA PERIOD' => ['FR' => 'EE', 'FW' => 'EE', 'EU' => 'EB', 'EY' => 'EB'],
-            'VISA MULTIPLICITY' => ['FR' => 'EY', 'FW' => 'FD', 'EU' => 'ET', 'EY' => 'ET'],
-            'PL. OF VISA CITY' => ['FR' => 'BY', 'FW' => 'BY', 'EU' => null, 'EY' => null],
-            'PL. OF VISA COUNTRY' => ['FR' => 'BX', 'FW' => 'BX', 'EU' => null, 'EY' => null],
-            'INVITING COMPANY' => ['FR' => 'EN', 'FW' => 'EN', 'EU' => 'EK', 'EY' => 'EK'],
-            'PL OF STAY DETAILS' => ['FR' => 'FR', 'FW' => 'FW', 'EU' => null, 'EY' => null],
+            'LAST NAME (Eng)' => ['FR' => 'I', 'FW' => 'I', 'EU' => 'I', 'EY' => 'I', 'EU' => 'I', 'DB' => 'C'],
+            'Name (Eng)' => ['FR' => 'J', 'FW' => 'J', 'EU' => 'J', 'EY' => 'J', 'EU' => 'J', 'DB' => 'D'],
+            'LAST NAME (Rus)' => ['FR' => 'K', 'FW' => 'K', 'EU' => 'K', 'EY' => 'K', 'EU' => 'K', 'DB' => 'E'],
+            'NAME (Rus)' => ['FR' => 'L', 'FW' => 'L', 'EU' => 'L', 'EY' => 'L', 'EU' => 'L', 'DB' => 'F'],
+            'PASSPORT №' => ['FR' => 'M', 'FW' => 'M', 'EU' => 'M', 'EY' => 'M', 'EU' => 'M', 'DB' => 'G'],
+            'DATE OF EXIT' => ['FR' => 'BM', 'FW' => 'BM', 'EU' => 'BK', 'EY' => 'BK', 'DB' => 'BD'],
+            'DATE OF ENTRY' => ['FR' => 'BB', 'FW' => 'BB', 'EU' => 'AZ', 'EY' => 'AZ', 'DB' => 'AS'],
+            'VISA PERIOD' => ['FR' => 'EE', 'FW' => 'EE', 'EU' => 'EB', 'EY' => 'EB', 'DB' => 'CW'],
+            'VISA MULTIPLICITY' => ['FR' => 'EY', 'FW' => 'FD', 'EU' => 'ET', 'EY' => 'ET', 'DB' => NULL],
+            'PL. OF VISA CITY' => ['FR' => 'BY', 'FW' => 'BY', 'EU' => null, 'EY' => null, 'DB' => 'BO'],
+            'PL. OF VISA COUNTRY' => ['FR' => 'BX', 'FW' => 'BX', 'EU' => null, 'EY' => null, 'DB' => NULL],
+            'INVITING COMPANY' => ['FR' => 'EN', 'FW' => 'EN', 'EU' => 'EK', 'EY' => 'EK', 'DB' => NULL],
+            'PL OF STAY DETAILS' => ['FR' => 'FR', 'FW' => 'FW', 'EU' => null, 'EY' => null, 'DB' => NULL],
 
-            'DATE OF BIRTH' => 'N',
-            'SEX (Eng.)' => ['FR' => 'DJ', 'FW' => 'DJ', 'EU' => 'DG', 'EY' => 'DG'],
+            'DATE OF BIRTH' => ['FR' => 'N', 'FW' => 'N', 'EU' => 'N', 'EY' => 'N', 'DB' => 'H'],
+            'SEX (Eng.)' => ['FR' => 'DJ', 'FW' => 'DJ', 'EU' => 'DG', 'EY' => 'DG', 'DB' => 'CT'],
             'PASS ISSUED BY' => 'AX',
-            'PL. OF BIRTH' => 'Z',
-            'PASS DATE OF ISSUE' => 'AB',
-            'PASS DATE OF VALIDITY' => 'AM',
-            'PL. OF RESIDENCE' => ['FR' => 'AZ', 'FW' => 'AZ', 'EU' => 'AX', 'EY' => 'AX'],
-            'DATE OF BIRTH' => 'N',
+            'PL. OF BIRTH' => ['FR' => 'Z', 'FW' => 'Z', 'EU' => 'Z', 'EY' => 'Z', 'DB' => 'S'],
+            'PASS DATE OF ISSUE' => ['FR' => 'AB', 'FW' => 'AB', 'EU' => 'AB', 'EY' => 'AB', 'DB' => 'U'],
+            'PASS DATE OF VALIDITY' => ['FR' => 'AM', 'FW' => 'AM', 'EU' => 'AM', 'EY' => 'AM', 'DB' => 'AF'],
+            'PL. OF RESIDENCE' => ['FR' => 'AZ', 'FW' => 'AZ', 'EU' => 'AX', 'EY' => 'AX', 'DB' => 'AQ'],
 
-            'COMPANY' => ['FR' => 'DU', 'FW' => 'DU', 'EU' => 'DR', 'EY' => 'DR'],
-            'COMPANY ADDRESS' => ['FR' => 'DW', 'FW' => 'DW', 'EU' => 'DT', 'EY' => 'DT'],
+            'COMPANY' => ['FR' => 'DU', 'FW' => 'DU', 'EU' => 'DR', 'EY' => 'DR', 'DB' => NULL],
+            'COMPANY ADDRESS' => ['FR' => 'DW', 'FW' => 'DW', 'EU' => 'DT', 'EY' => 'DT', 'DB' => NULL],
             //'ENTERING PERSON' => 'EA',
-            'JOB POSITION Eng' => ['FR' => 'DK', 'FW' => 'DK', 'EU' => 'DH', 'EY' => 'DH'],
+            'JOB POSITION Eng' => ['FR' => 'DK', 'FW' => 'DK', 'EU' => 'DH', 'EY' => 'DH', 'DB' => NULL],
             //'JOB POSITION Rus' => 'DL'
 
 
-            'PL OF STAY REGION' => ['FR' => 'FE', 'FW' => 'FJ', 'EU' => 'FE', 'EY' => 'FE'],
-            'TYPE PL OF STAY' => ['FR' => 'FF', 'FW' => 'FK', 'EU' => 'FF', 'EY' => 'FF'],
-            'PL OF STAY CITY' => ['FR' => 'FG', 'FW' => 'FL', 'EU' => 'FG', 'EY' => 'FG'],
-            'TYPE PL OF STAY DISTRICT' => ['FR' => 'FH', 'FW' => 'FM', 'EU' => 'FH', 'EY' => 'FH'],
-            'PL OF STAY DISTRICT' => ['FR' => 'FI', 'FW' => 'FN', 'EU' => 'FI', 'EY' => 'FI'],
-            'TYPE PL OF STAY STREET' => ['FR' => 'FJ', 'FW' => 'FO', 'EU' => 'FJ', 'EY' => 'FJ'],
-            'PL OF STAY STREET' => ['FR' => 'FK', 'FW' => 'FP', 'EU' => 'FK', 'EY' => 'FK'],
-            'TYPE PL OF STAY HOUSE' => ['FR' => 'FL', 'FW' => 'FQ', 'EU' => 'FL', 'EY' => 'FL'],
-            'PL OF STAY HOUSE' => ['FR' => 'FM', 'FW' => 'FR', 'EU' => 'FM', 'EY' => 'FM'],
-            'PL OF STAY HOUSING' => ['FR' => 'FN', 'FW' => 'FS', 'EU' => 'FN', 'EY' => 'FN'],
-            'PL OF STAY BUILDING' => ['FR' => 'FO', 'FW' => 'FT', 'EU' => 'FO', 'EY' => 'FO'],
-            'PL OF STAY FLAT' => ['FR' => 'FP', 'FW' => 'FU', 'ET' => 'FP', 'EY' => 'FP']
+            'PL OF STAY REGION' => ['FR' => 'FE', 'FW' => 'FJ', 'EU' => 'FE', 'EY' => 'FE', 'EU' => null, 'DB' => NULL],
+            'TYPE PL OF STAY' => ['FR' => 'FF', 'FW' => 'FK', 'EU' => 'FF', 'EY' => 'FF', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY CITY' => ['FR' => 'FG', 'FW' => 'FL', 'EU' => 'FG', 'EY' => 'FG', 'EU' => null, 'DB' => NULL],
+            'TYPE PL OF STAY DISTRICT' => ['FR' => 'FH', 'FW' => 'FM', 'EU' => 'FH', 'EY' => 'FH', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY DISTRICT' => ['FR' => 'FI', 'FW' => 'FN', 'EU' => 'FI', 'EY' => 'FI', 'EU' => null, 'DB' => NULL],
+            'TYPE PL OF STAY STREET' => ['FR' => 'FJ', 'FW' => 'FO', 'EU' => 'FJ', 'EY' => 'FJ', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY STREET' => ['FR' => 'FK', 'FW' => 'FP', 'EU' => 'FK', 'EY' => 'FK', 'EU' => null, 'DB' => NULL],
+            'TYPE PL OF STAY HOUSE' => ['FR' => 'FL', 'FW' => 'FQ', 'EU' => 'FL', 'EY' => 'FL', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY HOUSE' => ['FR' => 'FM', 'FW' => 'FR', 'EU' => 'FM', 'EY' => 'FM', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY HOUSING' => ['FR' => 'FN', 'FW' => 'FS', 'EU' => 'FN', 'EY' => 'FN', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY BUILDING' => ['FR' => 'FO', 'FW' => 'FT', 'EU' => 'FO', 'EY' => 'FO', 'EU' => null, 'DB' => NULL],
+            'PL OF STAY FLAT' => ['FR' => 'FP', 'FW' => 'FU', 'ET' => 'FP', 'EY' => 'FP', 'EU' => null, 'DB' => NULL]
         ];
 
         foreach ($columns as $key => $col) {
 
             if (is_array($col)) {
 
+                echo '$key=' . $key . '<br/>';
                 if ($col[$version] == null) {
                     if ($version == 'EU') {
                         if ($key == 'PL. OF VISA CITY')
@@ -214,7 +214,7 @@ class updatePassportAndVisas
                         $dateOfEntry = CronAPP::convertDate($row[$this->labelIndexes['DATE OF ENTRY']]);
 
                         if ($passportRow['es_person'] === null) {
-                            
+
                             print_r($passportRow);
                             echo '<hr/>';
                             print_r($row);
@@ -326,13 +326,16 @@ class updatePassportAndVisas
             $sets[] = $db->quoteName('es_namelinelat') . '=' . $db->quote($MRZ);
         }
 
+        $visaIssueCountry = null;
         if ($this->version == "EY") {
             $index = CronAPP::getColumnIndex('EW');
             $visaIssueCountry = $xlsRow[$index];
         } else {
-            $visaIssueCountry = $xlsRow[$this->labelIndexes['PL. OF VISA COUNTRY']];
+            if($this->labelIndexes['PL. OF VISA COUNTRY'] !== null)
+                $visaIssueCountry = $xlsRow[$this->labelIndexes['PL. OF VISA COUNTRY']];
         }
 
+        $countryID = null;
         if ($visaIssueCountry !== null and $visaIssueCountry != "") {
             $countryID = $this->findCountryByName($visaIssueCountry);
             if ($countryID === null) {
@@ -433,7 +436,7 @@ class updatePassportAndVisas
             }
         }
 
-        if ($passportRow['es_birthplace'] === null) {
+        if ($countryID !== null and $passportRow['es_birthplace'] === null) {
             $Place_of_birth = $xlsRow[$this->labelIndexes['PL. OF BIRTH']];
             $Place_of_birthRIS = $xlsRow[$this->labelIndexes['PL. OF BIRTH'] + 1];
             $Place_of_birthID = $this->findPlaceByName($Place_of_birth, $countryID, $Place_of_birthRIS);
@@ -443,7 +446,7 @@ class updatePassportAndVisas
             }
         }
 
-        if ($passportRow['es_residenceplace'] === null) {
+        if ($countryID !== null and $passportRow['es_residenceplace'] === null) {
             $residencePlace = $xlsRow[$this->labelIndexes['PL. OF RESIDENCE']];
             $residencePlaceRUS = $xlsRow[$this->labelIndexes['PL. OF RESIDENCE'] + 1];
             $residencePlaceID = $this->findPlaceByName($residencePlace, $countryID, $residencePlaceRUS);
@@ -589,12 +592,14 @@ class updatePassportAndVisas
     {
         $db = Factory::getDBO();
         $sets = [];
+        $visaIssueCountry = null;
 
         if ($this->version == "EY") {
             $index = CronAPP::getColumnIndex('EW');
             $visaIssueCountry = $xlsRow[$index];
         } else {
-            $visaIssueCountry = $xlsRow[$this->labelIndexes['PL. OF VISA COUNTRY']];
+            if($this->labelIndexes['PL. OF VISA COUNTRY'] !== null)
+                $visaIssueCountry = $xlsRow[$this->labelIndexes['PL. OF VISA COUNTRY']];
         }
 
         if ($visaIssueCountry !== null and $visaIssueCountry != "") {
@@ -614,7 +619,7 @@ class updatePassportAndVisas
                 if ($visaIssuePlace !== null and $visaIssuePlace != "") {
                     $visaIssuePlaceRUS = $xlsRow[$this->labelIndexes['PL. OF VISA CITY'] + 1];
 
-                    if ($visaIssuePlace !== null and $visaIssuePlace != "") {
+                    if ($countryID != null and $visaIssuePlace !== null and $visaIssuePlace != "") {
                         $placeID = $this->findPlaceByName($visaIssuePlace, $countryID, $visaIssuePlaceRUS);
                         if ($placeID === null) {
                             CronAPP::print_console('PL. OF VISA CITY: ' . $visaIssuePlace . '<br/>', $this->logFile);
@@ -690,8 +695,9 @@ class updatePassportAndVisas
                 echo '$workCompany=' . $workCompany . '<br/>';
 
                 $companyID = $this->addCompany($workCompany, $visaRow['es_person'], true, $xlsRow);
-                if ($companyID === null)
-                    die;
+                if ($companyID === null) {
+                    die('Company ID is NULL');
+                }
             }
         }
 
@@ -703,8 +709,9 @@ class updatePassportAndVisas
                     $this->invitingCompanies[] = $invitingCompany;
 
                 $companyID = $this->addCompany($invitingCompany, $visaRow['es_person'], true, $xlsRow);
-                if ($companyID === null)
-                    die;
+                if ($companyID === null) {
+                    die('Company ID is NULL');
+                }
 
                 if ($visaRow['es_invcompanyname'] === null) {
                     $sets[] = 'es_invcompanyname=' . $companyID;
@@ -827,12 +834,6 @@ class updatePassportAndVisas
                 $sets[] = 'es_ismigrant=' . $isMigrant;
             } else {
                 if ($row['es_position'] != $positionId) {
-                    /*
-                    echo $sql;
-                    echo '<br/>$positionId=' . $positionId . '<br/>';
-                    print_r($row);
-                    die;
-                    */
 
                     //Add New Company Employee
                     $sets[] = 'es_company=' . $CompanyID;
