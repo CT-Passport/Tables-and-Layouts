@@ -43,7 +43,15 @@
     <div class="control-group">
         <div class="control-label">{{ employees.title }}</div>
         {% set companyID = tables.getrecord("ProjectCompanyID","_id="~projectId) %}
-        <div class="controls">{{ employees.edit("","","","employeeName","","company="~companyID~" and ismigrant=1") }}</div>
+      
+      
+        <div class="controls">
+          <input type="hidden" id="comes_temporaryEmployeeHolder" onchange="addEmployeeToEmployeeTable();" />
+          <button class="btn btn-primary" onClick="addEmployee({{ companyID }});return false;">Добавить работника +</button>
+          <div style="margin-top:3px;">
+          {{ employees.edit("","","","employeeName","","company="~companyID~" and ismigrant=1") }}
+          </div>
+      	</div>
     </div>
 
 </div>

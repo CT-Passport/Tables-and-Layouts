@@ -1,0 +1,16 @@
+#sqljoin_table_comes_employees td {
+padding-bottom:2px;
+}
+
+#sqljoin_table_comes_employees tr{
+border:3px solid white;
+}
+
+#sqljoin_table_comes_employees tr:nth-child(odd) {
+background: #e5ffff;
+
+}
+#sqljoin_table_comes_employees tr:nth-child(even) {
+	background: #f6fdfd;
+
+}

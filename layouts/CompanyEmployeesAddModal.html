@@ -4,13 +4,6 @@
 
 {% if record.id != "" %}
 {% set URLisMigrant = person.getvalue("ismigrant") %}
-
-{% if ismigrant.value != URLisMigrant %}
-{% set URLisMigrant = ismigrant.value %}
-URLisMigrant
-{% endif %}
-
-URLisMigrant: {{ URLisMigrant }}
 {% endif %}
 
 {% endif %}
@@ -22,7 +15,6 @@ URLisMigrant: {{ URLisMigrant }}
   {% endif %}
 </legend>
 
-{tab:Детали}
 
 <div class="form-horizontal">
   
@@ -48,10 +40,9 @@ URLisMigrant: {{ URLisMigrant }}
 {% set companyId = company.value %}
 {% set companyName = company %}
 {% endif %}
+  
+<! -- important --><input type="hidden" name="comes_company" value="{{ companyId }}" />
 
-  
-<!-- important --><input type="hidden" name="comes_company" value="{{ companyId }}" />
-  
 {% if companyName == "" %}
 <p>Компания не указана или не найдена.</p>
 {% else %}
@@ -63,9 +54,7 @@ URLisMigrant: {{ URLisMigrant }}
           
           {% if companyId != "" %} <img src="/images/flags/{{ companyDetails.countryCode|lower  }}.png" style="margin-right:10px;" alt="{{ companyDetails.country }}" title="{{ companyDetails.country }}" />
       
-          <p>Сотрудники компании:</p>
-  
-{{ tables.getrecords("CompanyEmployeesListSimple",'company='~companyId) }}
+          
           {% endif %}
 
       
@@ -76,7 +65,8 @@ URLisMigrant: {{ URLisMigrant }}
   
 	<div class="control-group">
 		<div class="control-label">{{ person.title }}</div><div class="controls">
-            {% if companyDetails.countryCode == 'RU' %}
+      
+      {% if companyDetails.countryCode == 'RU' %}
        {% set peoplefilter = "ismigrant=="~URLisMigrant %}
       
        {% set addPersonLink = "add-person?ismigrant=" ~ URLisMigrant %}
@@ -89,13 +79,11 @@ URLisMigrant: {{ URLisMigrant }}
       
       {% endif %}
 </div>
-	</div>      
-      
-
-
+	</div>
 
 <div class="control-group">
 		<div class="control-label">{{ position.title }}</div><div class="controls">{{ position.edit("","",["positions","namerussubj","published",null,"namerussubj"],null,"dobavit-dolzhnost","virtualselect") }}</div>
+  
 	</div>
   
 {% if URLisMigrant == 0 %}
@@ -104,27 +92,15 @@ URLisMigrant: {{ URLisMigrant }}
 		<div class="control-label">{{ phone.title }}</div><div class="controls">{{ phone.edit }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ phone1.title }}</div><div class="controls">{{ phone1.edit }}</div>
-	</div>
+
 
 	<div class="control-group">
 		<div class="control-label">{{ email.title }}</div><div class="controls">{{ email.edit }}</div>
 	</div>
 
-	<div class="control-group">
-		<div class="control-label">{{ email1.title }}</div><div class="controls">{{ email1.edit }}</div>
-	</div>
+
 
 {% endif %}
 </div>
 
-
-{tab:Комментарий}
-{{ comment.edit("","","100%") }}
-{/tabs}
-
-
-
-
-<div style="text-align:center;">{{ html.button("save","","","btn btn-primary offset-md-") }} {{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}</div>
+<div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }}</div>

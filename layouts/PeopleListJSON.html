@@ -1,0 +1,6 @@
+[
+{% block record %}
+{"value":"{{ record.id }}",
+"label":"{{ fullname }}",
+"description":"{{ dateofbirth("d.m.Y") }}"}{% if record.isLast == false %},{% endif %}
+{% endblock %}]
