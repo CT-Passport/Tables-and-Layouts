@@ -33,6 +33,7 @@
 
 {% endif %}
 
+{% if passportphotocopy.value == "" or personId != "" %}
 {tab:Сведения о паспорте}  
 <div class="form-horizontal">
   
@@ -145,6 +146,7 @@
 	</div>
 </div>
 
+{% endif %}
 {tab:Фото} 
 
 	<div class="control-group">

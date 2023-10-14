@@ -453,10 +453,7 @@ function getPredictionValues(array $prediction, $label, $changeCase = false): ar
 function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
 {
     $listing_id = $row_new['id'];
-    $app = Factory::getApplication();
-
     $Code = getPredictionValue($prediction, 'Code');
-
     $db = JFactory::getDBO();
 
     $MRZ = getPredictionValue($prediction, 'MRZ');
@@ -465,7 +462,7 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
         $MRZ = str_replace('u003c', '<', $MRZ);
     }
 
-    if ($MRZ !== null)
+    if ($MRZ !== null and $Code !==null)
         $nameFromMRZ = namePartsFromMRZ($row_new, $Code, $MRZ);
 
     $row_new['NativeSurname'] = getPredictionValue($prediction, 'Surname', true);
@@ -473,7 +470,7 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
 
     $sets = [];
 
-    if ($MRZ !== null) {
+    if ($MRZ !== null and $Code !==null) {
         if ($nameFromMRZ[0] != '' and $nameFromMRZ[2] != '') {
             if ($row_new['es_namelinelat'] == '') {
                 $row_new['es_namelinelat'] = $nameFromMRZ[0] . ($nameFromMRZ[1] != '' ? ' ' . $nameFromMRZ[1] : '') . ',' . $nameFromMRZ[2] . ($nameFromMRZ[3] != '' ? ' ' . $nameFromMRZ[3] : '');
@@ -504,7 +501,7 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
     }
 
     $Passport_Number = getPredictionValue($prediction, 'Passport_Number');
-    if ($row_new['es_number'] == '') {
+    if ($Passport_Number !== null and $row_new['es_number'] == '') {
 
         $Passport_Number_List = explode(' ', $Passport_Number);
         if (count($Passport_Number_List) == 2) {
@@ -532,16 +529,18 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
     }
 
     $Date_of_expiry = getPredictionValue($prediction, 'Date_of_expiry');
-    $newDate = convertPassportDate($Date_of_expiry);
-    if ($newDate !== false) {
-        $Date_of_expiry = $newDate;
-        if ($row_new['es_expirationdate'] === null or $row_new['es_expirationdate'] == '') {
-            $row_new['es_expirationdate'] = $newDate;
-            $sets[] = $db->quoteName('es_expirationdate') . '=' . $db->quote($newDate);
+    if($Date_of_expiry !== null) {
+        $newDate = convertPassportDate($Date_of_expiry);
+        if ($newDate !== false) {
+            $Date_of_expiry = $newDate;
+            if ($row_new['es_expirationdate'] === null or $row_new['es_expirationdate'] == '') {
+                $row_new['es_expirationdate'] = $newDate;
+                $sets[] = $db->quoteName('es_expirationdate') . '=' . $db->quote($newDate);
+            }
+        } else {
+            $res = ['status' => 'error', 'message' => 'Invalid date format or month abbreviation.'];
+            die(json_encode($res));
         }
-    } else {
-        $res = ['status' => 'error', 'message' => 'Invalid date format or month abbreviation.'];
-        die(json_encode($res));
     }
 
     if ($row_new['es_validitystatus'] === null or $row_new['es_validitystatus'] == '') {
@@ -570,27 +569,34 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
     if ($row_new['es_ethnicity'] === null or $row_new['es_ethnicity'] == '') {
 
         $Nationality = getPredictionValue($prediction, 'Nationality');
-        $NationalityID = getNationalityIDOrAddTheRecord($Nationality);
-        if ($NationalityID !== null) {
-            $row_new['es_ethnicity'] = $NationalityID;
-            $sets[] = $db->quoteName('es_ethnicity') . '=' . $NationalityID;
+        if($Nationality !== null) {
+            $NationalityID = getNationalityIDOrAddTheRecord($Nationality);
+            if ($NationalityID !== null) {
+                $row_new['es_ethnicity'] = $NationalityID;
+                $sets[] = $db->quoteName('es_ethnicity') . '=' . $NationalityID;
+            }
         }
     }
 
-    $gender = strtolower(getPredictionValue($prediction, 'Sex'));
-    if ($row_new['es_gender'] === null or $row_new['es_gender'] == '') {
-        $row_new['es_gender'] = ($gender == 'm' ? '1' : '2');
-        $sets[] = $db->quoteName('es_gender') . '=' . ($gender == 'm' ? '1' : '2');
+    $genderString = getPredictionValue($prediction, 'Sex');
+    if($genderString !== null) {
+        $gender = strtolower($genderString);
+        if ($row_new['es_gender'] === null or $row_new['es_gender'] == '') {
+            $row_new['es_gender'] = ($gender == 'm' ? '1' : '2');
+            $sets[] = $db->quoteName('es_gender') . '=' . ($gender == 'm' ? '1' : '2');
+        }
     }
 
     if ($countryID !== null) {
 
         if ($row_new['es_issueauthority'] === null or $row_new['es_issueauthority'] == '') {
             $AuthorityName = getPredictionValue($prediction, 'Authority');
-            $AuthorityID = getAuthorityIDOrAddTheRecord($AuthorityName, $countryID);
-            if ($AuthorityID !== null) {
-                $row_new['es_issueauthority'] = $AuthorityID;
-                $sets[] = $db->quoteName('es_issueauthority') . '=' . $AuthorityID;
+            if($AuthorityName !== null) {
+                $AuthorityID = getAuthorityIDOrAddTheRecord($AuthorityName, $countryID);
+                if ($AuthorityID !== null) {
+                    $row_new['es_issueauthority'] = $AuthorityID;
+                    $sets[] = $db->quoteName('es_issueauthority') . '=' . $AuthorityID;
+                }
             }
         }
     }
@@ -613,14 +619,16 @@ function nanonetsJSONtoTableProcessPrediction(&$row_new, $prediction): bool
 
     if ($row_new['es_birthplace'] === null or $row_new['es_birthplace'] == '') {
         $Place_of_birth = getPredictionValue($prediction, 'Place_of_birth');
-        $Place_of_birthID = getPlaceCityIDOrAddTheRecord($Place_of_birth, $countryID);
-        if ($Place_of_birthID !== null) {
-            $row_new['es_birthplace'] = $Place_of_birthID;
-            $sets[] = $db->quoteName('es_birthplace') . '=' . $Place_of_birthID;
+        if ($Place_of_birth !== null) {
+            $Place_of_birthID = getPlaceCityIDOrAddTheRecord($Place_of_birth);
+            if ($Place_of_birthID !== null) {
+                $row_new['es_birthplace'] = $Place_of_birthID;
+                $sets[] = $db->quoteName('es_birthplace') . '=' . $Place_of_birthID;
+            }
         }
     }
 
-    if ($MRZ !== null) {
+    if ($MRZ !== null and $Passport_Number !== null) {
         if ($row_new['es_id'] === null or $row_new['es_id'] == '') {
 
             $Passport_Number_NoSpace = str_replace(' ', '', $Passport_Number);
@@ -873,9 +881,9 @@ function mindeeJSONtoTable(&$row_new): bool
     return true;
 }
 
-function getPlaceCityIDOrAddTheRecord($PlaceName)
+function getPlaceCityIDOrAddTheRecord(string $PlaceName)
 {
-    die("ADD COUNTRY ID");
+    die("ADD COUNTRY ID, place name: " . $PlaceName);
 
     $db = Factory::getDBO();
     $query = 'SELECT id FROM #__customtables_table_placescities WHERE es_namelat=LOWER(' . $db->quote(strtolower($PlaceName)) . ') LIMIT 1';
@@ -891,7 +899,7 @@ function getPlaceCityIDOrAddTheRecord($PlaceName)
     return $recs[0]['id'];
 }
 
-function getAuthorityIDOrAddTheRecord($AuthorityName, $countryID)
+function getAuthorityIDOrAddTheRecord(string $AuthorityName, int $countryID)
 {
     $db = Factory::getDBO();
     $query = 'SELECT id FROM #__customtables_table_passissueauthorities WHERE es_country=' . $countryID . ' AND es_namelat=LOWER(' . $db->quote(strtolower($AuthorityName)) . ') LIMIT 1';
@@ -908,7 +916,7 @@ function getAuthorityIDOrAddTheRecord($AuthorityName, $countryID)
     return $recs[0]['id'];
 }
 
-function getNationalityIDOrAddTheRecord($Nationality)
+function getNationalityIDOrAddTheRecord(string $Nationality)
 {
     $db = Factory::getDBO();
     $query = ' SELECT id FROM #__customtables_table_ethnicity WHERE es_namelat=LOWER(' . $db->quote(strtolower($Nationality)) . ') OR es_synonym=' . $db->quote(strtolower($Nationality)) . ' LIMIT 1';
@@ -932,7 +940,7 @@ function getCountryID($countryISO3Code)
     return $recs[0]['id'];
 }
 
-function convertPassportDate($originalDate)
+function convertPassportDate(string $originalDate)
 {
     if (strlen($originalDate) == 10) {
         $parts = explode('.', $originalDate);
