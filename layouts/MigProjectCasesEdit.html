@@ -30,7 +30,7 @@
 {tab:Файлы}
 
 <div class="control-group">
-		<div class="control-label">{{ files.title }}</div><div class="controls">{{ files.edit }}</div>
+		<div class="control-label">{% if files.value != "" %}{{ files.title }}{% endif %}</div><div class="controls">{{ files.edit }}</div>
 	</div>
 
 	<div class="control-group">

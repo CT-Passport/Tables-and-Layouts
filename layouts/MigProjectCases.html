@@ -1,6 +1,18 @@
+{% set projectId = "" %}
+{% set whereList = url.getstringanddecode("where")|split(" and ") %}
+{% for where in whereList %}
+{% set w = where|split("=") %}
+{% if w[0] == "project" %}
+{% set projectId = w[1] %}
+{% endif %}
+{% endfor %}
+
+
 <legend>{{ table.title }}</legend>
 <div style="float:right;">{{ html.recordcount }}</div>
-<div style="float:left;">{{ html.add }}</div>
+<div style="float:left;">
+  <a href="/5-2-spornye-kejsy-proekta?view=edititem&amp;returnto={{ url.base64 }}&amp;es_project={{ projectId }}" id="ctToolBarAddNew71" class="toolbarIcons"><img src="/components/com_customtables/libraries/customtables/media/images/icons/new.png" alt="Добавить" title="Добавить"></a>
+</div>
 
 <div class="datagrid">
 

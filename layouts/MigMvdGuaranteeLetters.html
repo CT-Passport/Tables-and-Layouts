@@ -21,7 +21,7 @@
 <th>{{ project.title }}<br>
 {{ projsite.title }}</th>
 <th>{{ projectbatch.label(true) }}</th>
-<th>{{ employee.label }}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
 </tr></thead>
 
@@ -37,14 +37,13 @@
   <td><b>{{ tables.getrecord("projectName","id="~project.value) }}</b><br>
 {{ tables.getrecord("projectsiteName","id="~projectsite.value) }}</td>
 <td>{{ projectbatch }}</td>
-<td><a href="/index.php/garantijnye-pisma-vybor-rabotnika?batch={{ projectbatch.value }}&listing_id={{ record.id }}">
-    <button class="btn btn-primary">Add / Edit Employee
-
-  {% if employee.value != 0 %}
-      <br/><b>{{ employee }}</b>
-  {% endif %}
+<td style="text-align:center;">
+{{ url.set("guarantee",record.id) }}
   
-  </button></a></td>
+  {{ employees.value }}
+  
+{{ employees.layout("EmployeeListWithMidMvdGuaranteeSimple",null,"") }}  
+</td>
 <td>{{ html.toolbar("edit","publish","refresh","delete") }}</td>
 </tr>
 {% endblock %}
@@ -59,7 +58,7 @@
 <th>{{ project.title }}<br>
 {{ projsite.title }}</th>
 <th>{{ projectbatch.title }}</th>
-<th>{{ employee.label }}</th>
+<th style="text-align:center;">{% if document.languagepostfix=="_ru" %}Документ{% else %}Document{% endif %}</th>
 <th>{% if document.languagepostfix=="_ru" %}Действие{% else %}Action{% endif %}<br/></th>
 </tr></tfoot>
   

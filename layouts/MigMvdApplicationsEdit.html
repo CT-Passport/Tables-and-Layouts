@@ -36,9 +36,8 @@
 		<div class="control-label">{{ projectbatch.title }}</div><div class="controls"><b>{{ projectbatch.get("	fullname") }}</b></div>
 	</div>
 
-<hr/>  
 {% set employeesList = projectbatch.getvalue("employees") %}
-
+<hr/>  
 <div class="control-group">
 		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','published','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
 	</div>

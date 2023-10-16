@@ -1,7 +1,9 @@
 {{ html.goback }}
-<legend>{% if document.languagepostfix=="_ru" %}Заявления в МВД на приглашение на въезд - Майкрософт Ворд Документ{% else %}An Application for MVD for an Entry Invitation - MS Word Document{% endif %}</legend>
+<legend>{% if document.languagepostfix=="_ru" %}Гарантийное письмо - Майкрософт Ворд Документ{% else %}Guarantee Letter - MS Word Document{% endif %}</legend>
 
-{% set company =tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
+{% set company2 = tables.getrecord("ProjectCompanyJSON",project.value)  %}
+company2: {{ company2 }}<br/>
+{% set company = tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
 
 {% set c="" %}{% set d="" %}
 {% if reasonsforurgentregistrationareattached.value == 1 %}
@@ -11,35 +13,15 @@
 {% endif %}
 
 {% set employeeIdFromURL = url.getint("employee") %}
-{% set MigMvdAppWorker =tables.getrecord("MigMvdAppWorkerJSON","migmvdapplication=" ~ record.id ~ " and employee=" ~ employeeIdFromURL)| json_decode  %}
-
-{% set e="" %}{% set f="" %}{% set g="" %}
-
-{% if MigMvdAppWorker.visamultiplicity == 1 %}
-{% set e="X" %}
-{% elseif MigMvdAppWorker.visamultiplicity == 2 %}
-{% set f="X" %}
-{% elseif MigMvdAppWorker.visamultiplicity == 3 %}
-{% set g="X" %}
-{% endif %}
-
-{% set h="" %}{% set i="" %}{% set j="" %}{% set k="" %}{% set l="" %}
-
-{% if MigMvdAppWorker.visaTypeCategory == 1 %}
-{% set h="X" %}
-{% elseif MigMvdAppWorker.visaTypeCategory == 2 %}
-{% set i="X" %}
-{% elseif MigMvdAppWorker.visaTypeCategory == 3 %}
-{% set j="X" %}
-{% elseif MigMvdAppWorker.visaTypeCategory == 4 %}
-{% set k="X" %}
-{% elseif MigMvdAppWorker.visaTypeCategory == 5 %}
-{% set l="X" %}
-{% endif %}
 
 {% set listOfEmployees = employees.value|split(',') %}
 
 {% if employeeIdFromURL in listOfEmployees %}
+
+{% set person2 =tables.getrecord("EmployeeJSON",employeeIdFromURL) %}
+
+{{ person2 }}
+
 {% set person =tables.getrecord("EmployeeJSON",employeeIdFromURL) | json_decode %}
 {% else %}
 Employee not found
@@ -60,20 +42,50 @@ Employee not found
 "issueplace": "{{ visa.issueplace }}"
 #}
 
+{% set monthes = [
+    'января', 'февраля', 'марта',
+    'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября',
+    'октября', 'ноября', 'декабря'
+] %}
 
+{% set monthNumber = submdate("m") %}
+
+{% if monthNumber >= 1 and monthNumber <= 12 %}
+    {% set monthName = monthes[monthNumber - 1] %}
+    {{ monthName }}
+{% else %}
+    Invalid month number
+{% endif %}
+
+{#
+'egrul':applicationdate("d.m.Y"),                                           
+'SpeedupDate':planissdate("d.m.Y"),
+'LastNameRus':person.lastnamerussubj,
+'LastNameLat':person.lastnamelat,
+'FirstNameRus':person.firstnamerussubj,
+'FirstNameLat':person.firstnamelat,
+'MiddleNameRus':person.middlenamerussubj,
+'MiddleNameLat':person.middlenamelat,
+#}
+
+                                           person.genderCitizenshipsGen : {{ person.genderCitizenshipsGen }}
+                                           
 {% set values = 
 
 {'InitialNumber':regnum,
 'SubmitDate':submdate("d.m.Y"),
+'SubmitDateD':submdate("d"),
+'SubmitDateM':monthName,
+'SubmitDateY':submdate("y"),
 'inn_number':company.INN,
 'ogrn':company.OGRN,
-'egrul':applicationdate("d.m.Y"),
 'CompanyFullName':company.fullnamerus | base64decode,
+'Director':company.Director,
 'CompanyAddress':company.LegalAddress,
 'CompanyAddressPhysical':company.Address,
 'CompanyPhone':company.phone,
 'CompanyEmail':company.email,
-'SpeedupDate':planissdate("d.m.Y"),
 'VisitPurpose':MigMvdAppWorker.visitpurpose,
 'VisaLength':MigMvdAppWorker.visatermdays,
 'PlannedEntranceDate':MigMvdAppWorker.rusentrydate,
@@ -89,18 +101,13 @@ Employee not found
 'j':j,
 'k':k,
 'l':l,
-'LastNameRus':person.lastnamerussubj,
-'LastNameLat':person.lastnamelat,
-'FirstNameRus':person.firstnamerussubj,
-'FirstNameLat':person.firstnamelat,
-'MiddleNameRus':person.middlenamerussubj,
-'MiddleNameLat':person.middlenamelat,
+'nameRus':person.nameRus,
 'm':m,
 'n':n,
+'genderCitizenshipsGen':person.genderCitizenshipsGen | lower,
 'birthDate':person.birthDate,
-'BirthCountry':person.birthcountry,
 'BirthPlace':person.birthplacerus,
-'Citizenship':person.issuecountry,
+'Citizenship':person.issueCountryGen,
 'ResidencyCountry':MigMvdAppWorker.rescountry,
 'ResidencyState':MigMvdAppWorker.resplacerus,
 
@@ -115,8 +122,11 @@ Employee not found
 'PassportNumber':person.number,
 'PassportIssueAuthority':person.issueauthority,
 'PassportIssueDate':person.issuedate,
-'PassportEndDate':person.expirationdate,
-
+'PassportEndDate':person.expirationdate
+}
+%}
+                                           
+{#
 'PlannedPlaceToStay':MigMvdAppWorker.stayaddressRegion,
 'PlannedCityToStay':MigMvdAppWorker.stayaddressCity,
 'PlannedStreetToStay':MigMvdAppWorker.stayaddressStreet,
@@ -125,11 +135,9 @@ Employee not found
 'PlannedStructure':MigMvdAppWorker.stayaddressinrusstructure,
 'PlannedApartment':MigMvdAppWorker.stayaddressinrussapartment,
 'PlannedPhone':MigMvdAppWorker.stayaddressinrussphone
+#}
 
-}
-%}
-
-{% set newfile = phpword.setvalues("images/DocumentTemplates/Zayavlebie-V-MVD.docx",values) %}
+{% set newfile = phpword.setvalues("images/DocumentTemplates/GuaranteeLetter.docx",values) %}
 
 {% if newfile == null %}
 

@@ -98,20 +98,11 @@
           <div class="control-group">
             <div class="control-label">{{ resplace.title }}</div><div class="controls">{{ resplace.edit }}</div>
           </div>
-
-  			        
   
           <div class="control-group">
             <div class="control-label">{{ submdate.title }}</div><div class="controls">{{ submdate.edit }}</div>
           </div>
-          <div class="control-group">
-            <div class="control-label">{{ comment.title }}</div>
-            <div class="controls">{{ comment.edit }}</div>
-          </div>
-
-          <div class="control-group">
-            <div class="control-label">{{ letterdocslink.title }}</div><div class="controls">{{ letterdocslink.edit }}</div>
-          </div>
+          
         {% endif %}
       {% endif %}
     {% endif %}
@@ -119,6 +110,10 @@
 
 {tab:{{ comment.title }}}
 {{ comment.edit("","","100%") }}
+{tab:Документы}
+<div class="control-group">
+            <div class="control-label">{{ letterdocslink.title }}</div><div class="controls">{{ letterdocslink.edit }}</div>
+</div>
 {/tabs}
 
 <div style="text-align:center;">

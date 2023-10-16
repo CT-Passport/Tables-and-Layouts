@@ -1,0 +1,26 @@
+{{ document.setheadtag('<script type="text/javascript" src="/components/com_customtables/libraries/customtables/media/js/chart.min.js"></script>') }}
+
+<h2>Иностранные работники по странам</h2>
+<canvas id="generalChartProducts" width="400" height="400" style="max-height:400px;"></canvas>
+<script>
+  let countries = [
+  {% block record %}
+["{{ namerussubj }}",{{ record.count("passports","issuecountry="~record.id) }}]{% if record.islast == false %},{% endif %}
+	{% endblock %}];
+                   
+let labels = [];
+let values = [];
+	for(let i=0;i<countries.length;i++)
+    {
+      if(countries[i][1]>0)
+      {
+      	labels.push(countries[i][0]);
+      values.push(countries[i][1]);
+        
+      if(i==5)
+        break;
+      }
+    }
+  let data = {a1:values};
+doDrawGeneralChart("generalChartProducts",data,labels)
+</script>

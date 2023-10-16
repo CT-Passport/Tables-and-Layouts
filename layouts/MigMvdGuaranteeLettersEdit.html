@@ -14,20 +14,37 @@
 		<div class="control-label">{{ submdate.title }}</div><div class="controls">{{ submdate.edit }}</div>
 	</div>
 
+{% if projectbatch.value == '' %}
 <div class="control-group">
 		<div class="control-label">{{ projectbatch.title }}</div><div class="controls">{{ projectbatch.edit("","",[["migprojects","name"],["migprojectsites","name"],["migprojectbatches","layout:ProjectBatchNumberAndEmployees"]]) }}</div>
-	</div>  
-
-	<div class="control-group">
-		<div class="control-label">{{ comment.title }}</div><div class="controls">{{ comment.edit }}</div>
+	</div>{% else %}
+  
+<div class="control-group">
+		<div class="control-label">{{ project.title }}</div><div class="controls"><b>{{ tables.getrecord("projectName",project.value) }}</b></div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ projsite.title }}</div><div class="controls"><b>{{ tables.getrecord("projectsiteName",projsite.value) }}</b></div>
+	</div>
+  
+<div class="control-group">
+		<div class="control-label">{{ projectbatch.title }}</div><div class="controls"><b>{{ projectbatch.get("	fullname") }}</b></div>
+	</div>
+  
+{% set employeesList = projectbatch.getvalue("employees") %}
+<hr/>
+<div class="control-group">
+		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','published','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
 	</div>
 
-<hr/>
+{% endif %}
+
+{tab:{{ comment.title }}}
+{{ comment.edit("","","100%") }}
+{tab:Документы}
 <div class="control-group">
 		<div class="control-label">{{ gletdocslink.title }}</div><div class="controls">{{ gletdocslink.edit }}</div>
 	</div>
-{tab:{{ comment.title }}}
-{{ comment.edit("","","100%") }}
 {/tabs}
 
 <div style="text-align:center;">{{ html.button("saveandclose","","","btn btn-primary offset-md-") }} {{ html.button("cancel","","","btn btn-primary offset-md-") }}
