@@ -2,39 +2,14 @@
 <legend>{% if document.languagepostfix=="_ru" %}Гарантийное письмо - Майкрософт Ворд Документ{% else %}Guarantee Letter - MS Word Document{% endif %}</legend>
 
 {% set company = tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
-
-{% set c="" %}{% set d="" %}
-{% if reasonsforurgentregistrationareattached.value == 1 %}
-{% set c="X" %}
-{% else %}
-{% set d="X" %}
-{% endif %}
-
 {% set employeeIdFromURL = url.getint("employee") %}
-
 {% set listOfEmployees = employees.value|split(',') %}
 
 {% if employeeIdFromURL in listOfEmployees %}
-
-{% set person =tables.getrecord("EmployeeJSON",employeeIdFromURL) | json_decode %}
+    {% set person =tables.getrecord("EmployeeJSON",employeeIdFromURL) | json_decode %}
 {% else %}
-Employee not found
+    Employee not found
 {% endif %}
-
-
-{% set m="" %}{% set n="" %}
-{% if person.genderValue == 1 %}
-{% set m="X" %}
-{% else %}
-{% set n="X" %}
-{% endif %}
-
-{#
-{% set visa =tables.getrecord("VisaJSONPersonExtended","person=" ~ person.personID)  %}| json_decode
-{{ visa }}
-"issuecountry": "{{ visa.issuecountry }}",
-"issueplace": "{{ visa.issueplace }}"
-#}
 
 {% set monthes = [
     'января', 'февраля', 'марта',
@@ -47,23 +22,9 @@ Employee not found
 
 {% if monthNumber >= 1 and monthNumber <= 12 %}
     {% set monthName = monthes[monthNumber - 1] %}
-    {{ monthName }}
 {% else %}
     Invalid month number
 {% endif %}
-
-{#
-'egrul':applicationdate("d.m.Y"),                                           
-'SpeedupDate':planissdate("d.m.Y"),
-'LastNameRus':person.lastnamerussubj,
-'LastNameLat':person.lastnamelat,
-'FirstNameRus':person.firstnamerussubj,
-'FirstNameLat':person.firstnamelat,
-'MiddleNameRus':person.middlenamerussubj,
-'MiddleNameLat':person.middlenamelat,
-#}
-
-                                           person.genderCitizenshipsGen : {{ person.genderCitizenshipsGen }}
                                            
 {% set values = 
 
@@ -76,70 +37,22 @@ Employee not found
 'ogrn':company.OGRN,
 'CompanyFullName':company.fullnamerus | base64decode,
 'Director':company.Director,
-'CompanyAddress':company.LegalAddress,
-'CompanyAddressPhysical':company.Address,
 'CompanyPhone':company.phone,
-'CompanyEmail':company.email,
-'VisitPurpose':MigMvdAppWorker.visitpurpose,
-'VisaLength':MigMvdAppWorker.visatermdays,
-'PlannedEntranceDate':MigMvdAppWorker.rusentrydate,
-'PlannedLeaveDate':MigMvdAppWorker.visaenddate,
-'PlannedPlacesToVisit':MigMvdAppWorker.rusvisitplaces,
-'c':c,
-'d':d,
-'e':e,
-'f':f,
-'g':g,
-'h':h,
-'i':i,
-'j':j,
-'k':k,
-'l':l,
 'nameRus':person.nameRus,
-'m':m,
-'n':n,
 'genderCitizenshipsGen':person.genderCitizenshipsGen | lower,
 'birthDate':person.birthDate,
-'BirthPlace':person.birthplacerus,
 'Citizenship':person.issueCountryGen,
-'ResidencyCountry':MigMvdAppWorker.rescountry,
-'ResidencyState':MigMvdAppWorker.resplacerus,
 'StayPlace':stayplace,
-
-'VisaIssueCountry':MigMvdAppWorker.visaisscountry,
-'VisaIssueCity':MigMvdAppWorker.visaisscity,
-
-'CurrentWorkPlace':MigMvdAppWorker.empworkplace,
-'CurrentWorkPosition':MigMvdAppWorker.position,
-'CurrentWorkAddress':MigMvdAppWorker.empworkaddress,
-
 'PassportSeries':person.passportseries,
 'PassportNumber':person.number,
-'PassportIssueAuthority':person.issueauthority,
-'PassportIssueDate':person.issuedate,
-'PassportEndDate':person.expirationdate
 }
 %}
-                                           
-{#
-'PlannedPlaceToStay':MigMvdAppWorker.stayaddressRegion,
-'PlannedCityToStay':MigMvdAppWorker.stayaddressCity,
-'PlannedStreetToStay':MigMvdAppWorker.stayaddressStreet,
-'PlannedHouseToStay':MigMvdAppWorker.stayaddressinrushouse,
-'PlannedFrame':MigMvdAppWorker.stayaddressinrussframe,
-'PlannedStructure':MigMvdAppWorker.stayaddressinrusstructure,
-'PlannedApartment':MigMvdAppWorker.stayaddressinrussapartment,
-'PlannedPhone':MigMvdAppWorker.stayaddressinrussphone
-#}
 
 {% set newfile = phpword.setvalues("images/DocumentTemplates/GuaranteeLetter.docx",values) %}
 
 {% if newfile == null %}
-
-<p>{% if document.languagepostfix=="_ru" %}Не возможно создать файл{% else %}Could not create the file{% endif %}</p>
+	    <p>{% if document.languagepostfix=="_ru" %}Не возможно создать файл{% else %}Could not create the file{% endif %}</p>
 {% else %}
-
-<iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
-
-{% if document.languagepostfix=="_ru" %}Файл{% else %}File{% endif %}: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
+	    <iframe src="https://docs.google.com/gview?url={{ url.root("includehost") }}{{ newfile }}&embedded=true" style="width:100%;min-height:500px;"></iframe>
+	    {% if document.languagepostfix=="_ru" %}Файл{% else %}File{% endif %}: <a href="{{ url.root("includehost") }}{{ newfile }}">{{ newfile }}</a>
 {% endif %}
