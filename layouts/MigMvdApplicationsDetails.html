@@ -25,21 +25,13 @@
 	<div class="control-group detailsLine">
 		<div class="detailsLabel">{{ projectbatch.title }}</div>:<div class="detailsValue">{{ projectbatch }}</div>
 	</div>
-  
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ rusentrydate.title }}</div>:<div class="detailsValue">{{ rusentrydate }}</div>
-	</div>
-
-	<div class="control-group detailsLine">
-		<div class="detailsLabel">{{ visaenddate.title }}</div>:<div class="detailsValue">{{ visaenddate }}</div>
-	</div>
 
 {tab:{{ employees.title }}}
 
 
 {{ url.set("appid",record.id) }}
 
-<a href="/ru/zayavleniya-v-mvd-na-priglashenie-na-vezd-v-rossiyu-rabotniki?app={{ record.id }}" target="_blank">Редактировать как таблицу</a>
+<a href="/ru/mvd/zayavleniya-v-mvd-na-priglashenie-na-vezd-v-rossiyu-rabotniki?app={{ record.id }}" target="_blank">Редактировать как таблицу</a>
 
 <table>
 <tbody>
