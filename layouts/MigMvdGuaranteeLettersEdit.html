@@ -36,7 +36,10 @@
 <div class="control-group">
 		<div class="control-label">{{ employees.title }}</div><div class="controls"> {{ employees.edit("","",['companyemployees','person','published','_id=' ~ employeesList],"CompanyEmployeeFullName") }}</div>
 	</div>
-
+<hr/>
+<div class="control-group">
+		<div class="control-label">{{ stayplace.title }}</div><div class="controls"><b>{{ stayplace.edit }}</b></div>
+	</div>
 {% endif %}
 
 {tab:{{ comment.title }}}

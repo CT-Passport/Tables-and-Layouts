@@ -1,8 +1,6 @@
 {{ html.goback }}
 <legend>{% if document.languagepostfix=="_ru" %}Гарантийное письмо - Майкрософт Ворд Документ{% else %}Guarantee Letter - MS Word Document{% endif %}</legend>
 
-{% set company2 = tables.getrecord("ProjectCompanyJSON",project.value)  %}
-company2: {{ company2 }}<br/>
 {% set company = tables.getrecord("ProjectCompanyJSON",project.value) | json_decode %}
 
 {% set c="" %}{% set d="" %}
@@ -17,10 +15,6 @@ company2: {{ company2 }}<br/>
 {% set listOfEmployees = employees.value|split(',') %}
 
 {% if employeeIdFromURL in listOfEmployees %}
-
-{% set person2 =tables.getrecord("EmployeeJSON",employeeIdFromURL) %}
-
-{{ person2 }}
 
 {% set person =tables.getrecord("EmployeeJSON",employeeIdFromURL) | json_decode %}
 {% else %}
@@ -110,6 +104,7 @@ Employee not found
 'Citizenship':person.issueCountryGen,
 'ResidencyCountry':MigMvdAppWorker.rescountry,
 'ResidencyState':MigMvdAppWorker.resplacerus,
+'StayPlace':stayplace,
 
 'VisaIssueCountry':MigMvdAppWorker.visaisscountry,
 'VisaIssueCity':MigMvdAppWorker.visaisscity,
