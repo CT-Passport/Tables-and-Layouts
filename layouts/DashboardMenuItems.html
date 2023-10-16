@@ -8,9 +8,19 @@
   {% set menuItemlink = alias %}
   {% endif %}
   
+  {% set children = record.count("menu","_published=1 and parent_id=" ~ record.id) %}
+  
+  {% set paramValues = params | json_decode %}
+
+  	{% if paramValues.menu_show == 1 %}
   <a href="{{ menuItemlink }}" title="{{ title }}">
-    
-    <button class="btn button btn-primary">{{ title }}
+    <div style="position:relative;display:inline-block;width:170px;height:130px;margin:20px;">
+      {% if children > 0 %}
+            {% for i in 1..children %}
+                <button class="btn button btn-primary" style="position:absolute;margin-left:{{ 5 * i }}px;margin-top:{{ 5 * i }}px;opacity: 0.2;">a</button>
+            {% endfor %}
+      {% endif %}
+    <button class="btn button btn-primary" style="position:absolute;">{{ title }}
     
     
       {% if alias == "ludi" %}
@@ -38,12 +48,11 @@
       
       {% elseif alias == "garantijnye-pisma" %}
       <br/><br/>({{ record.count("migmvdguaranteeletters") }})
-      
-      
-      
       {% endif %}
     
     </button>
+    </div>
   </a>
+  {% endif %}
 {% endblock %}
 </div>
